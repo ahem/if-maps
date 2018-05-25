@@ -1,0 +1,94 @@
+title "Curses!";
+
+map "Attic";
+
+    room "Attic" tag Attic exit n s e;
+        item "History of the Meldrews" tag history_book hidden;
+        item "Trapdoor";
+        item "Teachests";
+        task "Look in teachests" get history_book;
+        task "Close trapdoor";
+        item "Jewellery box" hidden after last;
+
+    room "Old Furniture" dir s exit se;
+        item "Bird Whiste" note "in cupboard";
+        item "Medicine Bottle" note "in cupboard" note "guaranteed-unbreakable, with child-proof lock";
+        item "Parcel" tag parcel note "in cupboard";
+        item "Wrapping Paper with Reindeer" tag wrapping_paper hidden;
+        item "Box of Chocolates" tag chocolates_box hidden;
+        item "Postcard of the Champs-Elysees" tag postcard hidden;
+        task "Open parcel" need parcel get wrapping_paper give chocolates_box give postcard;
+
+    room "Over the East Wing" tag over_east_wing dir se exit e w s;
+
+    room "Dark room" dir w;
+        item "Red light";
+        item "Photo" note "of Roger Meldrew";
+        item "Photographer's Flash"
+            note "room left inside for a battery and a timer mechanism (which seem to be optional extras).";
+
+    room "East Annexe" dir e from over_east_wing exit n;
+        item "Insulation";
+        task "TODO: Search insulation";
+
+    room "Dead end" dir s;
+        item "Rucksack" tag rucksack note "blurp about Ebenezer Meldrew";
+
+    room "Disused Observatory" dir s from over_east_wing go down tag observatory;
+        item "Glass ball";
+        item "Smoke detector";
+
+    room "Souvenirs Room" dir s go down;
+        item "Slides projector";
+
+    room "Library Storage" dir w from observatory;
+        task "TODO: Tighten pipe";
+        item "Romantic Novel" after last;
+        item "Book of Poetry" after last;
+
+    room "Servant's Room" dir e from Attic tag servants_room;
+        item "Bed";
+        item "Classical dictionary";
+        item "Scarf";
+        task "Sleep on bed" goto premonition;
+
+    room "Old Winery" dir n from Attic exit e w tag old_winery;
+        item "Glass demijohn" tag demijohn note "Hands slip when trying to open";
+        task "TODO: Open glass demijohn";
+        item "Nasty battery" after last;
+        item "Tourist map" after last;
+        item "Attic Key" note "Disappears through floorboards! How are you going to get it back?";
+        task "TODO: Get attic key";
+
+    room "Storage Room" dir e tag storage_room;
+        item "Dumpwaiter";
+        item "Wheel with handle";
+        item "Steel wrench";
+        item "Chicken wishbone" note "In dumbwaiter";
+
+    room "Aunt Jemima’s Lair" dir w from old_winery go down exit sw s w tag jemimas_lair;
+        item "Calendar";
+
+    room "Potting Room" dir w;
+        item "Aunt Jemima";
+        task "TODO: Distract Aunt Jemima";
+        item "Rubber gloves" after last;
+
+    room "Airing Cupboard" dir s from jemimas_lair;
+        item "Sheets";
+        item "Wireless radio" hidden;
+        task "Examine Sheets" note "Reveals radio" score 2;
+
+
+map "Premonition";
+
+    room "Premonition" tag premonition join servants_room;
+
+    room "The general's tent" dir e;
+
+    room "Shrine of the Bear" dir n;
+        item "Mascot";
+        task "TODO: figure out what the deal is with 'lagach'";
+
+    room "Camp Fire" dir sw from premonition;
+
