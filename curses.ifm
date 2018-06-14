@@ -10,7 +10,17 @@ item "Crumpled piece of paper";
 map "Attic";
 
     room "Attic" tag Attic exit n s e;
-        item "History of the Meldrews" tag history_book hidden note "written by Peter Meldrew";
+        item "History of the Meldrews" tag history_book hidden
+            note "written by Peter Meldrew"
+            note "Isaac (1705 - 1792). Mad Isaac, something about curse and merlins grave"
+            note "Roger (1846 - 1913). Young wife write romances, he did sewer solutions"
+            note "Ebenezer (1846 - 1908). Catographer"
+            note "Helene (1902 - ). Painter, looking for perfect blue"
+            note "Anton (Helenes husband), chessmaster in 1930's, eats blueberry yougurt"
+            note "Joshua (1710-1776). Bit of a crook, choked on chicken bone. Ghost on attic"
+            note "Capability / Willard (1761-1817). Gardener, planted hedge maze"
+            note "Gerard (1898-1916). Roger’s eldest son was killed in the Battle of the Somme. His mother, “Marie Swelldon”, gave up writing afterwards."
+            ;
         item "Trapdoor";
         item "Teachests";
         task "Look in teachests" get history_book;
@@ -61,22 +71,32 @@ map "Attic";
         task "Give wishbone to ghost" tag get_rid_of_ghost need wishbone note "This sends the key flying into a chimney!" score 7;
 
     room "Chimney" dir w from inside_cupboard need large_painting;
-        item "Stick" note "wedged in place";
+        item "Stick" tag sooty_old_stick note "wedged in place";
         task "Put torch in fireplace" need torch;
 
     room "Priest's hole" dir s s go down oneway leave all after last score 5;
         item "Iron key" hidden after get_rid_of_ghost score 4;
-        item "Prayer Book" note "Mad Isaac Meldrew's diary of supernatural investigations. Many thing about curse";
+        item "Prayer Book"
+            note "Mad Isaac Meldrew's diary of supernatural investigations. Many thing about curse"
+            note "1792: about Merlin's Hat"
+            ;
         item "Little hatch door";
-        task "TODO: Open little hatch door" need attic_key;
+        task "Get sooty old stick" give sooty_old_stick;
+        task "Unlock little hatch door" need attic_key;
+        task "Enter hatch" after last goto cellar_west;
+        task "Wave sooty old stick" need sooty_old_stick
+            note "becomes rod";
 
-    room "Dead end" dir s from east_annexe;
+    room "Dead end" tag dead_end dir s from east_annexe;
         item "Rucksack" tag rucksack note "blurp about Ebenezer Meldrew";
+        item "Fire Escape" hidden;
 
     room "Disused Observatory" dir s from over_east_wing go down tag observatory;
         item "Glass ball";
         item "Smoke detector";
         task "Polish glass ball" note "allows lookin in the bowl to see different scenes";
+        task "Trigger smoke detector" tag set_of_smoke_detector after last after fool_in_projector score 3
+            note "just enter the room when the fool is in projector and light shining this way";
 
     room "Souvenirs Room" tag souvenirs_room dir s go down;
         item "Slides projector";
@@ -86,6 +106,7 @@ map "Attic";
         task "Enter Folly" after last goto folly;
         task "Put Ace of Cups in projector" need ace_of_cups;
         task "Enter Ace of Cups" after last goto cups_and_glasses;
+        task "Put 'Fool' in projector and turn dial" tag fool_in_projector need fool_tarot_card;
 
     room "Cups and Glasses" dir s nolink tag cups_and_glasses exit n
             note "List to conspiracy about 'acurssed Meldrew' here";
@@ -100,12 +121,13 @@ map "Attic";
     
     room "Up the Mast" dir s go down;
         item "Flag of the British Merchant Navy" tag british_merchant_navy_flag;
-        item "Broken flagpole" tag broken_flagpole hidden;
+        item "Broken flagpole" tag broken_flagpole hidden
+            note "becomes rod";
         task "hold flag and climb flagpole" score 6 goto aboard_ship_in_bottle cmd "get flag then port"
             give british_merchant_navy_flag give broken_flagpole;
 
     room "Prow of the Lady Magdalena" dir w from aboard_ship_in_bottle;
-        item "Green branch";
+        item "Green branch" tag green_branch;
 
     room "Stern" dir e from aboard_ship_in_bottle;
         item "Anchor chain";
@@ -132,8 +154,9 @@ map "Attic";
         task "Open demijohn" need wrench score 3;
         item "Nasty battery" after last;
         item "Tourist map" tag hamburg_map after last;
-        item "Attic Key" tag attic_key note "Disappears through floorboards! How are you going to get it back?";
-        task "TODO: Get attic key";
+        item "Attic Key" tag attic_key
+            note "Disappears through floorboards! How are you going to get it back?"
+            note "Robot mouse can get it in the basement";
 
     room "Storage Room" dir e tag storage_room;
         item "Dumpwaiter";
@@ -146,8 +169,8 @@ map "Attic";
     room "Aunt Jemima's Lair" dir w from old_winery go down exit sw s w tag jemimas_lair;
         item "Calendar";
         item "Daisy-chain" tag daisy_chain score 2;
-        task "Give chocolates to Jemima" need chocolates_box give daisy_chain score 3
-            note "TODO: which colour???";
+        task "Give chocolates to Jemima (yellow)" need chocolates_box give daisy_chain score 3
+            note "the daisies should be yellow because those are Merlyn's Hat daisies. See 1792 in prayer book + February in calendar";
 
     room "Potting Room" dir w;
         item "Aunt Jemima";
@@ -170,7 +193,7 @@ map "Garden and Cellars";
     room "Dark passage" dir n from dark_shaft exit n need gas_mask after last;
     item "Coal dust" note "wear gas mask to breathe here";
     item "Metal door" note "leading north, locked";
-    task "Unlock metal door" need brass_key;
+    task "Unlock metal door" need attic_key;
 
     room "Garden Stream" dir n tag garden_stream exit nw e s join on_board_the_phlebas;
         item "Coal Bunker";
@@ -199,56 +222,55 @@ map "Garden and Cellars";
 
     room "Lawn Ornaments" dir e from family_tree;
         item "Bust" note "At the base is an engraving: \"Self-Portrait, H.M. '54\"";
+        task "Crush statue with garden roller" note "reveals an ancient well" need garden_roller;
+        task "TODO: figure out what the well is all about";
 
-    room "Mosaic" dir e;
+    room "Mosaic" tag mosaic dir e;
         item "Wooden ball";
 
+    room "Hollow" tag hollow dir se from mosaic nolink;
+        item "Birds nest";
+        item "Corn crake";
+        task "wave branch to scare bird away" need green_branch;
+        item "Nuts" score 4 after last;
+        link hollow to mosaic oneway;
+
+    room "Public footpath" tag public_footpath dir e go down exit n;
+
+    room "Stone Cross" dir n;
+        item "Old Evans" note "has cresent moon mascot";
+        item "Newspaper";
+        item "Memorial" note "Your eye is caught by Second Lieutenant Gerard Meldrew of the 19th/21st Rifles";
+        item "Curch" note "The fourteenth-century Church of St Michael and All Angels doesn’t seem to be 
+locked up, exactly - just barred from the other side.";
+        item "Pub" note "'God Encompasseth', now known as 'Goat and Compasses'";
+        task "TODO: enter church or pub, maybe??";
+
+    room "Beside the Drive" dir sw from public_footpath join dead_end after set_of_smoke_detector;
+
     room "Maze" dir n from family_tree score 5 need garden_roller exit n s;
-
     room "Maze" dir n tag maze_1 need garden_roller exit s e w;
-
     room "Maze" dir e need garden_roller exit w;
-
     room "Maze" dir w from maze_1 need garden_roller exit w;
-
     room "Maze" dir w tag maze_2 need garden_roller exit n e w;
-
     room "Maze" dir w need garden_roller exit e;
-
     room "Maze" dir n from maze_2 need garden_roller exit n s;
-
     room "Maze" dir n tag maze_3 need garden_roller exit n s e w;
-
     room "Maze" dir w need garden_roller exit e;
-
     room "Maze" dir e from maze_3 need garden_roller exit w;
-
     room "Maze" dir n from maze_3 need garden_roller exit n s;
-
     room "Maze" dir n tag maze_4 need garden_roller exit e w s;
-    
     room "Maze" dir w need garden_roller exit e w;
-
     room "Maze" dir w tag maze_5 need garden_roller exit e w;
-
     room "Maze" dir e from maze_4 need garden_roller exit e w;
-
     room "Maze" dir e need garden_roller exit w s;
-
     room "Maze" dir s need garden_roller exit n e;
-
     room "Maze" dir e need garden_roller exit w s;
-
     room "Maze" dir s need garden_roller exit n e;
-
     room "Maze" dir e need garden_roller exit e w;
-
     room "Maze" dir e need garden_roller exit n w;
-
     room "Maze" dir n need garden_roller exit n s;
-
     room "Maze" dir n need garden_roller exit s w;
-
     room "Maze" dir w need garden_roller exit e;
 
     room "Viewpoint ledge" dir w from maze_5 score 5;
@@ -263,7 +285,7 @@ map "Garden and Cellars";
         item "Robot mouse" tag robot_mouse;
         task "Pull rope to ride dumbwaiter" goto dark_shaft;
 
-    room "Cellar West" dir w from cellar exit nw s;
+    room "Cellar West" tag cellar_west dir w from cellar exit nw s;
     task "TODO: Open iron door";
 
     room "Hellish Place" dir s go down;
@@ -271,8 +293,7 @@ map "Garden and Cellars";
 
     room "Cellars South" tag cellars_south dir s from cellar;
     item "Hole in wall";
-    item "Brass key" tag brass_key hidden;
-    task "Navigate mouse through robot maze" need robot_mouse give brass_key;
+    task "Navigate mouse through robot maze" need robot_mouse give attic_key;
 
     link cellar to dark_shaft nopath style DashedLink;
 
@@ -306,7 +327,9 @@ map "Unreal City";
         task "Say time" goto garden_stream score 5 give ace_of_cups;
 
     room "Shadowy Hallway" tag shadowy_hallway dir n from unreal_city;
-        item "Posters";
+        item "Posters"
+            note "'Bateaux Phlebas - toujours le dernier mot' (means Phlebas Tours, always the last word)"
+            note "Grafiti behind poster: Shantih Shantih Shantih";
 
     room "Bohemia" dir e;
         item "Mural" note "Impressionist mural painting of a waitress at a bar, signed Helene";
@@ -316,13 +339,14 @@ map "Unreal City";
         item "Tarot pack";
         task "Push bell" note "summons Madame Sosostris, the famous clairvoyante" goto unreal_city;
         item "Drowned Sailor Tarot Card" hidden after last;
-        item "Fool Tarot Card" hidden after last;
+        item "Fool Tarot Card" tag fool_tarot_card hidden after last;
         item "Grim Reaper Tarot Card" hidden after last;
 
     room "Near Ring Road" dir e e from unreal_city;
 
     room "Chatelet-les-Halles" dir e go down;
         item "kiosk";
+        task "TODO: figure out what to do with kiosk man";
 
 map "Museum";
     room "Museum Foyer" tag museum_foyer exit s ne;
@@ -353,13 +377,16 @@ map "Museum";
 
     room "Coven Cell" tag coven_cell dir s e nolink;
         task "Eat poision antidote" need red_tablet;
+        task "TODO: escape" after last;
     
 
 map "Folly";
 
     room "Folly" tag folly exit e score 5 join souvenirs_room;
         item "Bean pole"
-            note "after taking pole, folly collapses some time later causing the game to end";
+            note "after taking pole, folly collapses some time later causing the game to end"
+            note "becomes rod"
+            ;
 
     room "Maze Foundations" dir e;
     room "Maze Foundations" tag maze_foundations_1 dir e;
@@ -420,4 +447,5 @@ map "Robot maze";
     room "Robot Maze" dir n from robot_maze_1;
     room "Robot Maze" dir n;
     room "Robot Maze" dir w;
+
 

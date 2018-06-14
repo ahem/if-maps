@@ -1,0 +1,1008 @@
+%!PS-Adobe-2.0
+%%Title: Curses!
+%%Creator: IFM v5.4
+%%Pages: 6
+%%EndComments
+
+% This file is part of IFM (Interactive Fiction Mapper), copyright (C)
+% Glenn Hutchings 1997-2008.
+% 
+% IFM comes with ABSOLUTELY NO WARRANTY.  This is free software, and you
+% are welcome to redistribute it under certain conditions; see the file
+% COPYING for details.
+
+% Default IFM PostScript prolog.
+
+% Start a new page.
+/beginpage {			% WIDTH HEIGHT ROTFLAG beginpage
+    /curmatrix matrix currentmatrix def
+
+    % Page orientation.
+    {
+	/pagewidth page_height def
+	/pageheight page_width def
+	/mapwidth map_height def
+	/mapheight map_width def
+	90 rotate
+	0 pageheight neg translate
+    } {
+	/pagewidth page_width def
+	/pageheight page_height def
+	/mapwidth map_width def
+	/mapheight map_height def
+    } ifelse
+
+    % Leave space for title if required.
+    show_page_title {
+	/pageheight pageheight page_title_fontsize 1.2 mul sub def
+    } if
+
+    % Get width and height of page contents.
+    /bp-height exch def
+    /bp-width exch def
+
+    % Calculate box size.
+    /bp-boxx pagewidth page_margin 2 mul sub mapwidth bp-width max div def
+    /bp-boxy pageheight page_margin 2 mul sub mapheight bp-height max div def
+    /boxsize bp-boxx bp-boxy min def
+
+    % Calculate page offsets.
+    /widthoffset pagewidth bp-width boxsize mul sub 2 div def
+    /heightoffset pageheight bp-height boxsize mul sub 2 div def
+
+    % Draw background.
+    newpath
+    page_margin page_margin moveto
+    pagewidth page_margin 2 mul sub 0 rlineto
+    0 pageheight page_margin 2 mul sub rlineto
+    pagewidth page_margin 2 mul sub neg 0 rlineto
+    closepath page_background_colour selectcolour fill
+
+    show_page_border {
+	newpath
+	page_margin page_margin moveto
+	pagewidth page_margin 2 mul sub 0 rlineto
+	0 pageheight page_margin 2 mul sub rlineto
+	pagewidth page_margin 2 mul sub neg 0 rlineto
+	closepath page_border_colour selectcolour stroke
+    } if
+
+    % Draw title if required.
+    show_page_title {
+	page_title_font page_title_fontsize selectfont
+	page_title_colour selectcolour
+
+	titlestring
+	pagewidth 2 div
+	pageheight page_margin sub page_title_fontsize add false text
+    } if
+
+    % Calculate font scaling factor.
+    /scalewidth mapwidth dup bp-width max div def
+    /scaleheight mapheight dup bp-height max div def
+    /fontscale scalewidth scaleheight min def
+
+    % Split the combined directional strings into individual versions.
+    link_updown_string (/) search {
+	exch pop % remove (/)
+    }{
+	pop (D) (U)
+    } ifelse
+
+    /link_up_string exch def
+    /link_down_string exch def
+
+    link_inout_string (/) search {
+	exch pop % remove (/)
+    }{
+	pop (O) (I)
+    } ifelse
+
+    /link_in_string exch def
+    /link_out_string exch def
+
+    /ah-size boxsize link_arrow_size mul def
+    /link_dashed false def
+} def
+
+% Display a map title
+/maptitle {			% STRING X Y maptitle
+    map_title_colour selectcolour
+    map_title_font map_title_fontsize selectfont
+    pagepos false text
+} def
+
+% Draw a map border
+/mapborder {			% XMIN YMIN XMAX YMAX mapborder
+    pagepos
+    /mb-ymax exch def
+    /mb-xmax exch def
+
+    pagepos
+    /mb-ymin exch def
+    /mb-xmin exch def
+
+    newpath
+    mb-xmin mb-ymin moveto
+    mb-xmax mb-ymin lineto
+    mb-xmax mb-ymax lineto
+    mb-xmin mb-ymax lineto
+    closepath map_background_colour selectcolour fill
+
+    newpath
+    mb-xmin mb-ymin moveto
+    mb-xmax mb-ymin lineto
+    mb-xmax mb-ymax lineto
+    mb-xmin mb-ymax lineto
+    closepath map_border_colour selectcolour stroke
+} def
+
+% Draw a room. 
+/room {				% STRING X Y [ITEMLIST] ITEMS room
+    % Convert and save arguments.
+    /rm-items exch def
+    rm-items {
+	/rm-itemlist exch def
+    } if
+
+    pagepos
+    /rm-ypos exch def
+    /rm-xpos exch def
+    /rm-string exch def
+
+    gsave
+	% Draw room shadow box if required.
+	room_shadow_xoff 0 ne room_shadow_yoff 0 ne or {
+	    room_shadow_colour selectcolour
+
+	    newpath
+	    rm-xpos rm-ypos moveto
+	    boxsize 1 room_shadow_xoff 2 mul sub mul room_width 2 div mul
+	    boxsize 1 room_shadow_yoff 2 mul sub mul room_height 2 div mul
+	    rmoveto
+
+	    room_width boxsize mul neg 0 rlineto
+	    0 room_height boxsize mul neg rlineto
+	    room_width boxsize mul 0 rlineto
+	    closepath fill
+	} if
+
+	% Draw room box.
+	gsave
+	    room_border_dashed {
+		[ 2 2 ] 2 setdash
+	    } if
+
+	    room_border_colour selectcolour
+
+	    room_border_width setlinewidth
+	    newpath
+	    rm-xpos rm-ypos moveto
+	    boxsize room_width 2 div mul
+	    boxsize room_height 2 div mul
+	    rmoveto
+
+	    room_width boxsize mul neg 0 rlineto
+	    0 room_height boxsize mul neg rlineto
+	    room_width boxsize mul 0 rlineto
+	    closepath
+
+	    gsave 
+		room_colour selectcolour fill
+	    grestore 
+	    stroke
+	grestore
+
+	% Draw room text (and item text if required).
+	room_text_colour selectcolour
+	room_text_font room_text_fontsize fontscale mul selectfont
+
+	rm-items show_items and {
+	    rm-string rm-xpos rm-ypos
+	    boxsize room_height mul 1 roomitemratio sub 2 div mul add
+	    boxsize room_width mul
+	    boxsize room_height mul roomitemratio mul
+	    boxtext
+
+	    item_text_colour selectcolour
+	    item_text_font item_text_fontsize fontscale mul selectfont
+
+	    rm-itemlist rm-xpos rm-ypos
+	    boxsize room_height mul roomitemratio 2 div mul sub
+	    boxsize room_width mul
+	    boxsize room_height mul 1 roomitemratio sub mul
+	    boxtext
+	}{
+	    rm-string rm-xpos rm-ypos
+	    boxsize room_width mul
+	    boxsize room_height mul
+	    boxtext
+	} ifelse
+    grestore
+} def
+
+% Draw a room exit.
+/roomexit {			% X1 Y1 X2 Y2 roomexit
+    % Save arguments.
+    /re-y2 exch def
+    /re-x2 exch def
+    /re-y1 exch def
+    /re-x1 exch def
+
+    gsave
+	% Draw line.
+	room_exit_colour selectcolour
+	room_exit_width setlinewidth
+	re-x1 re-y1 pagepos moveto
+	re-x2 re-y2 pagepos lineto
+	stroke
+    grestore
+} def
+
+/taillabel {			% string Xtail Ytail Xhead Yhead
+	link_text_colour selectcolour
+	link_text_font link_text_fontsize fontscale mul selectfont
+
+	gsave
+		3 index 3 index pagepos translate	% to tail
+		angle rotate
+		link_text_fontsize fontscale mul 0.75 mul dup transform
+	grestore
+	itransform
+
+	map_background_colour true text
+} def
+
+% Draw a link.
+/link {				% [ X Y ... ] UP IN ONEWAY link
+    % Save arguments.
+    /ln-oneway exch def
+    /ln-in exch def
+    /ln-up exch def
+    /ln-points exch def
+    /ln-np ln-points length def
+
+    gsave
+	link_colour selectcolour
+	link_line_width setlinewidth
+	link_dashed {
+	    [ 2 2 ] 2 setdash
+	} if
+
+	% load the points onto the stack (and draw the line backwards)
+	ln-points aload pop
+
+	% If oneway, draw an arrowhead and skip forward so the line does
+	% not obscure the head.
+	ln-oneway {
+		gsave
+			2 copy pagepos translate
+			3 index 3 index 4 2 roll angle rotate
+			arrowhead
+			ah-size neg 0 transform
+		grestore
+		itransform
+	}{
+		pagepos
+	} ifelse
+
+	moveto
+
+	% draw segments connected by arcs
+ 	2 2 ln-np 4 sub {
+	    pop
+	    pagepos
+	    3 index 3 index pagepos
+	    boxsize 10 div
+	    arct
+ 	} for
+
+	% draw the final (initial) segment
+	pagepos lineto
+ 
+ 	stroke
+
+	% Mark up/down/in/out if required.
+ 	ln-up 0 ne ln-in 0 ne or {
+
+ 	    % Push the head label and the tail label.
+	    ln-up 1 eq {
+ 		link_down_string
+ 		link_up_string
+ 	    }{
+ 		ln-up -1 eq {
+ 		    link_up_string
+ 		    link_down_string
+ 		}{
+ 		    ln-in 1 eq {
+ 			link_out_string
+ 			link_in_string
+ 		    }{
+ 			link_in_string
+ 			link_out_string
+ 		    } ifelse
+ 		} ifelse
+ 	    } ifelse 
+
+ 	    % Mark the tail.
+ 	    ln-points 0 4 getinterval aload pop
+ 	    taillabel
+
+ 	    % Also mark the head if not oneway.
+ 	    ln-oneway {
+		pop % the head label
+ 	    }{
+ 		ln-points ln-np 4 sub 4 getinterval aload pop
+		4 2 roll
+ 		taillabel
+ 	    } ifelse
+ 	} if
+
+    grestore
+} def
+
+% Draw a circular link.
+/circle {				% Xr Yr angle circle
+    gsave
+	link_colour selectcolour
+	link_line_width 2 div setlinewidth
+	link_dashed {
+		[ 2 2 ] 2 setdash
+	} if
+
+	3 1 roll pagepos translate rotate
+	0 0 moveto
+	boxsize 8 div dup 0 exch 180 -160 arcn
+ 	stroke
+
+	110 rotate
+	arrowhead
+
+    grestore
+} def
+
+% End a page.
+/endpage {			% endpage
+    curmatrix setmatrix
+    showpage
+} def
+
+% Draw some text in a box.
+/boxtext {			% STRING X Y WIDTH HEIGHT text
+    % Save arguments.
+    /bt-height exch def
+    /bt-width exch def
+    /bt-ypos exch def
+    /bt-xpos exch def
+
+    % Get text lines.
+    bt-width bt-height splittext
+    /bt-factor exch 1 textmargin sub mul def
+    /bt-lines exch def
+    /bt-numlines bt-lines length def
+
+    gsave
+	% Move to centre of box.
+	bt-xpos bt-ypos translate
+
+	% Draw box around text if required.
+	debug {
+	    newpath
+	    bt-width 2 div bt-height 2 div moveto
+	    bt-width neg 0 rlineto
+	    0 bt-height neg rlineto
+	    bt-width 0 rlineto
+	    closepath stroke
+	} if
+
+	% Scale box.
+	bt-factor dup scale
+
+	% Draw each line.
+	/bt-linegap current-fontsize textspacing mul def
+	/bt-lineheight current-fontsize bt-linegap add def
+	/bt-textheight bt-numlines bt-lineheight mul bt-linegap sub def
+
+	0 1 bt-numlines 1 sub {
+	    % Get string.
+	    dup bt-lines exch get
+
+	    % Get its Y offset.
+	    exch bt-numlines 1 sub exch sub 0.5 add bt-lineheight mul 
+	    bt-textheight 2 div sub
+
+	    % Draw it.
+	    0 exch false text
+	} for
+    grestore
+} def
+
+% Split a string into pieces for filling.
+/splittext {			% STRING WIDTH HEIGHT split LINES FACTOR
+    % Save arguments.
+    /st-height exch def
+    /st-width exch def
+    /st-str exch def
+
+    {
+	% Build pieces.
+	/st-lines [
+	    st-str st-width {} breakline
+	] def
+
+	% Calculate text squishing factor.
+	/st-factor 1 def
+
+	st-lines {
+	    stringwidth pop st-width exch div
+	    st-factor min /st-factor exch def
+	} forall
+
+	st-lines length
+	textspacing 1 add mul
+	current-fontsize mul
+	st-height exch div
+	st-factor min /st-factor exch def
+
+	% If no squishing required, end it.
+	st-factor 1 ge { exit } if
+
+	% Otherwise, try a smaller font size.
+	current-font current-fontsize 1 sub selectfont
+
+	% But not too small.
+	current-fontsize 1 lt { exit } if
+    } loop
+
+    st-lines st-factor
+} def
+
+% Line breaking algorithm (program 12 from Adobe Cookbook).
+/breakline {			% STRING WIDTH PROC breakline
+    /bl-proc exch def
+    /bl-linewidth exch def
+
+    % Text string needs trailing space for filling to work properly.
+    addspace /bl-textstring exch def
+
+    % Get width of a space in current font.
+    /bl-breakwidth ( ) stringwidth pop def
+
+    % Typeset width of the current line.
+    /bl-curwidth 0 def
+
+    % Index of the most recent space encountered in the text.
+    /bl-lastwordbreak 0 def
+
+    % Index of the first character on the current line.
+    /bl-startchar 0 def
+
+    % Remaining text.
+    /bl-restoftext bl-textstring def
+
+    % Break into lines.
+    {
+	% Find next word.
+	bl-restoftext ( ) search {
+	    /bl-nextword exch def pop
+	    /bl-restoftext exch def
+	    /bl-wordwidth bl-nextword stringwidth pop def
+
+	    % If next word won't fit, process current line (if any)
+	    % and start a new one.  If it will, tag it on.
+	    bl-curwidth bl-wordwidth add bl-linewidth gt {
+		bl-lastwordbreak 0 gt {
+		    bl-textstring bl-startchar
+		    bl-lastwordbreak bl-startchar sub
+		    getinterval bl-proc
+		} if
+
+		/bl-startchar bl-lastwordbreak def
+		/bl-curwidth bl-wordwidth bl-breakwidth add def
+	    }{
+		/bl-curwidth bl-curwidth bl-wordwidth add bl-breakwidth add def
+	    } ifelse
+
+	    % Mark last word break.
+	    /bl-lastwordbreak bl-lastwordbreak bl-nextword length add 1 add def
+	}{
+	    pop exit
+	} ifelse
+    } loop
+
+    % Process the last line.
+    /bl-lastchar bl-textstring length def
+    bl-textstring bl-startchar bl-lastchar bl-startchar sub getinterval bl-proc
+} bind def
+
+% Draw arrowhead with point at 0,0 facing east (caller must rotate/translate).
+/arrowhead {
+	newpath
+	0 0 moveto
+	ah-size neg ah-size 2 div G div rlineto
+	0 ah-size G div neg rlineto
+	closepath fill
+} bind def	
+
+% Draw centred text.
+/text {				% STRING X Y [BGCOLOUR] BGFLAG text
+    /tx-bgbox exch def
+    tx-bgbox {
+	/tx-bgcolour exch def
+    } if
+
+    gsave
+	% Move to text centre.
+	translate
+	/tx-string exch def
+
+	% Get string length.
+	tx-string stringwidth pop
+
+	% Subtract space width if required.
+	tx-string length 1 sub tx-string exch get 32 eq {
+	    ( ) stringwidth pop sub
+	} if
+
+	% Move to string centre.
+	neg 2 div current-fontsize neg 3 div
+	moveto
+
+	% Draw text outline in background if required.
+	tx-bgbox {
+	    gsave
+		tx-bgcolour selectcolour
+		tx-string false charpath pathbbox rectangle
+	    grestore
+	} if
+
+	% Draw text.
+	tx-string show
+    grestore
+} bind def
+
+% Add trailing space to a string.
+/addspace {			% STRING addspace STRING
+    dup length 1 add string /as-str exch def
+    dup as-str exch 0 exch putinterval
+    length as-str exch 32 put as-str
+} def
+
+% Draw a filled rectangle.
+/rectangle {			% LLX LLY URX URY rectangle
+    /rc-ury exch def
+    /rc-urx exch def
+    /rc-lly exch def
+    /rc-llx exch def
+
+    gsave
+	newpath rc-llx rc-lly moveto
+	rc-urx rc-lly lineto
+	rc-urx rc-ury lineto
+	rc-urx neg rc-ury lineto
+	closepath fill
+    grestore
+} bind def
+
+% Find the angle of the vector (x1, y1) to (x2, y2).
+/angle {			% X1 Y1 X2 Y2 ANGLE angle
+    3 -1 roll sub
+    3 1 roll sub neg
+    atan
+} bind def
+
+% Select a font.
+/selectfont {			% FONT SIZE selectfont
+    /current-fontsize exch def
+    /current-font exch def
+    current-font findfont current-fontsize scalefont setfont
+} bind def
+
+% Select a colour.
+/selectcolour {			% COLOUR-ARRAY selectcolour
+    aload pop setrgbcolor
+} bind def
+
+% Convert to page coordinates.
+/pagepos {			% X Y pagepos PX PY
+    0.5 add boxsize mul heightoffset add exch
+    0.5 add boxsize mul widthoffset add exch
+} def
+
+% Print stack if debugging.
+/stack {			% MESSAGE stack
+    debug { (*** ) print print ( ***\n) print pstack } { pop } ifelse
+} bind def
+
+% Print a debugging message.
+/msg {				% MESSAGE msg
+    debug { print (\n) print } { pop } ifelse
+} bind def
+
+% Print a value if debugging.
+/val {				% MESSAGE VALUE val
+    debug { exch print == } { pop pop } ifelse
+} bind def
+
+% The Golden Ratio [1/G == G/(1+G)].
+/G 5 0.5 exp 1 add 2 div def
+
+% Standard definitions.
+/debug false def
+/cm {72 mul 2.54 div} def
+/inch {72 mul} def
+/max {2 copy gt {} {exch} ifelse pop} def
+/min {2 copy lt {} {exch} ifelse pop} def
+
+% Control variables.
+/textspacing 0.1 def
+/textmargin 0.1 def
+/roomitemratio 0.6 def
+/page_margin 2 cm def
+/page_width 21 cm def
+/page_height 29.7 cm def
+/map_width 8 def
+/map_height 10 def
+/show_page_border false def
+/page_border_colour [0 0 0] def
+/page_background_colour [1 1 1] def
+/show_page_title true def
+/titlestring (Curses!) def
+/page_title_font /Times-Bold def
+/page_title_fontsize 18 def
+/page_title_colour [0 0 0] def
+/map_title_font /Times-Bold def
+/map_title_fontsize 14 def
+/map_title_colour [0 0 0] def
+/map_border_colour [0 0 0] def
+/map_background_colour [1 1 1] def
+/room_width 0.8 def
+/room_height 0.65 def
+/room_text_font /Times-Bold def
+/room_text_fontsize 10 def
+/room_colour [1 1 1] def
+/room_text_colour [0 0 0] def
+/room_border_colour [0 0 0] def
+/room_border_dashed false def
+/room_border_width 1 def
+/room_shadow_xoff 0.05 def
+/room_shadow_yoff 0.05 def
+/room_shadow_colour [0.498 0.498 0.498] def
+/room_exit_colour [0 0 0] def
+/room_exit_width 1 def
+/show_items true def
+/item_text_font /Times-Italic def
+/item_text_fontsize 6 def
+/item_text_colour [0 0 0] def
+/link_colour [0 0 0] def
+/link_dashed false def
+/link_arrow_size 0.1 def
+/link_text_font /Times-Roman def
+/link_text_fontsize 6 def
+/link_text_colour [0 0 0] def
+/link_line_width 1 def
+/link_updown_string (U/D) def
+/link_inout_string (I/O) def
+
+%%EndProlog
+
+%%Page: 1 1
+
+6 10 false beginpage
+(Attic) 2.5 9 maptitle
+(Airing Cupboard) 1 7 (Sheets) true room
+(Potting Room) 0 8 (Aunt Jemima, Rubber gloves) true room
+(Aunt Jemima's Lair) 1 8 (Calendar, Daisy-chain) true room
+0.6 7.675 0.53 7.5525 roomexit
+(Storage Room \(3\)) 3 8 (Dumpwaiter, Wheel with handle, Steel wrench, Chicken wishbone) true room
+(Old Winery) 2 8 (Glass demijohn, Nasty battery, Tourist map, Attic Key) true room
+(Servant's Room \(4\)) 3 7 (Bed, Classical dictionary, Scarf) true room
+(Library Storage \(5\)) 2 4 (Romantic Novel, Book of Poetry) true room
+(Stern) 4 1 (Anchor chain) true room
+(Prow of the Lady Magdalena) 2 1 (Green branch) true room
+(Up the Mast) 3 0 (Flag of the British Merchant Navy) true room
+(Aboard Ship) 3 1 false room
+(Cups and Glasses) 3 2 (Mounted bottle) true room
+(Souvenirs Room \(6\)) 3 3 (Slides projector) true room
+(Disused Observatory) 3 4 (Glass ball, Smoke detector) true room
+(Dead end \(2\)) 5 4 (Rucksack) true room
+(Priest's hole) 4 4 (Prayer Book, Little hatch door) true room
+(Chimney) 4 6 (Stick) true room
+(Battlements) 4 8 (Iron key, Ghost) true room
+(Roof) 5 7 false room
+(Inside Cupboard) 5 6 (Large painting, Skylight, Gas mask) true room
+(East Annexe) 5 5 (Insulation) true room
+(Dark room) 2 5 (Red light, Photo, Photographer's Flash) true room
+(Over the East Wing) 3 5 false room
+(Old Furniture) 2 6 (Bird Whiste, Medicine Bottle, Parcel) true room
+(Attic) 2 7 (Trapdoor, Teachests) true room
+[ 2 6.675 2 6.325 ] 0 0 false link
+[ 2.4 5.675 2.6 5.325 ] 0 0 false link
+[ 2.6 5 2.4 5 ] 0 0 false link
+[ 3.4 5 4 5 4.6 5 ] 0 0 false link
+[ 5 5.325 5 5.675 ] 0 0 false link
+[ 5 6.325 5 6.675 ] 1 0 false link
+[ 4.6 7.325 4.4 7.675 ] 0 0 false link
+[ 4.6 6 4.4 6 ] 0 0 false link
+[ 4 5.675 4 5 4 4.325 ] -1 0 true link
+[ 5 4.675 5 4.325 ] 0 0 false link
+[ 3 4.675 3 4.325 ] -1 0 false link
+[ 3 3.675 3 3.325 ] -1 0 false link
+[ 3 0.675 3 0.325 ] -1 0 false link
+[ 2.6 1 2.4 1 ] 0 0 false link
+[ 3.4 1 3.6 1 ] 0 0 false link
+/link_dashed true def
+[ 3 2.675 3 2.325 ] 0 0 false link
+[ 3 1.675 3 1.325 ] 0 0 false link
+/link_dashed false def
+[ 2.6 4 2.4 4 ] 0 0 false link
+[ 2.4 7 2.6 7 ] 0 0 false link
+[ 2 7.325 2 7.675 ] 0 0 false link
+[ 2.4 8 2.6 8 ] 0 0 false link
+[ 1.6 8 1.4 8 ] -1 0 false link
+[ 0.6 8 0.4 8 ] 0 0 false link
+[ 1 7.675 1 7.325 ] 0 0 false link
+endpage
+
+%%Page: 2 2
+
+10 13 false beginpage
+(Garden and Cellars) 4.5 12 maptitle
+(Cellars South \(7\)) 6 0 (Hole in wall) true room
+(Hellish Place) 5 0 (Devil) true room
+(Cellar West) 5 1 false room
+4.6 1.325 4.53 1.4475 roomexit
+(Cellars \(3\)) 6 1 (Dumpwaiter, Window-vent, Robot mouse) true room
+(Wine Cellars) 7 1 false room
+(Viewpoint ledge) 0 11 (Plaque, Miniature) true room
+(Maze) 7 11 false room
+(Maze) 8 11 false room
+(Maze) 8 10 false room
+(Maze) 8 9 false room
+(Maze) 7 9 false room
+(Maze) 6 9 false room
+(Maze) 6 10 false room
+(Maze) 5 10 false room
+(Maze) 5 11 false room
+(Maze) 4 11 false room
+(Maze) 1 11 false room
+(Maze) 2 11 false room
+(Maze) 3 11 false room
+(Maze) 3 10 false room
+(Maze) 4 9 false room
+(Maze) 2 9 false room
+(Maze) 3 9 false room
+(Maze) 3 8 false room
+(Maze) 2 7 false room
+(Maze) 3 7 false room
+(Maze) 4 7 false room
+(Maze) 6 7 false room
+(Maze) 5 7 false room
+(Maze) 5 6 false room
+(Beside the Drive \(2\)) 8 3 false room
+(Stone Cross) 9 5 (Old Evans, Newspaper, Memorial, Curch, Pub) true room
+(Public footpath) 9 4 false room
+(Hollow) 8 4 (Birds nest, Corn crake, Nuts) true room
+(Mosaic) 7 5 (Wooden ball) true room
+(Lawn Ornaments) 6 5 (Bust) true room
+(Vegetable Garden) 4 4 (Runner-bean plant) true room
+(Garage) 3 5 (Garden Roller, Weed killer, Spade) true room
+(Clearing) 4 5 false room
+(Up the Family tree) 5 4 false room
+(Family Tree) 5 5 false room
+(Beside the wall) 7 4 (shrub) true room
+(Garden Stream \(1\)) 6 4 (Coal Bunker) true room
+(Dark passage) 6 3 (Coal dust, Metal door) true room
+(Dark Shaft) 6 2 (Dumpwaiter) true room
+[ 6 2.325 6 2.675 ] 0 0 false link
+[ 6 3.325 6 3.675 ] 0 0 false link
+[ 6.4 4 6.6 4 ] 0 0 false link
+[ 5.6 4.325 5.4 4.675 ] 0 0 false link
+[ 5 4.675 5 4.325 ] 1 0 false link
+[ 4.6 5 4.4 5 ] 0 0 false link
+[ 3.6 5 3.4 5 ] 0 0 false link
+[ 4 4.675 4 4.325 ] 0 0 false link
+[ 5.4 5 5.6 5 ] 0 0 false link
+[ 6.4 5 6.6 5 ] 0 0 false link
+[ 7.6 4.325 7.4 4.675 ] 0 0 true link
+[ 8.4 4 8.6 4 ] -1 0 false link
+[ 9 4.325 9 4.675 ] 0 0 false link
+[ 8.6 3.675 8.4 3.325 ] 0 0 false link
+[ 5 5.325 5 5.675 ] 0 0 false link
+[ 5 6.325 5 6.675 ] 0 0 false link
+[ 5.4 7 5.6 7 ] 0 0 false link
+[ 4.6 7 4.4 7 ] 0 0 false link
+[ 3.6 7 3.4 7 ] 0 0 false link
+[ 2.6 7 2.4 7 ] 0 0 false link
+[ 3 7.325 3 7.675 ] 0 0 false link
+[ 3 8.325 3 8.675 ] 0 0 false link
+[ 2.6 9 2.4 9 ] 0 0 false link
+[ 3.4 9 3.6 9 ] 0 0 false link
+[ 3 9.325 3 9.675 ] 0 0 false link
+[ 3 10.325 3 10.675 ] 0 0 false link
+[ 2.6 11 2.4 11 ] 0 0 false link
+[ 1.6 11 1.4 11 ] 0 0 false link
+[ 3.4 11 3.6 11 ] 0 0 false link
+[ 4.4 11 4.6 11 ] 0 0 false link
+[ 5 10.675 5 10.325 ] 0 0 false link
+[ 5.4 10 5.6 10 ] 0 0 false link
+[ 6 9.675 6 9.325 ] 0 0 false link
+[ 6.4 9 6.6 9 ] 0 0 false link
+[ 7.4 9 7.6 9 ] 0 0 false link
+[ 8 9.325 8 9.675 ] 0 0 false link
+[ 8 10.325 8 10.675 ] 0 0 false link
+[ 7.6 11 7.4 11 ] 0 0 false link
+[ 0.6 11 0.4 11 ] 0 0 false link
+[ 7 3.675 7 3 7 2 7 1.325 ] -1 0 true link
+[ 6.6 1 6.4 1 ] 0 0 false link
+[ 5.6 1 5.4 1 ] 0 0 false link
+[ 5 0.675 5 0.325 ] -1 0 false link
+[ 6 0.675 6 0.325 ] 0 0 false link
+/link_dashed true def
+[ 6 1.325 6 1.675 ] 0 0 false link
+endpage
+
+%%Page: 3 3
+
+6 9 false beginpage
+(Premonition) 2 8 maptitle
+(Dolmen) 2 5 false room
+(Camp Fire) 1 5 false room
+(Shrine of the Bear) 3 7 (Mascot) true room
+(The general's tent) 3 6 false room
+(Premonition \(4\)) 2 6 false room
+/link_dashed false def
+[ 2.4 6 2.6 6 ] 0 0 false link
+[ 3 6.325 3 6.675 ] 0 0 false link
+[ 1.6 5.675 1.4 5.325 ] 0 0 false link
+[ 1.4 5 1.6 5 ] 0 0 false link
+(Unreal City) 2.5 3 maptitle
+(Chatelet-les-Halles) 5 0 (kiosk) true room
+(Near Ring Road) 4 0 false room
+(Consulting Room) 2 2 (Bell, Tarot pack) true room
+1.6 2 1.53 2 roomexit
+(Bohemia) 3 1 (Mural) true room
+(Shadowy Hallway) 2 1 (Posters) true room
+(On board the Phlebas \(1\)) 0 0 (Hollow man) true room
+(Down by River) 1 0 (Fine silk handkerchief, Tourist boat) true room
+(Unreal city \(5\)) 2 0 false room
+[ 1.6 0 1.4 0 ] 0 0 false link
+[ 0.6 0 0.4 0 ] 0 0 false link
+[ 2 0.325 2 0.675 ] 0 0 false link
+[ 2.4 1 2.6 1 ] 0 0 false link
+[ 2 1.325 2 1.675 ] 1 0 false link
+[ 2.4 0 3 0 3.6 0 ] 0 0 false link
+[ 4.4 0 4.6 0 ] -1 0 false link
+endpage
+
+%%Page: 4 4
+
+3 5 false beginpage
+(Museum) 1 4 maptitle
+(Coven Cell) 1 0 false room
+(Dark Staircase) 0 1 (Empty matchbook) true room
+(Cabinet Room) 2 1 (Cabinet) true room
+(Hall of Exhibits) 1 1 (Tarot box, Painted still) true room
+(Revolving Door) 2 3 false room
+(Museum Foyer) 1 2 (Poster) true room
+[ 1.4 2.325 1.6 2.675 ] 0 0 false link
+[ 1 1.675 1 1.325 ] 0 0 false link
+[ 1.4 1 1.6 1 ] 0 0 false link
+[ 0.6 1 0.4 1 ] 0 0 false link
+endpage
+
+%%Page: 5 5
+
+9 7 false beginpage
+(Folly) 4 6 maptitle
+(Maze Foundations) 5 0 false room
+5 -0.325 5 -0.4475 roomexit
+(Maze Foundations \(marked with whitewash\)) 8 1 false room
+(Maze Foundations \(seedbed\)) 7 1 false room
+(Maze Foundations) 6 1 false room
+(Maze Foundations) 5 1 false room
+(Maze Foundations) 4 1 false room
+(Maze Foundations) 3 1 false room
+(Maze Foundations) 2 1 false room
+(Maze Foundations \(seedbed\)) 8 2 false room
+(Maze Foundations \(seedbed\)) 7 2 false room
+(Maze Foundations \(seedbed\)) 6 2 false room
+(Maze Foundations \(seedbed\)) 5 2 false room
+(Maze Foundations \(seedbed\)) 4 2 false room
+(Maze Foundations) 3 2 false room
+(Maze Foundations \(seedbed\)) 2 2 false room
+(Maze Foundations) 8 3 false room
+(Maze Foundations) 7 3 false room
+(Maze Foundations) 6 3 false room
+(Maze Foundations \(seedbed\)) 5 3 false room
+(Maze Foundations) 4 3 false room
+(Maze Foundations) 3 3 false room
+(Maze Foundations) 2 3 false room
+(Maze Foundations) 8 4 false room
+(Maze Foundations \(seedbed\)) 7 4 false room
+(Maze Foundations) 6 4 false room
+(Maze Foundations) 5 4 false room
+(Maze Foundations \(seedbed\)) 4 4 false room
+(Maze Foundations) 3 4 false room
+(Maze Foundations \(seedbed\)) 2 4 false room
+(Maze Foundations) 8 5 false room
+(Maze Foundations) 7 5 false room
+(Maze Foundations \(seedbed\)) 6 5 false room
+(Maze Foundations) 5 5 false room
+(Maze Foundations) 4 5 false room
+(Maze Foundations) 3 5 false room
+(Maze Foundations) 2 5 false room
+(Maze Foundations) 1 5 false room
+(Folly \(6\)) 0 5 (Bean pole) true room
+[ 0.4 5 0.6 5 ] 0 0 false link
+[ 1.4 5 1.6 5 ] 0 0 false link
+[ 2.4 5 2.6 5 ] 0 0 false link
+[ 3.4 5 3.6 5 ] 0 0 false link
+[ 4.4 5 4.6 5 ] 0 0 false link
+[ 5.4 5 5.6 5 ] 0 0 false link
+[ 6.4 5 6.6 5 ] 0 0 false link
+[ 7.4 5 7.6 5 ] 0 0 false link
+[ 2 4.675 2 4.325 ] 0 0 false link
+[ 2.4 4 2.6 4 ] 0 0 false link
+[ 3.4 4 3.6 4 ] 0 0 false link
+[ 4.4 4 4.6 4 ] 0 0 false link
+[ 5.4 4 5.6 4 ] 0 0 false link
+[ 6.4 4 6.6 4 ] 0 0 false link
+[ 7.4 4 7.6 4 ] 0 0 false link
+[ 2 3.675 2 3.325 ] 0 0 false link
+[ 2.4 3 2.6 3 ] 0 0 false link
+[ 3.4 3 3.6 3 ] 0 0 false link
+[ 4.4 3 4.6 3 ] 0 0 false link
+[ 5.4 3 5.6 3 ] 0 0 false link
+[ 6.4 3 6.6 3 ] 0 0 false link
+[ 7.4 3 7.6 3 ] 0 0 false link
+[ 2 2.675 2 2.325 ] 0 0 false link
+[ 2.4 2 2.6 2 ] 0 0 false link
+[ 3.4 2 3.6 2 ] 0 0 false link
+[ 4.4 2 4.6 2 ] 0 0 false link
+[ 5.4 2 5.6 2 ] 0 0 false link
+[ 6.4 2 6.6 2 ] 0 0 false link
+[ 7.4 2 7.6 2 ] 0 0 false link
+[ 2 1.675 2 1.325 ] 0 0 false link
+[ 2.4 1 2.6 1 ] 0 0 false link
+[ 3.4 1 3.6 1 ] 0 0 false link
+[ 4.4 1 4.6 1 ] 0 0 false link
+[ 5.4 1 5.6 1 ] 0 0 false link
+[ 6.4 1 6.6 1 ] 0 0 false link
+[ 7.4 1 7.6 1 ] 0 0 false link
+[ 5 0.675 5 0.325 ] 0 0 false link
+endpage
+
+%%Page: 6 6
+
+5 6 false beginpage
+(Robot maze) 2 5 maptitle
+(Robot Maze) 2 4 false room
+(Robot Maze) 3 4 false room
+(Robot Maze) 3 3 false room
+(Robot Maze \(key\)) 0 4 false room
+(Robot Maze) 0 3 false room
+(Robot Maze) 1 3 false room
+(Robot Maze) 0 1 false room
+(Robot Maze) 2 0 false room
+(Robot Maze) 1 0 false room
+(Robot Maze) 1 1 false room
+(Robot Maze) 1 2 false room
+(Robot Maze) 2 2 false room
+(Robot Maze) 3 2 false room
+(Robot Maze \(entry\) \(7\)) 4 2 false room
+4.4 2 4.47 2 roomexit
+[ 3.6 2 3.4 2 ] 0 0 false link
+[ 2.6 2 2.4 2 ] 0 0 false link
+[ 1.6 2 1.4 2 ] 0 0 false link
+[ 1 1.675 1 1.325 ] 0 0 false link
+[ 1 0.675 1 0.325 ] 0 0 false link
+[ 1.4 0 1.6 0 ] 0 0 false link
+[ 0.6 1 0.4 1 ] 0 0 false link
+[ 1 2.325 1 2.675 ] 0 0 false link
+[ 0.6 3 0.4 3 ] 0 0 false link
+[ 0 3.325 0 3.675 ] 0 0 false link
+[ 3 2.325 3 2.675 ] 0 0 false link
+[ 3 3.325 3 3.675 ] 0 0 false link
+[ 2.6 4 2.4 4 ] 0 0 false link
+endpage
