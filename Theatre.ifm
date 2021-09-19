@@ -1,0 +1,131 @@
+title "Theatre";
+
+task "TODO: find phone" note "Reinhard left his cellular phone somewhere before he died";
+
+map "Ground Floor";
+
+    room "Theatre Lobby" tag lobby exit n nw ne s start;
+        item "pattern on floor" after task_open_curtains;
+        task "TODO: figure out what pattern means";
+
+    room "Cloakroom" tag cloakroom dir ne from lobby;
+        task "open secret passage" cmd "pull cleaner hook";
+        task "TODO: explore secret passage" note "need light of some kind";
+
+    room "Manager's Office" tag managers_office dir nw from lobby exit n s;
+        item "metal safe";
+        item "page" note "18th May 1898" note "hidden in desk-drawer";
+        item "architects plans" note "hidden in desk-drawer";
+        item "red pearl" tag item_red_pearl hidden;
+        task "open safe" need stethoscope give item_red_pearl score 1;
+        task "break plastered wall" tag task_break_wall cmd "hit wall";
+
+    room "Ticket Office" dir s from managers_office after task_break_wall score 1;
+        item "skeleton";
+        item "page" note "6th May 1898";
+        item "pocket watch" note "chained to skeleton";
+        task "turn watch to 7:40" tag task_set_time cmd "pull dial" cmd "turn dial";
+
+    room "Cramped Hallway" tag cramped_hallway dir n from managers_office exit s w n;
+        item "page" note "3rd May 1898";
+
+    room "Narrow Hallway" tag narrow_hallway dir n from cramped_hallway exit n;
+        item "dead body" note "push carpet rolls";
+        item "appointment book" note "on body";
+
+    room "End of Hallway" tag end_of_hallway dir n from narrow_hallway exit n w;
+        item "page" note "21st July 1898";
+        task "TODO: open the office door (it has been nailed shut";
+
+    room "Alley Courtyard" tag alley_courtyard dir n 2 e from end_of_hallway nolink exit s;
+        link alley_courtyard to end_of_hallway dir sw;
+        item "rubbish bin";
+        item "page" note "24th May 1898";
+        item "ticket" tag old_ticket;
+        task "TODO: open stage doors";
+
+    room "Tight Stairway" tag tight_stairway dir w from cramped_hallway exit w;
+
+    room "Centre of Long Corridor" tag long_corridor dir w from tight_stairway exit e w n s;
+
+    room "Costume Room" tag costume_room dir w from long_corridor;
+        item "Gas mask";
+        task "TODO: avoid getting killed by mannequins";
+
+    room "South End of Long Corridor" tag long_corridor_s dir s from long_corridor exit w n s;
+
+    room "Music Room" dir w from long_corridor_s;
+        item "piano" note "piano can be pushed";
+        item "sheet music" note "The Soldier's Waltz";
+
+    room "Prop Room" dir s from long_corridor_s;
+        item "trapdoor in ceiling";
+        task "TODO: open trapdoor" note "cannot reach (maybe push bed piano?)";
+
+    room "North End of Long Corridor" tag long_corridor_n dir n from long_corridor exit w n s;
+
+    room "Guest Star Room" dir w from long_corridor_n;
+        item "fireplace";
+        task "TODO: explore chimney in fireplace - it goes up and down";
+
+    room "Sick Bay" dir n from long_corridor_n;
+        item "bed";
+        item "letter";
+        item "vial" note "poison!";
+        item "pain-killers" note "in cabinet";
+        item "page" note "29th July 1898" note "in cabinet";
+        item "stethoscope" tag stethoscope;
+
+    room "Basement" tag basement dir sw from managers_office go down;
+        item "Pager";
+        item "page" note "9th July 1898";
+        item "electrical panel";
+        task "turn on light in Secret Stairway" tag turn_on_light cmd "turn on switch";
+
+    room "Outside the Theatre" tag outside dir s from lobby;
+        task "TODO: escape thug";
+
+    room "Secret Stairway" tag secret_stairway dir e from cloakroom go down score 1 after turn_on_light;
+        item "page" note "14th August 1898";
+
+    room "Underground Passage" dir e from secret_stairway go down exit e;
+        task "TODO: open locked iron door!";
+
+
+map "Upper Floor";
+
+    room "Staircase Landing" tag staircase_landing exit w e s;
+        join staircase_landing to lobby go s;
+        item "Portrait" note "secret door in portait";
+
+    room "Secret Gallery" dir n from staircase_landing score 1;
+        item "page" note "6th June 1898";
+        item "camera";
+
+    room "Western Landing" tag western_landing dir w from staircase_landing exit n s;
+
+    room "Eastern Landing" tag eastern_landing dir e from staircase_landing exit n s e;
+
+    room "Eastern Stairway" tag eastern_stairway dir e from eastern_landing exit n;
+
+    room "Eastern Balcony" tag eastern_balcony dir n 2 from eastern_stairway go up;
+
+    room "Southern Landing" tag southern_landing dir s 2 from staircase_landing nolink;
+        link southern_landing to western_landing dir nw;
+        link southern_landing to eastern_landing dir ne;
+        item "curtains";
+        task "open curtains" tag task_open_curtains;
+        item "window" after task_open_curtains
+            note "circular window has curious pattern. Illumnated by street light outside";
+
+    room "Eastern Theatre Isle" tag east_aisle dir n 2 from eastern_landing exit s w n;
+        task "show ticket" tag show_ticket after task_set_time need old_ticket;
+
+    room "Western Theatre Isle" tag west_aisle dir n 2 from western_landing exit s e n link east_aisle;
+
+    room "Stage" tag stage dir n 2 e from west_aisle score 2 after show_ticket nolink exit s n;
+        link stage to west_aisle dir sw;
+        link stage to east_aisle dir se;
+
+
+
