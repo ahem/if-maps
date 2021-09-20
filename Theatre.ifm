@@ -9,8 +9,7 @@ map "Ground Floor";
         task "TODO: figure out what pattern means";
 
     room "Cloakroom" tag cloakroom dir ne from lobby;
-        task "open secret passage" cmd "pull cleaner hook";
-        task "TODO: explore secret passage" note "need light of some kind";
+        task "open secret passage" tag task_pull_cloakroom_hook cmd "pull cleaner hook";
 
     room "Manager's Office" tag managers_office dir nw from lobby exit n s;
         item "metal safe";
@@ -85,7 +84,7 @@ map "Ground Floor";
     room "Outside the Theatre" tag outside dir s from lobby;
         task "TODO: escape thug";
 
-    room "Secret Stairway" tag secret_stairway dir e from cloakroom go down score 1 after turn_on_light;
+    room "Secret Stairway" tag secret_stairway dir e from cloakroom go down score 1 after task_pull_cloakroom_hook turn_on_light;
         item "page" note "14th August 1898";
 
     room "Underground Passage" dir e from secret_stairway go down exit e;
