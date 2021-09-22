@@ -1,6 +1,7 @@
 title "Theatre";
 
 task "TODO: find phone" note "Reinhard left his cellular phone somewhere before he died";
+task "TODO: find secret passageway from the toilets";
 
 map "Ground Floor";
 
@@ -15,8 +16,8 @@ map "Ground Floor";
         item "metal safe";
         item "page" note "18th May 1898" note "hidden in desk-drawer";
         item "architects plans" note "hidden in desk-drawer";
-        item "red pearl" tag item_red_pearl hidden;
-        task "open safe" need stethoscope give item_red_pearl score 1;
+        item "red eye" tag item_red_eye hidden;
+        task "open safe" need stethoscope give item_red_eye score 1;
         task "break plastered wall" tag task_break_wall cmd "hit wall";
 
     room "Ticket Office" dir s from managers_office after task_break_wall score 1;
@@ -34,7 +35,7 @@ map "Ground Floor";
 
     room "End of Hallway" tag end_of_hallway dir n from narrow_hallway exit n w;
         item "page" note "21st July 1898";
-        task "TODO: open the office door (it has been nailed shut";
+        item "sealed door" note "go through chimney instead";
 
     room "Alley Courtyard" tag alley_courtyard dir n 2 e from end_of_hallway nolink exit s;
         link alley_courtyard to end_of_hallway dir sw;
@@ -48,24 +49,43 @@ map "Ground Floor";
     room "Centre of Long Corridor" tag long_corridor dir w from tight_stairway exit e w n s;
 
     room "Costume Room" tag costume_room dir w from long_corridor;
-        item "Gas mask";
-        task "TODO: avoid getting killed by mannequins";
+        item "mannequins" note "these are alive and murderous (pirate, cowboy and gladiator)";
+        item "gas mask" tag item_gas_mask;
+        task "TODO: get gas mask without getting killed by mannequins";
 
     room "South End of Long Corridor" tag long_corridor_s dir s from long_corridor exit w n s;
 
     room "Music Room" dir w from long_corridor_s;
-        item "piano" note "piano can be pushed";
+        item "piano" tag piano note "piano can be pushed";
         item "sheet music" note "The Soldier's Waltz";
 
-    room "Prop Room" dir s from long_corridor_s;
+    room "Prop Room" tag prop_room dir s from long_corridor_s;
         item "trapdoor in ceiling";
-        task "TODO: open trapdoor" note "cannot reach (maybe push bed piano?)";
+        task "open trapdoor" tag task_open_trapdoor need piano;
 
     room "North End of Long Corridor" tag long_corridor_n dir n from long_corridor exit w n s;
 
-    room "Guest Star Room" dir w from long_corridor_n;
+    room "Guest Star Room" tag guest_star_room dir w from long_corridor_n;
         item "fireplace";
         task "TODO: explore chimney in fireplace - it goes up and down";
+
+    room "Theatre Roof" dir w from guest_star_room go up;
+        item "crow" note "looks hungry";
+        task "lure crow down to chimney" tag task_crow_to_office cmd "get crow";
+
+    room "Sealed-Off Office" tag sealed_off_office dir w from end_of_hallway nolink;
+        link guest_star_room to sealed_off_office dir n 2 e se go down;
+        item "fireplace";
+        item "coffin";
+        task "open coffin" tag task_open_coffin;
+
+    room "Boiler Room" tag boiler_room dir n from sealed_off_office go down;
+        item "key" tag item_shiny_key after task_crow_to_office task_open_coffin score 2;
+        item "chest";
+        task "open chest" tag task_open_chest;
+        item "glue" after task_open_chest;
+        item "lump of coal";
+        
 
     room "Sick Bay" dir n from long_corridor_n;
         item "bed";
@@ -88,10 +108,10 @@ map "Ground Floor";
         item "page" note "14th August 1898";
 
     room "Underground Passage" dir e from secret_stairway go down exit e;
-        task "TODO: open locked iron door!";
+        task "unlock iron door" need item_shiny_key;
 
 
-map "Upper Floor";
+map "Auditorium";
 
     room "Staircase Landing" tag staircase_landing exit w e s;
         join staircase_landing to lobby go s;
@@ -99,19 +119,19 @@ map "Upper Floor";
 
     room "Secret Gallery" dir n from staircase_landing score 1;
         item "page" note "6th June 1898";
-        item "camera";
+        item "camera" tag item_camera;
 
-    room "Western Landing" tag western_landing dir w from staircase_landing exit n s;
+    room "Western Landing" tag western_landing dir w 2 from staircase_landing exit n s;
 
-    room "Eastern Landing" tag eastern_landing dir e from staircase_landing exit n s e;
+    room "Eastern Landing" tag eastern_landing dir e 2 from staircase_landing exit n s e;
 
     room "Eastern Stairway" tag eastern_stairway dir e from eastern_landing exit n;
 
     room "Eastern Balcony" tag eastern_balcony dir n 2 from eastern_stairway go up;
 
     room "Southern Landing" tag southern_landing dir s 2 from staircase_landing nolink;
-        link southern_landing to western_landing dir nw;
-        link southern_landing to eastern_landing dir ne;
+        link southern_landing to western_landing dir nw w;
+        link southern_landing to eastern_landing dir ne e;
         item "curtains";
         task "open curtains" tag task_open_curtains;
         item "window" after task_open_curtains
@@ -122,9 +142,49 @@ map "Upper Floor";
 
     room "Western Theatre Isle" tag west_aisle dir n 2 from western_landing exit s e n link east_aisle;
 
-    room "Stage" tag stage dir n 2 e from west_aisle score 2 after show_ticket nolink exit s n;
-        link stage to west_aisle dir sw;
-        link stage to east_aisle dir se;
+    room "Stage" tag stage dir n 4 e 2 from west_aisle score 2 after show_ticket nolink exit s n;
+        link stage to west_aisle dir sw w;
+        link stage to east_aisle dir se e;
 
+    room "Orchestra Pit" tag orchestra_pit dir s sw s from stage nolink exit e;
+        link orchestra_pit to stage dir n ne;
 
+    room "Pit Cupboards" tag pit_cupboards dir e from orchestra_pit exit e;
+        item "shadow";
+        task "defeat shadow" tag task_defeat_shadow cmd "photograph shadow" need item_camera score 2;
+
+    room "Dark Place" tag dark_place dir e from pit_cupboards after task_defeat_shadow exit nw;
+
+    room "Under the Stage" dir nw from dark_place;
+        item "page" note "2nd September 1898";
+        item "green eye";
+
+    room "Back Stage" tag back_stage dir n from stage
+            note "something moving in the corner";
+        item "page" note "23rd August 1898";
+        task "TODO: open stage doors";
+        task "TODO: catch 'something moving in the corner of your eye'";
+
+    room "Up the Ropes" tag up_the_ropes dir nw from back_stage go up cmd "climb rope" exit w;
+
+    room "Dressing Room" dir w from up_the_ropes score 1;
+        item "locker";
+        task "open locker" tag task_open_locker;
+        item "serpent" after task_open_locker;
+        item "newspaper clipping" after task_open_locker;
+        item "ancient amulet" after task_open_locker;
+
+map "Attic";
+
+    room "Southern End of Attic" tag attic_s join prop_room after task_open_trapdoor score 1 exit n;
+        item "two pages" note "17th June 1898 and 19th August 1898";
+
+    room "Attic Above the Theatre" tag attic dir n from attic_s exit n;
+        item "winch";
+        task "lower chandelier" tag task_lower_chandelier cmd "turn winch";
+
+    room "Attic Observatory" tag obeservatory dir n from attic;
+        item "telescope";
+        item "lens" tag item_lens hidden;
+        task "TODO: get lens" note "probably needs gas mask";
 
