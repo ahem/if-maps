@@ -1,5 +1,8 @@
 title "Theatre";
 
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
 task "TODO: find phone" note "Reinhard left his cellular phone somewhere before he died";
 task "TODO: find secret passageway from the toilets";
 
@@ -107,8 +110,15 @@ map "Ground Floor";
     room "Secret Stairway" tag secret_stairway dir e from cloakroom go down score 1 after task_pull_cloakroom_hook turn_on_light;
         item "page" note "14th August 1898";
 
-    room "Underground Passage" dir e from secret_stairway go down exit e;
+    room "Underground Passage" tag underground_passage dir e from secret_stairway go down exit e;
         task "unlock iron door" need item_shiny_key;
+
+    room "Above the Pit" tag above_the_pit dir e from underground_passage exit e;
+        item "page" note "25th July 1898"; 
+
+    room "Inside Pit" tag inside_pit dir e from above_the_pit exit e;
+        item "large creature" note "In the gloom, you can make the outline of some sort of transparent yet very large creature that is trapped in the pit.";
+        task "TODO: figure out how to not get killed by beast";
 
 
 map "Auditorium";
@@ -128,6 +138,7 @@ map "Auditorium";
     room "Eastern Stairway" tag eastern_stairway dir e from eastern_landing exit n;
 
     room "Eastern Balcony" tag eastern_balcony dir n 2 from eastern_stairway go up;
+        task "swing to western balcony on chandelier" cmd "enter chandelier" after push_chandelier goto western_balcony;
 
     room "Southern Landing" tag southern_landing dir s 2 from staircase_landing nolink;
         link southern_landing to western_landing dir nw w;
@@ -139,8 +150,24 @@ map "Auditorium";
 
     room "Eastern Theatre Isle" tag east_aisle dir n 2 from eastern_landing exit s w n;
         task "show ticket" tag show_ticket after task_set_time need old_ticket;
+        task "push chandelier" tag push_chandelier after task_lower_chandelier;
 
     room "Western Theatre Isle" tag west_aisle dir n 2 from western_landing exit s e n link east_aisle;
+
+    room "Western Balcony" tag western_balcony dir w from west_aisle nolink join eastern_balcony exit nw score 2;
+
+    room "Back Wall" tag back_wall dir nw from western_balcony exit s;
+        item "page" note "8th August 1898";
+
+    room "Wall with Large Hole" tag wall_with_large_hole dir s from back_wall exit w;
+
+    room "Secret Library" tag secret_library dir w from wall_with_large_hole exit s n;
+        item "chain" note "The chain is quite long, old, and rusty. It connects all the library shelves together. The chain has been hooked to the north wall";
+
+    room "Reading Recess" tag reading_recess dir n from secret_library;
+        item "two pages" note "15th July August and ? October 1898";
+        item "reading table";
+        item "chair";
 
     room "Stage" tag stage dir n 4 e 2 from west_aisle score 2 after show_ticket nolink exit s n;
         link stage to west_aisle dir sw w;
