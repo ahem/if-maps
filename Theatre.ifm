@@ -69,8 +69,7 @@ map "Ground Floor";
     room "North End of Long Corridor" tag long_corridor_n dir n from long_corridor exit w n s;
 
     room "Guest Star Room" tag guest_star_room dir w from long_corridor_n;
-        item "fireplace";
-        task "TODO: explore chimney in fireplace - it goes up and down";
+        item "fireplace" note "climb up and down through fireplace";
 
     room "Theatre Roof" dir w from guest_star_room go up;
         item "crow" note "looks hungry";
