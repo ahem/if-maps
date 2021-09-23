@@ -169,6 +169,15 @@ map "Auditorium";
         item "reading table";
         item "chair";
 
+    room "Southern End of the Library" tag library_s dir s from secret_library;
+        item "nest";
+        item "large slug" note "Its flesh is a sickly pulpy white colour, covered in hard ridges. At one end (which you imagine must be its head) there are a lot of large black dots which seem to be eyes and at the end is a strange bony point.";
+        item "broken window";
+        item "gistering ropes";
+        item "eye-like pearl";
+        task "TODO: defeat giant slug";
+
+
     room "Stage" tag stage dir n 4 e 2 from west_aisle score 2 after show_ticket nolink exit s n;
         link stage to west_aisle dir sw w;
         link stage to east_aisle dir se e;
