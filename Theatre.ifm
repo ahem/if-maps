@@ -10,7 +10,8 @@ map "Ground Floor";
 
     room "Theatre Lobby" tag lobby exit n nw ne s start;
         item "pattern on floor" after task_open_curtains;
-        task "TODO: figure out what pattern means";
+        task "put lens on pattern" task_put_lens_on_pattern need item_lens score 2;
+        task "TODO: figure out what pattern means" note "probably something with putting lens back in telescope";
 
     room "Cloakroom" tag cloakroom dir ne from lobby;
         task "open secret passage" tag task_pull_cloakroom_hook cmd "pull cleaner hook";
@@ -71,7 +72,7 @@ map "Ground Floor";
     room "Guest Star Room" tag guest_star_room dir w from long_corridor_n;
         item "fireplace" note "climb up and down through fireplace";
 
-    room "Theatre Roof" dir w from guest_star_room go up;
+    room "Theatre Roof" tag roof dir w from guest_star_room go up note "go west to go down to street balcony";
         item "crow" note "looks hungry";
         task "lure crow down to chimney" tag task_crow_to_office cmd "get crow";
 
@@ -137,7 +138,7 @@ map "Auditorium";
     room "Eastern Stairway" tag eastern_stairway dir e from eastern_landing exit n;
 
     room "Eastern Balcony" tag eastern_balcony dir n 2 from eastern_stairway go up;
-        task "swing to western balcony on chandelier" cmd "enter chandelier" after push_chandelier goto western_balcony;
+        task "swing to western balcony on chandelier" cmd "swing chandelier" after push_chandelier goto western_balcony;
 
     room "Southern Landing" tag southern_landing dir s 2 from staircase_landing nolink;
         link southern_landing to western_landing dir nw w;
@@ -149,7 +150,7 @@ map "Auditorium";
 
     room "Eastern Theatre Isle" tag east_aisle dir n 2 from eastern_landing exit s w n;
         task "show ticket" tag show_ticket after task_set_time need old_ticket;
-        task "push chandelier" tag push_chandelier after task_lower_chandelier;
+        task "push chandelier (twice)" tag push_chandelier after task_lower_chandelier;
 
     room "Western Theatre Isle" tag west_aisle dir n 2 from western_landing exit s e n link east_aisle;
 
@@ -162,6 +163,8 @@ map "Auditorium";
 
     room "Secret Library" tag secret_library dir w from wall_with_large_hole exit s n;
         item "chain" note "The chain is quite long, old, and rusty. It connects all the library shelves together. The chain has been hooked to the north wall";
+        task "unhook chain" tag task_unhook_chain;
+        task "push bookshelves" tag task_push_bookshelves after task_unhook_chain score 2 note "crushes slug";
 
     room "Reading Recess" tag reading_recess dir n from secret_library;
         item "two pages" note "15th July August and ? October 1898";
@@ -172,9 +175,11 @@ map "Auditorium";
         item "nest";
         item "large slug" note "Its flesh is a sickly pulpy white colour, covered in hard ridges. At one end (which you imagine must be its head) there are a lot of large black dots which seem to be eyes and at the end is a strange bony point.";
         item "broken window";
-        item "gistering ropes";
-        item "eye-like pearl";
-        task "TODO: defeat giant slug";
+        item "glistering ropes";
+        item "blue eye-like pearl" after task_push_bookshelves;
+
+    room "Street Balcony" tag street_balcony dir w from library_s;
+        join street_balcony to roof go up;
 
 
     room "Stage" tag stage dir n 4 e 2 from west_aisle score 2 after show_ticket nolink exit s n;
@@ -208,6 +213,7 @@ map "Auditorium";
         item "serpent" after task_open_locker;
         item "newspaper clipping" after task_open_locker;
         item "ancient amulet" after task_open_locker;
+        task "TODO: avoid snake";
 
 map "Attic";
 
@@ -221,5 +227,5 @@ map "Attic";
     room "Attic Observatory" tag obeservatory dir n from attic;
         item "telescope";
         item "lens" tag item_lens hidden;
-        task "TODO: get lens" note "probably needs gas mask";
+        task "TODO: get lens" note "probably needs gas mask" note;
 
