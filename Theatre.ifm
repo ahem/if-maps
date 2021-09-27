@@ -6,11 +6,18 @@ link_dashed = true in style DashedLink;
 task "TODO: find phone" note "Reinhard left his cellular phone somewhere before he died";
 task "TODO: find secret passageway from the toilets";
 
+# "...this very theatre seems to be a storehouse of mystical energy. Normally
+# when an abundance of mystical energy is centred in one place it will condense
+# into crystals of immense powers, but here in this theatre it seems to be
+# dispersed into the very walls. However one must still be careful, if I was
+# not protected by the enchantments weaved into my protecting medallion, my
+# very soul could be in jeopardy."
+
 map "Ground Floor";
 
     room "Theatre Lobby" tag lobby exit n nw ne s start;
         item "pattern on floor" after task_open_curtains;
-        task "put lens on pattern" task_put_lens_on_pattern need item_lens score 2;
+        task "put lens on pattern" tag task_put_lens_on_pattern need item_lens score 2;
         task "TODO: figure out what pattern means" note "probably something with putting lens back in telescope";
 
     room "Cloakroom" tag cloakroom dir ne from lobby;
@@ -34,7 +41,7 @@ map "Ground Floor";
         item "page" note "3rd May 1898";
 
     room "Narrow Hallway" tag narrow_hallway dir n from cramped_hallway exit n;
-        item "dead body" note "push carpet rolls";
+        item "dead body" tag item_corpse note "push carpet rolls";
         item "appointment book" note "on body";
 
     room "End of Hallway" tag end_of_hallway dir n from narrow_hallway exit n w;
@@ -54,8 +61,8 @@ map "Ground Floor";
 
     room "Costume Room" tag costume_room dir w from long_corridor;
         item "mannequins" note "these are alive and murderous (pirate, cowboy and gladiator)";
-        item "gas mask" tag item_gas_mask;
-        task "TODO: get gas mask without getting killed by mannequins";
+        task "break glue bottle" tag task_break_glue_bottle;
+        item "gas mask" tag item_gas_mask after task_break_glue_bottle;
 
     room "South End of Long Corridor" tag long_corridor_s dir s from long_corridor exit w n s;
 
@@ -87,13 +94,15 @@ map "Ground Floor";
         item "chest";
         task "open chest" tag task_open_chest;
         item "glue" after task_open_chest;
-        item "lump of coal";
+        item "lump of coal" tag item_coal;
+        item "purple eye" tag item_purple_eye hidden;
+        task "clean coal" need item_coal give item_purple_eye;
         
 
     room "Sick Bay" dir n from long_corridor_n;
         item "bed";
         item "letter";
-        item "vial" note "poison!";
+        item "vial" tag item_vial_of_poison note "poison!";
         item "pain-killers" note "in cabinet";
         item "page" note "29th July 1898" note "in cabinet";
         item "stethoscope" tag stethoscope;
@@ -115,10 +124,14 @@ map "Ground Floor";
 
     room "Above the Pit" tag above_the_pit dir e from underground_passage exit e;
         item "page" note "25th July 1898"; 
+        task "pour liquid on corpse" tag task_poison_corpse need item_vial_of_poison item_corpse;
+        task "throw corpse in pit" tag task_throw_corpse after task_poison_corpse score 3;
 
-    room "Inside Pit" tag inside_pit dir e from above_the_pit exit e;
+    room "Inside Pit" tag inside_pit dir e from above_the_pit exit e after task_throw_corpse;
         item "large creature" note "In the gloom, you can make the outline of some sort of transparent yet very large creature that is trapped in the pit.";
-        task "TODO: figure out how to not get killed by beast";
+
+    room "Tunnel Junction" tag tunnel_junction dir e from inside_pit exit ne se sw;
+        item "page" note "2nd July 1898";
 
 
 map "Auditorium";
@@ -204,6 +217,8 @@ map "Auditorium";
         item "page" note "23rd August 1898";
         task "TODO: open stage doors";
         task "TODO: catch 'something moving in the corner of your eye'";
+        item "newspaper clipping" hidden after task_push_locker;
+        item "ancient amulet" tag item_medallion hidden after task_push_locker;
 
     room "Up the Ropes" tag up_the_ropes dir nw from back_stage go up cmd "climb rope" exit w;
 
@@ -213,7 +228,8 @@ map "Auditorium";
         item "serpent" after task_open_locker;
         item "newspaper clipping" after task_open_locker;
         item "ancient amulet" after task_open_locker;
-        task "TODO: avoid snake";
+        task "close locker" tag task_close_locker;
+        task "push locker east" tag task_push_locker after task_close_locker score 2;
 
 map "Attic";
 
@@ -227,5 +243,7 @@ map "Attic";
     room "Attic Observatory" tag obeservatory dir n from attic;
         item "telescope";
         item "lens" tag item_lens hidden;
-        task "TODO: get lens" note "probably needs gas mask" note;
+        task "put lens back in telescope" tag task_return_lens after task_put_lens_on_pattern need item_gas_mask;
+        item "star crystal" tag item_star_crystal hidden;
+        task "look in telescope" tag task_look_in_telescope score 5 give item_star_crystal;
 
