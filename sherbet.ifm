@@ -1,0 +1,147 @@
+title "The Meteor, the Stone and a Long Glass of Sherbet";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+map "Intro";
+
+    room "Watling Street" tag Watling_street_1 exit s ne;
+
+    room "Customs Post" tag Customs_post exit sw e dir ne;
+
+    room "Watling Street" tag Watling_street_2 exit w e dir e;
+        task "scare elephant" score 3
+            note "wait for the bird to appear, look at it through telescope"
+            note "tell Amilia to give the book, look up Bird of Paraside in book"
+            note "'chirrup' and 'coo' to attract bird"
+            note "pour sherbet on elephant"
+            note "pull left ear";
+
+
+map "Customs";
+
+    room "Customs House Bedroom" exit e;
+        item "bed";
+        item "book" tag Guide_book note "The Guide For Travellers To The Lower Northlands and Surrounding Provinces";
+        item "figurine" tag Jade_figurine score 1;
+        item "painting";
+        task "sleep" tag task_sleep;
+
+    room "Upstairs Landing" dir e after task_sleep;
+        item "curtains";
+
+    room "Kitchen" tag Kitchen dir s go down exit e w;
+        item "ham";
+        item "hook" note "too high to reach";
+        item "stove" note "a modern charchoal stove";
+        item "wickerwork hamper";
+        item "cheese" note "in hamper";
+        item "apple" note "in hamper";
+        item "garlic" note "in hamper";
+        task "tie rope to stove" tag task_tie_rope need rope;
+        task "throw rope over hook" tag task_throw_rope;
+        task "pull rope" tag task_pull_rope after task_throw_rope;
+        task "untie rope" tag task_untie_rope after task_pull_rope;
+        task "tie rope to me" tag task_tie_rope_to_me after task_untie_rope;
+        task "put ladder in chimney" tag task_ladder_in_chimney note "allows to get rope";
+
+    room "Living Room" dir w;
+        item "trunk";
+        item "trophy case";
+        item "lantern";
+        item "rug";
+        item "telescope" note "in trunk";
+        item "credentials" note "in trunk";
+        item "rope" tag rope note "in trunk";
+        task "open trophy case" tag task_open_trophy_case;
+        item "jewelled scarab" hidden after task_open_trophy_case;
+
+    room "Cellars" tag Cellars exit s dir s from Kitchen nolink;
+        link Cellars to Kitchen after task_tie_rope_to_me style DashedLink go up;
+
+    room "Low Junction" tag Low_Junction dir s from Cellars exit s nw;
+
+    room "Bubbling Pool" dir nw from Low_Junction;
+        item "pool";
+        item "platinum egg" tag platinum_egg hidden;
+        task "search leaves" tag task_search_leaves score 2 give platinum_egg;
+        task "TODO: figure out what to do with pool";
+
+    room "Passage Under the Wall" dir s from Low_Junction exit s;
+        item "snake";
+        task "give apple to snake" tag task_poison_snake
+            note "doesn't give any points so maybe wrong???";
+
+    room "Topmost Ledge" tag Topmost_Ledge dir s after task_poison_snake exit e sw;
+        item "Inverted cedar" note "nearest branch 10 feet away";
+
+    room "Low Crawl" tag Low_Crawl dir sw exit w s;
+        item "stick";
+
+    room "Shambles" dir w;
+        item "garbage mound";
+        item "chimney" note "much to tight to climb";
+        task "TODO: search garbage mound - it is full of ants and woodlice which bite";
+
+    room "Half Cave" dir s from Low_Crawl;
+        item "wall" note "masoned with mortar and seemingly recent";
+        item "triangular cavity" note "dark, 1 foot or so high, and blocked by a rough quartz window";
+        item "pottery piece" note "remains of pottery two thousand years old";
+        task "TODO: break wall";
+        task "TODO: open quartz window";
+
+    room "Dark Doorway" tag Dark_Doorway dir e from Topmost_Ledge exit n se;
+        item "Inverted cedar" note "nearest branch 30 feet away";
+
+    room "Pale Corridor" dir n exit e;
+        item "Adventurer" note "would do almost anything for treasure.";
+        task "TODO: go east, blocked by adventurer. 'The Chamber is private to my Master!'";
+
+    room "Long Curved Ledge" tag Long_Curved_Ledge dir se from Dark_Doorway;
+        item "iron ring" note "on wall";
+        # task "climb to other ledges, 50 feet below" note "by using ladder I can get rope back, but it is not long enough";
+        item "Inverted cedar" note "nearest branch 70 feet away";
+        task "tie rope to ring, tie rope to me, jump" need rope;
+
+    room "Tiny Recess" tag Tiny_Recess dir s from Long_Curved_Ledge nolink;
+        link Tiny_Recess to Long_Curved_Ledge style DashedLink;
+        task "TODO: get back after untying rope";
+
+    room "Dead End" dir ne from Tiny_Recess;
+        item "ignot of silver" score 1;
+
+    room "Top Branches" tag Top_Branches dir w 3 from Topmost_Ledge nolink exit w s;
+        link Topmost_Ledge to Top_Branches style DashedLink oneway cmd "jump to branch";
+        item "bow";
+        item "arrow";
+        item "tree-house";
+        task "TODO: Enter tree house: Strangely, every side appears to be solid with vine-bound planks and logs, even the obvious place where a doorway should be";
+        task "put ladder on ledge" need ladder;
+
+    room "Branches Near Cave Floor" dir s 2 from Top_Branches go down;
+
+    room "Cave Floor" tag Cave_Floor dir s 2 go down exit nw sw s e;
+        item "ladder" tag ladder;
+
+    room "Enclosed Stream" dir e;
+        item "stream";
+
+    room "Shattered Temple Rampart" dir s from Cave_Floor;
+        item "scroll" note "azzev spell (view the past)";
+        task "TODO: get scroll - The scree fall is on the very edge of an avalanche! You’d need to be a lot more than arm’s length away to survive that.";
+
+    room "Furrow and Workings" dir sw from Cave_Floor;
+        item "small drum";
+
+    room "North Edge of Pool" dir nw from Cave_Floor;
+        item "arrow";
+        item "water lily";
+
+
+
+
+
+
+
+
+
