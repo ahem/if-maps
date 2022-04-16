@@ -65,7 +65,7 @@ map "Customs";
         item "pool";
         item "platinum egg" tag platinum_egg hidden;
         task "search leaves" tag task_search_leaves score 2 give platinum_egg;
-        task "TODO: figure out what to do with pool";
+        task "drink from pool" score 1 tag task_learn_magic;
 
     room "Passage Under the Wall" dir s from Low_Junction exit s;
         item "snake";
@@ -81,14 +81,15 @@ map "Customs";
     room "Shambles" dir w;
         item "garbage mound";
         item "chimney" note "much to tight to climb";
-        task "TODO: search garbage mound - it is full of ants and woodlice which bite";
+        item "spellbook" tag spellbook hidden;
+        task "jilnix mound" after task_learn_magic score 1 give spellbook;
 
     room "Half Cave" dir s from Low_Crawl;
         item "wall" note "masoned with mortar and seemingly recent";
-        item "triangular cavity" note "dark, 1 foot or so high, and blocked by a rough quartz window";
+        item "triangular cavity" note "dark, 1 foot or so high, and blocked by a rough quartz window"
+            note "this it lit up by task_light_cavity";
         item "pottery piece" note "remains of pottery two thousand years old";
         task "TODO: break wall";
-        task "TODO: open quartz window";
 
     room "Dark Doorway" tag Dark_Doorway dir e from Topmost_Ledge exit n se;
         item "Inverted cedar" note "nearest branch 30 feet away";
@@ -115,8 +116,11 @@ map "Customs";
         item "bow";
         item "arrow";
         item "tree-house";
+        item "triangular cavity" note "go on west branch to see";
         task "TODO: Enter tree house: Strangely, every side appears to be solid with vine-bound planks and logs, even the obvious place where a doorway should be";
         task "put ladder on ledge" need ladder;
+        task "chiaro arrow, shoot triangular cavity" tag task_light_cavity score 1
+            note "this lights up the cavity in Half Cave";
 
     room "Branches Near Cave Floor" dir s 2 from Top_Branches go down;
 
@@ -138,7 +142,7 @@ map "Customs";
         item "water lily";
 
 
-
+# jilnix - summon bats
 
 
 
