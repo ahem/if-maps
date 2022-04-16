@@ -1,0 +1,120 @@
+title "Uncle Zebulon's Will";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+item "iron coin" hidden tag iron_coin;
+
+map "Uncle Zebulon's Will";
+
+  room "Garden" tag Garden exit n e w;
+
+  room "Porch" tag Porch dir e from Garden;
+    item "demon";
+    item "letter" note "demon gives it when opening door";
+    task "read letter" score 5;
+
+  room "Hall" tag Hall dir e from Porch exit n e s w;
+    item "lead coin" tag lead_coin note "octagonal, bears image of a trident";
+    item "trap door";
+
+  room "Study" tag Study dir s from Hall;
+    item "desk";
+    item "book";
+    item "crystal ball"
+      note "reveals image of Zebulon putting coins in a bottle"
+      note "reveals image of me searching wooden crate"
+      note "reveals image of young girls throwing coin in well"
+      note "reveals image Zebulon turning carrot into rabbit with wand"
+      note "reveals image me looking in crystal ball";
+    item "green glass lens" hidden note "in desk drawer";
+    task "examine book" tag task_examine_book score 5;
+    item "paper" hidden after task_examine_book note "poem about PORTALS";
+
+  room "Sitting Room" tag Sitting_Room dir e from Hall;
+    item "green bottle"note "labelled FILL ME, about half a litre";
+    item "armchair";
+    item "mirror";
+    item "pipe rack";
+    item "magic wand" hidden note "search armchair";
+    task "point wand at mirror" tag task_point_wand_at_mirrror score 10;
+    task "put all lenses and coins in green bottle" after task_drop_blue_bottle
+      note "this teleports the items to the blue bottle in the shed"
+      score 5;
+
+  room "Kitchen" dir n from Hall;
+    item "carrot";
+    item "cupboard";
+    item "blue bottle" tag blue_bottle hidden note "in cupboard";
+    item "silver coin" hidden tag silver_coin
+      note "in blue bottle. Hexagonian, bears image of cresent";
+    item "sink" note "made of galvanized iron";
+    task "point wand at carrot" tag task_point_wand_at_carrot note "turns it into a tomato";
+    task "eat tomato" tag eat_tomato give copper_coin score 5;
+    item "copper coin" tag copper_coin hidden;
+
+  room "Attic" tag Attic dir se from Hall go up;
+    item "packing crate";
+    item "brass plate" note "scorpion + some stats. Also list of elemets";
+    item "wood shavings" hidden note "in crate";
+    item "teal box" hidden note "in wood shavings";
+    item "red lens" hidden note "in teal box";
+
+  room "Moor gnittis" tag Moor_gnittis dir n 3 from Sitting_Room exit w;
+    item "glass flask" note "contains greenish liquid";
+    task "put silver coin in green glask" need silver_coin give iron_coin;
+
+  room "Tower Room" tag Tower_room dir w from Moor_gnittis;
+    item "mechanism" note "mechanical model of solar system";
+    item "scroll";
+    item "bronze stand" hidden note "on solar system";
+    item "gold ball" hidden note "it is the sun in solar system, on bronze stand";
+
+  room "Shed" tag Shed dir n from Garden;
+    item "paper"
+      note "I’m a great step closer to the goal:  I have discovered an acid that actually"
+      note "transmutes noble metals into base ones.  If only the process could be reversed!";
+    item "workbench";
+    item "bronze stand" hidden note "on workbench";
+    item "statue";
+    item "blue lens" hidden note "examine statue to find it";
+    task "drop blue bottle" tag task_drop_blue_bottle need blue_bottle;
+    task "TODO: figure out what is up with statue";
+    task "put red lens on left eye and green lens on right eye" score 5;
+    task "turn left ear" tag task_turn_left_ear score 5;
+    task "turn right ear" tag task_turn_right_ear
+      after task_turn_left_ear
+      note "repear until image of moon";
+    task "put gold ball on bronze stand then wait" tag task_open_portal
+      after task_turn_right_ear score 15;
+    task "enter hole" after task_open_portal goto Plain;
+
+  room "Plain" tag Plain dir s 3 from Hall nolink 
+      note "(from poem) ...Guarded by Gods of Time and War and Love";
+    item "cylinder" note "press button on this to get back to Shed";
+    item "Venus statue" note "copper??";
+    item "Mars statue" note "iron??";
+    item "Saturn statue" note "lean??"; 
+    task "throw copper coin in water" need copper_coin score 10;
+    task "throw iron coin in water" need iron_coin;
+    task "throw lead coin in water" need lead_coin goto Desert;
+
+  room "Desert" tag Desert dir e 2 from Plain nolink finish score 10;
+    
+
+
+
+
+# General Notes:
+#   'follow the rules by the letter and you may find that new possibilities open up'
+#
+# From brass plate in attic:
+#   GOLD    The Sun, Ruler of the Daylit Sky   [gold ball]
+#   SILVER  Luna, Mistress of the Night        
+#   MERCURY Wing-footed Messenger of the Gods
+#   COPPER  Venus, Carnal Love                 [copper coin]
+#   IRON    Mars, Blood-red Bringer of War     [iron coin]
+#   TIN     Jupiter, Ruler of the Gods
+#   LEAD    Saturn, Lord of Time Itself        [lead coin]
+
+
