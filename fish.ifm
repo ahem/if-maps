@@ -1,0 +1,101 @@
+title "Curses!";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+# Spatterlight saves games in:
+#    /Users/ahm/Library/Containers/net.ccxvii.spatterlight/Data/
+
+map "Fish Bowl";
+  room "Goldfish Bowl";
+    item "ant eggs";
+
+  room "Castle" tag Castle dir e go in;
+    item "small warp";
+    item "smooth warp";
+    item "jagged warp";
+    task "enter small warp" goto Plush_Lounge;
+    task "enter smooth warp" goto Clearing;
+
+map "Small Warp";
+  room "Plush Lounge" tag Plush_Lounge exit n e w;
+    item "Rod" note "he moves around";
+    item "Waste bin";
+    task "Rod, make coffee" tag task_rod_make_coffee;
+    item "Ferric Oxide Tape" tag ferric_tape note "in bin";
+
+  room "Entrance Hall" tag Entrance_Hall dir e from Plush_Lounge exit e;
+    item "Gold discs";
+
+  room "Hallway" tag Hallway dir w from Plush_Lounge exit n s w;
+  
+  room "Corridor" tag Corridor dir w from Hallway exit n s;
+    item "light switch";
+    task "turn on light switch" tag task_turn_on_lightswitch;
+
+  room "Store" dir s from Corridor after task_turn_on_lightswitch;
+    item "Tape bin";
+    item "Chrome cassette";
+    item "Metal cassette";
+
+  room "Secondary Control Room" dir n from Corridor;
+    item "cupboard";
+    item "cassette player";
+    item "amplifier";
+    item "button";
+    item "head cleaner" hidden note "in cupboard";
+    task "press button" note "turns on recording sign so producer doesn't interrupt";
+    task "play metal tape in cassette player";
+    task "play chrome tape in cassette player";
+    task "play oxide tape in cassette player" tag task_learn_code_from_tape
+      note "rythm is password";
+
+  room "Office" dir n from Plush_Lounge;
+    item "filing cabinet";
+    task "set lock to <code from tape>" tag task_open_cabinet_lock after task_learn_code_from_tape;
+    item "spindle" hidden;
+    task "get spindle" after task_open_cabinet_lock goto Castle
+      note "getting the spindle completes this warp";
+
+
+map "Smooth Warp";
+  room "Clearing" tag Clearing exit s se e;
+    item "Stump";
+    item "Micky Blowtorch" note "in stump";
+    item "Gold disc" note "in stump, under Micky";
+
+  room "Dim Forest" tag Dim_Forest dir e exit e;
+
+  room "Cool Glade" tag Cool_Glade dir e from Dim_Forest exit s sw;
+
+  room "Dank Forest" tag Dank_Forest dir s from Clearing exit s;
+
+  room "Wet Forest" tag Wet_Forest dir e from Dank_Forest exit n;
+    link Clearing to Wet_Forest;
+    link Dim_Forest to Wet_Forest;
+    link Cool_Glade to Wet_Forest;
+
+  room "Gloomy Forest" tag Gloomy_Forest dir e from Wet_Forest;
+    link Gloomy_Forest to Cool_Glade;
+
+  room "Outside Smithy" tag Ouside_Smithy dir s from Gloomy_Forest exit e w nw;
+    link Ouside_Smithy to Wet_Forest;
+
+  room "Dark Forest" tag Dark_Forest dir w from Ouside_Smithy;
+    link Dark_Forest to Wet_Forest;
+
+  room "Charred Glade" tag Charred_Glade dir w from Dark_Forest exit s;
+    link Dank_Forest to Charred_Glade;
+    link Wet_Forest to Charred_Glade;
+
+  room "Smithy" tag Smithy dir e from Ouside_Smithy;
+    item "bird cage";
+    item "mould" hidden note "in cage";
+    item "exploding parrot" note "after 10 turns the parrot explodes and turns into feathers";
+    item "tool cabinet";
+    item "fire";
+    item "asbestos gloves" hidden note "hanging on cupboard";
+    item "tongs" hidden note "in cupboard";
+    item "crucible" hidden note "in cupboard";
+    item "hammer" hidden note "in cupboard";
+
