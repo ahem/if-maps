@@ -1,4 +1,4 @@
-title "Curses!";
+title "Fish!";
 
 page_rotate = false;
 link_dashed = true in style DashedLink;
@@ -14,8 +14,9 @@ map "Fish Bowl";
     item "small warp";
     item "smooth warp";
     item "jagged warp";
-    task "enter small warp" goto Plush_Lounge;
-    task "enter smooth warp" goto Clearing;
+    task "enter small warp" tag task_enter_small_warp goto Plush_Lounge;
+    task "enter smooth warp" tag task_enter_smooth_warp goto Clearing
+      after task_enter_small_warp;
 
 map "Small Warp";
   room "Plush Lounge" tag Plush_Lounge exit n e w;
@@ -62,11 +63,20 @@ map "Smooth Warp";
   room "Clearing" tag Clearing exit s se e;
     item "Stump";
     item "Micky Blowtorch" note "in stump";
-    item "Gold disc" note "in stump, under Micky";
+    task "wait for micky to leave after parrot explosion"
+      tag task_wait_for_micky_to_leave
+      after task_open_parrot_cage;
+    item "Gold disc" tag gold_disc hidden after task_open_parrot_cage;
 
   room "Dim Forest" tag Dim_Forest dir e exit e;
 
   room "Cool Glade" tag Cool_Glade dir e from Dim_Forest exit s sw;
+    task "wait for mould to cool" tag task_cool_mould
+      note "go here while avoiding micky, Wet Forest and  Gloomy Forest";
+    task "hit mould with hammer" tag task_open_mould
+      after task_cool_mould
+      need hammer;
+    task "get ring" after task_open_mould goto Castle;
 
   room "Dank Forest" tag Dank_Forest dir s from Clearing exit s;
 
@@ -94,8 +104,19 @@ map "Smooth Warp";
     item "exploding parrot" note "after 10 turns the parrot explodes and turns into feathers";
     item "tool cabinet";
     item "fire";
-    item "asbestos gloves" hidden note "hanging on cupboard";
-    item "tongs" hidden note "in cupboard";
-    item "crucible" hidden note "in cupboard";
-    item "hammer" hidden note "in cupboard";
+    item "asbestos gloves" tag asbestos_gloves hidden note "hanging on cupboard";
+    task "wear gloves" tag task_wear_asbestos_gloves need asbestos_gloves;
+    item "tongs" tag tongs hidden note "in cupboard";
+    item "crucible" tag crucible hidden note "in cupboard";
+    item "hammer" tag hammer hidden note "in cupboard";
+    task "open cage" tag task_open_parrot_cage
+      note "parrot escapes when you leave cage";
+    task "put gold disc in crucible" tag task_put_gold_disc_in_crucible
+      after task_wear_asbestos_gloves
+      need gold_disc;
+    task "hold crucible with tongs" tag task_hold_crucible_with_tongs
+      after task_put_gold_disc_in_crucible need tongs;
+    task "hold crucible in fire" tag task_meld_disc after task_hold_crucible_with_tongs;
+    task "empty crucible in mould" tag task_fill_mould after task_meld_disc;
+
 
