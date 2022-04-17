@@ -193,20 +193,25 @@ map "Jagged Warp";
 
 map "Large Warp";
   room "Lounge" tag Lounge;
-    item "watch" tag watch;
+    item "watch" tag watch hidden note "Dr. Roach (the host) starts with this";
     item "fishton";
+    item "lightswitch";
     item "fishofax" tag fishofax hidden note "on shelf";
     item "Fisa card" tag fisa_card hidden note "in fishofax";
     item "tatty card" tag tatty_card hidden note "in wallet";
     task "look under fishton";
     item "travel pass" hidden tag travel_pass after last;
     task "touch print" tag task_touch_print;
+    task "turn off switch" tag task_turn_off_lights;
 
   room "Landing" tag Landing dir s from Lounge after task_touch_print exit s e;
+    item "silver print";
+    item "gold print";
+    task "touch silver print" tag task_close_apartment_door
+      note "prevents burglary";
+    task "TODO: get into Ernest Chubs apartment";
 
-  room "Lobby" tag Lobby dir e from Landing nolink;
-    # link Landing to Lobby oneway;
-    link Lobby to Landing go up;
+  room "Lobby" tag Lobby dir e from Landing go down;
 
   room "Paddlington" dir s; 
 
@@ -217,7 +222,7 @@ map "Large Warp";
   room "Platform" tag Paddlington_Platform need travel_pass dir e;
     task "wait for train";
 
-  room "Tube" tag Tube dir n 3 nolink
+  room "Tube" tag Tube dir n 4 nolink
     note "Paddlington, Barbellican, Pickerel, Battersea, Opah University, Angel, Eelpout, Museum";
     link Tube to Paddlington_Platform style DashedLink go out;
     task "wait for train to arrive";
@@ -225,7 +230,6 @@ map "Large Warp";
     task "TODO: get off at Angel" note "probably not possible";
     task "TODO: get off at Museum";
 
-    
   room "Platform" tag Pickerel_Platform dir e 2 nolink;
     link Tube to Pickerel_Platform style DashedLink go out;
 
@@ -245,14 +249,18 @@ map "Large Warp";
   room "Dace Road" tag Dace_Road dir se from Plaza exit s w e;
 
   room "Police Station" dir s from Dace_Road;
+    item "dogfish";
 
   room "Pub" tag Pub dir w from Dace_Road;
-    item "Simon Tench";
     item "Dr. Salmon" note "drunk sitting at bar";
     item "cylinder" note "interesting";
     task "TODO: get cylinder"
       note "'The cylinder can only be sold to dedicated sniffers. I don’t know if you can hold your sniffs, do I?'";
-
+    item "mask" tag mask hidden;
+    task "buy mask with fisa" need fisa_card give mask;
+    task "give mask to salmon" after last need mask lose mask;
+    item "new card" tag new_card hidden;
+    task "ask salmon about card" after last give new_card;
 
   room "Shark Street" tag Shark_Street dir e from Dace_Road exit n s e se;
 
@@ -264,11 +272,14 @@ map "Large Warp";
   room "Second Hand Shop" dir n from Shark_Street;
     item "radio case";
     item "fishton" note "is this mine? was I robbed?";
-    task "TODO: get radio case" note "It’s sold mate, sorry. Rod is going to deliver it to a customer later on";
+    item "film" tag film hidden note "attack of the killer tomatoes";
+    task "TODO: get radio case" note "It’s sold mate, sorry. Rod is going to deliver it to a customer later on"
+      note "it has already been sold to Chub (my neighbour)";
+    task "buy film with fisa" need fisa_card give film;
 
   room "Hardware Shop" dir e from Shark_Street;
-    item "screwdriver";
-    item "hyperdriver" note "opens lok screws";
+    item "screwdriver" tag screwdriver;
+    item "hyperdriver" tag hyperdriver;
     item "plastic bag";
 
   room "Eelpout Underground Station" dir se from Shark_Street;
@@ -285,8 +296,14 @@ map "Large Warp";
     item "steel door";
     item "switch" note "controls the power to subway";
     item "gauge" note "displays power level 100";
-    task "TODO: turn off power to subway"
-      note "hmm... why would I want this? Maybe to explore steel door?";
+    task "pull switch" tag turn_off_subway_power;
+
+  room "Tunnel" dir w after task_turn_off_lights task_turn_off_protocopier turn_off_subway_power;
+    item "turbine";
+
+  room "Curve" dir w;
+    item "filter" tag filter;
+    task "unscrew screw with screwdriver" need screwdriver give filter;
 
   room "Platform" tag Opah_Platform dir ne 2 from Tube nolink;
     link Tube to Opah_Platform style DashedLink go out;
@@ -304,16 +321,24 @@ map "Large Warp";
   room "University Foyer" tag University_Foyer dir e from Opah exit e s n;
     item "steel door";
     item "slot";
-    task "TODO: open steel door" note "needs Dr. Salmons ID card, he is probably in town getting drunk";
+    task "insert new card in slot" tag task_open_rearch_wing need new_card;
 
-  room "Principal's Office" dir s;
+  room "Principal's Office" dir s from University_Foyer;
     task "meet principal here at 10" tag task_meet_principal;
+
+  room "Research Wing" dir n from University_Foyer after task_open_rearch_wing;
+    item "crystal tuna";
+
+  room "Tower" dir n go up exit n;
+    item "trapdoor";
+    task "TODO: tower is half-empty, cannot reach trap door. Find something (reverse diving suit, maybe??)";
 
   room "Corridor" tag Corridor_w dir e from University_Foyer exit e s;
 
   room "Library" dir s;
     item "rare book";
-    task "TODO: look up stuff in book";
+    item "page" hidden tag focus_wheel_page;
+    task "look up focus wheel in book then tear page" give focus_wheel_page;
 
   room "Corridor" tag Corridor_e dir e from Corridor_w;
     item "slot";
@@ -324,21 +349,31 @@ map "Large Warp";
     item "terminal";
     task "sit at terminal then login" note "surname: Roach, password: me (from fishofax)"
         note "Stream Regulator = ((a+c)+(b+d))+e";
-      task "TODO: find Photon Bridge" note "Dr. Salmon may know whereabouts";
-      task "TODO: find Focus Wheel" note "stolen. Is this the thing I have recovered in the first warps??";
-      task "TODO: find Tuned Crystal" note "there is an untuned one in the museum but they won't let us near it";
+      task "find filter"
+        note "in Battersea, turn off all power, then get filter from turbine tunnel (need screwdriver)";
+      task "TODO: find Photon Bridge" note "Dr. Salmon may know whereabouts"
+        note "presumably in the tower in research wing. Need to cross air to get there";
+      task "find Focus Wheel"
+        note "look it up in book in library, tear the page, then use protocopier to get it";
+      task "TODO: find Tuned Crystal" note "there is an untuned one in the museum but they won't let us near it"
+        note "tune the crystal, once found, with the crystal tuna in Research Wing";
       task "TODO: find case" note "We also need a case to keep everything stable."
-        note "this will be the radio case in second hand shop";
+        note "this will be the radio case in second hand shop"
+        note "Ernest Chub has bought the case. Maybe break into his apartment to get it??";
 
   room "Project Room" dir ne;
     item "device";
     item "steam accelerator" hidden note "in device";
     item "lok screw" hidden note "on stream accelerator";
-    task "TODO: get tool for unlocking lok screw" note "that would be the hyperdriver from Hardware Shop";
+    task "TODO: unlock lok screw with hyperdriver" need hyperdriver
+      note "figure out how to prevent explosion";
 
   room "Store Room" dir se from Laboratory;
-    item "photocopier";
+    item "protocopier";
     item "wallchart";
+    task "insert page in slot" need focus_wheel_page tag task_get_focus_wheel;
+    item "focus wheel" hidden tag focus_wheel after last;
+    task "turn off protocopier" tag task_turn_off_protocopier after task_get_focus_wheel;
 
   room "Restaurant" dir s from Opah;
     item "waiter";
@@ -358,8 +393,4 @@ map "Large Warp";
 
   room "Alarm Room" dir n exit n;
     task "TODO: sneak past alarm";
-  
-    
-
-
 
