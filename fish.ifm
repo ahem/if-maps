@@ -15,15 +15,18 @@ map "Fish Bowl";
     item "smooth warp";
     item "jagged warp";
     task "enter small warp" tag task_enter_small_warp goto Plush_Lounge;
-    task "enter smooth warp" tag task_enter_smooth_warp goto Clearing
-      after task_enter_small_warp;
+    task "enter smooth warp" tag task_enter_smooth_warp goto Clearing;
+    task "enter jagged warp" tag task_enter_jagged_warp goto Back_of_Van;
+    task "enter large warp" tag task_enter_large_warp goto Lounge
+      give watch
+      after task_enter_large_warp task_enter_smooth_warp task_enter_jagged_warp;
 
 map "Small Warp";
   room "Plush Lounge" tag Plush_Lounge exit n e w;
     item "Rod" note "he moves around";
     item "Waste bin";
     task "Rod, make coffee" tag task_rod_make_coffee;
-    item "Ferric Oxide Tape" tag ferric_tape note "in bin";
+    item "Ferric Oxide Tape" tag oxide_cassette note "in bin";
 
   room "Entrance Hall" tag Entrance_Hall dir e from Plush_Lounge exit e;
     item "Gold discs";
@@ -36,19 +39,28 @@ map "Small Warp";
 
   room "Store" dir s from Corridor after task_turn_on_lightswitch;
     item "Tape bin";
-    item "Chrome cassette";
-    item "Metal cassette";
+    item "Chrome cassette" tag chrome_cassette;
+    item "Metal cassette" tag metal_cassette;
 
   room "Secondary Control Room" dir n from Corridor;
     item "cupboard";
     item "cassette player";
     item "amplifier";
     item "button";
-    item "head cleaner" hidden note "in cupboard";
+    item "head cleaner" tag head_cleaner hidden note "in cupboard";
     task "press button" note "turns on recording sign so producer doesn't interrupt";
-    task "play metal tape in cassette player";
-    task "play chrome tape in cassette player";
-    task "play oxide tape in cassette player" tag task_learn_code_from_tape
+    task "play head cleaner in cassette player" tag task_play_head_cleaner
+      need head_cleaner;
+    task "push fader" tag task_turn_up_volume note "turn up the volume";
+    task "play metal tape in cassette player" tag task_play_metal_cassette
+      need metal_cassette
+      after task_play_head_cleaner task_turn_up_volume;
+    task "play chrome tape in cassette player" tag task_play_chrome_cassette
+      need chrome_cassette
+      after task_play_metal_cassette;
+    task "play oxide tape in cassette player"tag task_learn_code_from_tape
+      need oxide_cassette 
+      after task_play_chrome_cassette
       note "rythm is password";
 
   room "Office" dir n from Plush_Lounge;
@@ -72,6 +84,7 @@ map "Smooth Warp";
 
   room "Cool Glade" tag Cool_Glade dir e from Dim_Forest exit s sw;
     task "wait for mould to cool" tag task_cool_mould
+      after task_fill_mould
       note "go here while avoiding micky, Wet Forest and  Gloomy Forest";
     task "hit mould with hammer" tag task_open_mould
       after task_cool_mould
@@ -118,5 +131,235 @@ map "Smooth Warp";
       after task_put_gold_disc_in_crucible need tongs;
     task "hold crucible in fire" tag task_meld_disc after task_hold_crucible_with_tongs;
     task "empty crucible in mould" tag task_fill_mould after task_meld_disc;
+
+map "Jagged Warp";
+
+  room "Back of Van" tag Back_of_Van;
+    item "blanket";
+    item "jeans" tag jeans;
+    task "wear jeans" need jeans;
+    
+  room "Cab" dir s;
+    item "Note";
+    task "search rubbish" tag task_search_rubbish;
+    item "torch" tag torch hidden after task_search_rubbish;
+    task "turn on torch" tag task_turn_on_torch need torch;
+
+  room "Dark Field" dir e go out after task_turn_on_torch need torch;
+
+  room "Narrow Track" dir e;
+
+  room "Outside the abbey" dir e;
+    item "poster";
+
+  room "Abbey" tag Abbey dir e exit n s;
+    item "fire";
+    item "hippies";
+
+  room "Ruined Nave" dir s from Abbey exit s;
+    item "broken pew" tag broken_pew;
+    task "turn off torch" tag task_turn_off_torch need torch need broken_pew;
+
+  room "Ruined Transept" tag Ruined_Transept dir n from Abbey exit n;
+    item "crumbling archway";
+    item "gargoyle" tag gargoyle after task_untie_ceremonial_cord;
+    task "drop pew" tag task_drop_broken_pew need broken_pew drop broken_pew;
+    task "climb pew then climb arch" tag task_climb_pew
+      after task_drop_broken_pew
+      need ceremonial_cord
+      goto Archway;
+    task "turn on torch" tag task_turn_on_torch_again after task_turn_off_torch;
+    task "pull cord" tag task_pull_ceremonial_cord after task_tie_cord_to_gargoyle;
+    task "untie cord" tag task_untie_ceremonial_cord after task_pull_ceremonial_cord;
+
+  room "Archway" tag Archway dir w from Ruined_Transept go up after task_climb_pew;
+    item "gargoyle";
+    task "tie cord to gargoyle" tag task_tie_cord_to_gargoyle need ceremonial_cord;
+
+  room "Antechamber" dir e from Ruined_Transept go down after task_turn_on_torch_again;
+
+  room "Catacombs" dir s;
+    task "search debris" tag task_search_catacomb_debris;
+    task "push lid" tag task_push_sarcophagus_lid after task_search_catacomb_debris;
+    task "put lid in doorway" need gargoyle;
+    
+  room "Altar Room" dir s go down after task_push_sarcophagus_lid;
+    item "alter" note "one side has a hole where a gargoyle should be";
+    item "ceremonial cord" tag ceremonial_cord note "about 30 feet long";
+    task "put gargoyle in hole" need gargoyle;
+    item "chalice" hidden tag chalice after last;
+    task "get grommit from chalice" need chalice goto Castle;
+
+
+map "Large Warp";
+  room "Lounge" tag Lounge;
+    item "watch" tag watch;
+    item "fishton";
+    item "fishofax" tag fishofax hidden note "on shelf";
+    item "Fisa card" tag fisa_card hidden note "in fishofax";
+    item "tatty card" tag tatty_card hidden note "in wallet";
+    task "look under fishton";
+    item "travel pass" hidden tag travel_pass after last;
+    task "touch print" tag task_touch_print;
+
+  room "Landing" tag Landing dir s from Lounge after task_touch_print exit s e;
+
+  room "Lobby" tag Lobby dir e from Landing nolink;
+    # link Landing to Lobby oneway;
+    link Lobby to Landing go up;
+
+  room "Paddlington" dir s; 
+
+  room "Paddlington Station" dir e;
+    item "guard";
+    item "ticket clerk";
+    
+  room "Platform" tag Paddlington_Platform need travel_pass dir e;
+    task "wait for train";
+
+  room "Tube" tag Tube dir n 3 nolink
+    note "Paddlington, Barbellican, Pickerel, Battersea, Opah University, Angel, Eelpout, Museum";
+    link Tube to Paddlington_Platform style DashedLink go out;
+    task "wait for train to arrive";
+    task "TODO: get off at Barbellican" note "probably not possible";
+    task "TODO: get off at Angel" note "probably not possible";
+    task "TODO: get off at Museum";
+
+    
+  room "Platform" tag Pickerel_Platform dir e 2 nolink;
+    link Tube to Pickerel_Platform style DashedLink go out;
+
+  room "Pickerel Underground Station" dir e from Pickerel_Platform go up;
+
+  room "Plaza" tag Plaza dir se exit n s w se;
+    link Plaza to Pub;
+
+  room "Cinema" dir w from Plaza
+    note "nothing here, just costs money and looses and hour";
+
+  room "Clothing Shop" dir n from Plaza;
+    item "tie" note "probably needed for restaurant??";
+    item "sun glasses" tag sun_glasses;
+    task "buy glasses with Fisa" need fisa_card give sun_glasses;
+
+  room "Dace Road" tag Dace_Road dir se from Plaza exit s w e;
+
+  room "Police Station" dir s from Dace_Road;
+
+  room "Pub" tag Pub dir w from Dace_Road;
+    item "Simon Tench";
+    item "Dr. Salmon" note "drunk sitting at bar";
+    item "cylinder" note "interesting";
+    task "TODO: get cylinder"
+      note "'The cylinder can only be sold to dedicated sniffers. I don’t know if you can hold your sniffs, do I?'";
+
+
+  room "Shark Street" tag Shark_Street dir e from Dace_Road exit n s e se;
+
+  room "Tuda Day's Music Shop" dir s from Shark_Street;
+    item "ear plugs" tag ear_plugs;
+    item "assistant";
+    task "buy ear plugs from assistant with fisa" need fisa_card give ear_plugs;
+
+  room "Second Hand Shop" dir n from Shark_Street;
+    item "radio case";
+    item "fishton" note "is this mine? was I robbed?";
+    task "TODO: get radio case" note "It’s sold mate, sorry. Rod is going to deliver it to a customer later on";
+
+  room "Hardware Shop" dir e from Shark_Street;
+    item "screwdriver";
+    item "hyperdriver" note "opens lok screws";
+    item "plastic bag";
+
+  room "Eelpout Underground Station" dir se from Shark_Street;
+
+  room "Platform" tag Eelpount_Station dir s go down;
+    link Tube to Eelpount_Station go out dir se 4 e 3 style DashedLink;
+
+  room "Platform" tag Battersea_Platform dir w 2 from Tube nolink;
+    link Tube to Battersea_Platform style DashedLink go out;
+
+  room "Battersea" dir w from Battersea_Platform go up;
+
+  room "Power Station" dir n;
+    item "steel door";
+    item "switch" note "controls the power to subway";
+    item "gauge" note "displays power level 100";
+    task "TODO: turn off power to subway"
+      note "hmm... why would I want this? Maybe to explore steel door?";
+
+  room "Platform" tag Opah_Platform dir ne 2 from Tube nolink;
+    link Tube to Opah_Platform style DashedLink go out;
+
+  room "Opah Station" dir ne;
+
+  room "Opah" tag Opah dir e exit n s e;
+    item "statue" note "'Scientia est bona' / 'knowledge is good'";
+    task "wear glasses" tag task_wear_sun_glasses need sun_glasses;
+    task "wear ear plugs" tag task_wear_ear_plugs need ear_plugs;
+
+  room "Disco" dir n from Opah after task_wear_ear_plugs task_wear_ear_plugs;
+    task "TODO: figure out what to do here? Maybe a good place to escape fins??";
+
+  room "University Foyer" tag University_Foyer dir e from Opah exit e s n;
+    item "steel door";
+    item "slot";
+    task "TODO: open steel door" note "needs Dr. Salmons ID card, he is probably in town getting drunk";
+
+  room "Principal's Office" dir s;
+    task "meet principal here at 10" tag task_meet_principal;
+
+  room "Corridor" tag Corridor_w dir e from University_Foyer exit e s;
+
+  room "Library" dir s;
+    item "rare book";
+    task "TODO: look up stuff in book";
+
+  room "Corridor" tag Corridor_e dir e from Corridor_w;
+    item "slot";
+    task "put tatty card in slot" tag task_open_laboratory_door
+      need tatty_card after task_meet_principal;
+
+  room "Laboratory" tag Laboratory dir e after task_open_laboratory_door exit ne se;
+    item "terminal";
+    task "sit at terminal then login" note "surname: Roach, password: me (from fishofax)"
+        note "Stream Regulator = ((a+c)+(b+d))+e";
+      task "TODO: find Photon Bridge" note "Dr. Salmon may know whereabouts";
+      task "TODO: find Focus Wheel" note "stolen. Is this the thing I have recovered in the first warps??";
+      task "TODO: find Tuned Crystal" note "there is an untuned one in the museum but they won't let us near it";
+      task "TODO: find case" note "We also need a case to keep everything stable."
+        note "this will be the radio case in second hand shop";
+
+  room "Project Room" dir ne;
+    item "device";
+    item "steam accelerator" hidden note "in device";
+    item "lok screw" hidden note "on stream accelerator";
+    task "TODO: get tool for unlocking lok screw" note "that would be the hyperdriver from Hardware Shop";
+
+  room "Store Room" dir se from Laboratory;
+    item "photocopier";
+    item "wallchart";
+
+  room "Restaurant" dir s from Opah;
+    item "waiter";
+    item "expensive oils" note "much denser than water";
+    task "TODO: get oil"
+      note "'buy oil from waiter with fisa' yields 'our licence doesn’t allow us to sell drinks except with meals."
+      note "'Sir really should have booked first'"
+      note "if a tie turns out to be needed, there is one in clothing store";
+
+  room "Platform" tag Museum_Platform dir n 2 from Tube nolink;
+    link Tube to Museum_Platform go out style DashedLink;
+
+  room "Museum Station" dir w from Museum_Platform go up;
+
+  room "Museum" dir n exit n e w;
+    item "skeleton";
+
+  room "Alarm Room" dir n exit n;
+    task "TODO: sneak past alarm";
+  
+    
+
 
 
