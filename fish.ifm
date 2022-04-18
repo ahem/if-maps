@@ -203,13 +203,13 @@ map "Large Warp";
     item "travel pass" hidden tag travel_pass after last;
     task "touch print" tag task_touch_print;
     task "turn off switch" tag task_turn_off_lights;
+    task "TODO: enter dark warp" after task_buy_cylinder;
 
   room "Landing" tag Landing dir s from Lounge after task_touch_print exit s e;
     item "silver print";
     item "gold print";
-    task "touch silver print" tag task_close_apartment_door
-      note "prevents burglary";
-    task "TODO: get into Ernest Chubs apartment";
+    task "touch silver print" ignore note "not doing this causes burglary to happen - which we need to get case";
+    task "get case" after task_buy_fishton give radio_case;
 
   room "Lobby" tag Lobby dir e from Landing go down;
 
@@ -228,7 +228,6 @@ map "Large Warp";
     task "wait for train to arrive";
     task "TODO: get off at Barbellican" note "probably not possible";
     task "TODO: get off at Angel" note "probably not possible";
-    task "TODO: get off at Museum";
 
   room "Platform" tag Pickerel_Platform dir e 2 nolink;
     link Tube to Pickerel_Platform style DashedLink go out;
@@ -254,13 +253,13 @@ map "Large Warp";
   room "Pub" tag Pub dir w from Dace_Road;
     item "Dr. Salmon" note "drunk sitting at bar";
     item "cylinder" note "interesting";
-    task "TODO: get cylinder"
-      note "'The cylinder can only be sold to dedicated sniffers. I don’t know if you can hold your sniffs, do I?'";
-    item "mask" tag mask hidden;
-    task "buy mask with fisa" need fisa_card give mask;
-    task "give mask to salmon" after last need mask lose mask;
-    item "new card" tag new_card hidden;
+    item "new card" tag new_card hidden note "Dr. Salmon has this";
+    task "buy mask with fisa then give it to salmon" need fisa_card;
     task "ask salmon about card" after last give new_card;
+    task "buy more masks" cmd "buy mask with fisa then give it to salmon" 2;
+    task "buy cylinder with fisa" after last tag task_buy_cylinder
+      note "'The cylinder can only be sold to dedicated sniffers. I don’t know if you can hold your sniffs, do I?'"
+      note "when cylinder is stolen by fin warp appears in Roach apartment";
 
   room "Shark Street" tag Shark_Street dir e from Dace_Road exit n s e se;
 
@@ -270,12 +269,11 @@ map "Large Warp";
     task "buy ear plugs from assistant with fisa" need fisa_card give ear_plugs;
 
   room "Second Hand Shop" dir n from Shark_Street;
-    item "radio case";
+    item "radio case" tag radio_case;
     item "fishton" note "is this mine? was I robbed?";
     item "film" tag film hidden note "attack of the killer tomatoes";
-    task "TODO: get radio case" note "It’s sold mate, sorry. Rod is going to deliver it to a customer later on"
-      note "it has already been sold to Chub (my neighbour)";
     task "buy film with fisa" need fisa_card give film;
+    task "buy fishton with fisa" need fisa_card tag task_buy_fishton;
 
   room "Hardware Shop" dir e from Shark_Street;
     item "screwdriver" tag screwdriver;
@@ -357,9 +355,10 @@ map "Large Warp";
         note "look it up in book in library, tear the page, then use protocopier to get it";
       task "TODO: find Tuned Crystal" note "there is an untuned one in the museum but they won't let us near it"
         note "tune the crystal, once found, with the crystal tuna in Research Wing";
-      task "TODO: find case" note "We also need a case to keep everything stable."
+      task "find case" note "We also need a case to keep everything stable."
         note "this will be the radio case in second hand shop"
-        note "Ernest Chub has bought the case. Maybe break into his apartment to get it??";
+        note "Ernest Chub has bought the case. Maybe break into his apartment to get it??"
+        note "arrange burglary (leave door open), then buy fishton back. Go home, both case and fishton have been delivered";
 
   room "Project Room" dir ne;
     item "device";
@@ -393,4 +392,20 @@ map "Large Warp";
 
   room "Alarm Room" dir n exit n;
     task "TODO: sneak past alarm";
+
+
+# In the Dimensions:
+#   Object is to toggle exits so only up is on
+#     up flips all bits
+#     n:  flips w, nw, n, ne, e and up
+#     e:  flips n, ne, e, se, s and up
+#     s:  flips e, se, s, sw, w and up
+#     w:  flips s, sw, w, nw, n and up
+#     ne: flips n, e, ne and up
+#     se: flips s, e, se and up
+#     sw: flips s, w, sw and up
+#     nw: flips n, w, nw and up
+
+
+
 
