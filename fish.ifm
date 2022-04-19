@@ -203,7 +203,21 @@ map "Large Warp";
     item "travel pass" hidden tag travel_pass after last;
     task "touch print" tag task_touch_print;
     task "turn off switch" tag task_turn_off_lights;
-    task "TODO: enter dark warp" after task_buy_cylinder;
+    task "enter dark warp" after task_buy_cylinder goto In_the_Dimensions;
+
+  room "In the Dimensions" tag In_the_Dimensions dir w 2 from Lounge nolink;
+    task "navigate dimensions"
+      note "Object is to toggle exits so only up is on"
+      note "- up flips all bits"
+      note "- n:  flips w, nw, n, ne, e and up"
+      note "- e:  flips n, ne, e, se, s and up"
+      note "- s:  flips e, se, s, sw, w and up"
+      note "- w:  flips s, sw, w, nw, n and up"
+      note "- ne: flips n, e, ne and up"
+      note "- se: flips s, e, se and up"
+      note "- sw: flips s, w, sw and up"
+      note "- nw: flips n, w, nw and up";
+    task "get cylinder" give cylinder after last goto Lounge;
 
   room "Landing" tag Landing dir s from Lounge after task_touch_print exit s e;
     item "silver print";
@@ -243,9 +257,10 @@ map "Large Warp";
     task "TODO: find someone to invite to cinema?" note "maybe to see the Killer Tomatoes movie?";
 
   room "Clothing Shop" dir n from Plaza;
-    item "tie" note "probably needed for restaurant??";
+    item "tie" tag tie;
     item "sun glasses" tag sun_glasses;
     task "buy glasses with Fisa" need fisa_card give sun_glasses;
+    task "buy tie with fisa" need fisa_card give tie;
 
   room "Dace Road" tag Dace_Road dir se from Plaza exit s w e;
 
@@ -254,7 +269,7 @@ map "Large Warp";
 
   room "Pub" tag Pub dir w from Dace_Road;
     item "Dr. Salmon" note "drunk sitting at bar";
-    item "cylinder" note "interesting";
+    item "cylinder" tag cylinder note "interesting";
     item "new card" tag new_card hidden note "Dr. Salmon has this";
     task "buy mask with fisa then give it to salmon" need fisa_card;
     task "ask salmon about card" after last give new_card;
@@ -280,7 +295,7 @@ map "Large Warp";
   room "Hardware Shop" dir e from Shark_Street;
     item "screwdriver" tag screwdriver;
     item "hyperdriver" tag hyperdriver;
-    item "plastic bag";
+    item "plastic bag" tag plastic_bag;
 
   room "Eelpout Underground Station" dir se from Shark_Street;
 
@@ -316,8 +331,9 @@ map "Large Warp";
     task "wear ear plugs" tag task_wear_ear_plugs need ear_plugs;
 
   room "Disco" dir n from Opah after task_wear_ear_plugs task_wear_ear_plugs;
-    task "TODO: invite Ernie Chub to Disco, give him tie";
-
+    task "find Ernest Chub somewhere and invite him to Disco" cmd "Chub, go to Disco";
+    task "give tie to Chub" need tie after last;
+    task "enter disco" tag task_free_chub_from_fin after last;
 
   room "University Foyer" tag University_Foyer dir e from Opah exit e s n;
     item "steel door";
@@ -329,10 +345,24 @@ map "Large Warp";
 
   room "Research Wing" dir n from University_Foyer after task_open_rearch_wing;
     item "crystal tuna";
+    task "put crystal in tuna" need crystal lose crystal;
+    task "close tuna" after last;
+    task "turn on tuna" after last;
+    task "open tuna" after last;
+    task "get crystal" after last give tuned_crystal;
+    item "tuned crystal" tag tuned_crystal hidden;
 
-  room "Tower" dir n go up exit n;
+  room "Tower" dir n go up;
     item "trapdoor";
-    task "TODO: tower is half-empty, cannot reach trap door. Find something (reverse diving suit, maybe??)";
+    task "put cylinder in bag" need plastic_bag cylinder;
+    task "open cylinder" after last goto Roof;
+
+  room "Roof" tag Roof dir n nolink;
+    item "railing";
+    item "photon bridge" tag photon_bridge;
+    task "drop bag" drop plastic_bag;
+    task "get photon bridge" give photon_bridge after last;
+    task "climb over railing" after last goto Opah;
 
   room "Corridor" tag Corridor_w dir e from University_Foyer exit e s;
 
@@ -350,25 +380,39 @@ map "Large Warp";
     item "terminal";
     task "sit at terminal then login" note "surname: Roach, password: me (from fishofax)"
         note "Stream Regulator = ((a+c)+(b+d))+e";
-      task "find filter"
+      task "find filter [A]"
         note "in Battersea, turn off all power, then get filter from turbine tunnel (need screwdriver)";
-      task "TODO: find Photon Bridge" note "Dr. Salmon may know whereabouts"
-        note "presumably in the tower in research wing. Need to cross air to get there";
-      task "find Focus Wheel"
+      task "find Photon Bridge [B]" note "Dr. Salmon may know whereabouts"
+        note "presumably in the tower in research wing. Need to cross air to get there"
+        note "get plastic bag from hardware store and cylinder from pub / dark dimension"
+        note "put cylinder in bag, open it and float to top of tower";
+      task "find Focus Wheel [C]"
         note "look it up in book in library, tear the page, then use protocopier to get it";
-      task "TODO: find Tuned Crystal" note "there is an untuned one in the museum but they won't let us near it"
+      task "find Tuned Crystal [D]" note "there is an untuned one in the museum but they won't let us near it"
+        note "buy plankton from restaurant and open the sachet in the Museum's Alarm room"
         note "tune the crystal, once found, with the crystal tuna in Research Wing";
-      task "find case" note "We also need a case to keep everything stable."
+      task "find case [E]" note "We also need a case to keep everything stable."
         note "this will be the radio case in second hand shop"
         note "Ernest Chub has bought the case. Maybe break into his apartment to get it??"
         note "arrange burglary (leave door open), then buy fishton back. Go home, both case and fishton have been delivered";
+    task "login as chub and play shutdown" tag task_play_shutdown after task_get_chubs_password
+      note "play the Shutdown game (games > shutdown)"
+      note " - cell 1 affects pos 1 (n)"
+      note " - cell 2 affects pos 1 (1), 2 (n) and 3 (1)"
+      note " - cell 3 affects pos 2 (2), 3 (n) and 4 (2)"
+      note " - cell 4 affects pos 3 (2), 4 (n) and 5 (3)"
+      note " - cell 5 affects pos 1 (4), 4 (4) and 5 (n)"
+      note "5 to 'O', 4 to 'C', 3 to 'S', 2 to 'A', 1 to 'W'";
+# ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ
+
 
   room "Project Room" dir ne;
     item "device";
-    item "steam accelerator" hidden note "in device";
+    item "stream accelerator" hidden note "in device" after task_play_shutdown;
     item "lok screw" hidden note "on stream accelerator";
-    task "TODO: unlock lok screw with hyperdriver" need hyperdriver
-      note "figure out how to prevent explosion";
+    task "unlock lok screw with hyperdriver" need hyperdriver
+      after task_free_chub_from_fin
+      tag task_get_chubs_password;
 
   room "Store Room" dir se from Laboratory;
     item "protocopier";
@@ -380,10 +424,11 @@ map "Large Warp";
   room "Restaurant" dir s from Opah;
     item "waiter";
     item "expensive oils" note "much denser than water";
+    item "plankton" tag plankton hidden;
     task "TODO: get oil"
       note "'buy oil from waiter with fisa' yields 'our licence doesn’t allow us to sell drinks except with meals."
-      note "'Sir really should have booked first'"
-      note "if a tie turns out to be needed, there is one in clothing store";
+      note "'Sir really should have booked first'";
+    task "buy plankton with fisa" need fisa_card give plankton;
 
   room "Platform" tag Museum_Platform dir n 2 from Tube nolink;
     link Tube to Museum_Platform go out style DashedLink;
@@ -394,21 +439,49 @@ map "Large Warp";
     item "skeleton";
 
   room "Alarm Room" dir n exit n;
-    task "TODO: sneak past alarm";
+    task "open sachet" tag task_make_beams_visible need plankton;
+
+  room "Crystal Room" dir n after task_make_beams_visible;
+    item "crystal" tag crystal;
 
 
-# In the Dimensions:
-#   Object is to toggle exits so only up is on
-#     up flips all bits
-#     n:  flips w, nw, n, ne, e and up
-#     e:  flips n, ne, e, se, s and up
-#     s:  flips e, se, s, sw, w and up
-#     w:  flips s, sw, w, nw, n and up
-#     ne: flips n, e, ne and up
-#     se: flips s, e, se and up
-#     sw: flips s, w, sw and up
-#     nw: flips n, w, nw and up
 
-
+# Start in lounge:
+#  - get pass + fishofax
+#  - switch off light
+#  - leave door open
+# Go to Battersea
+#  - take tour (spend the half hour here, before the meeting at Opah)
+# Go to Opah
+#  - meet principal
+#  - go to lab, read notes
+#  - go to library, get Focus wheel page
+#  - go to store room in lab, get focus wheel
+#  - turn off protocopier
+# Go to Eelpout
+#  - go to Hardware Store 
+#  - buy screwdriver
+# Go to Battersea (take tube from Pickerel)
+#  - turn off switch
+#  - get filter
+# Go to Eelpout
+#  - go to Pub
+#  - buy mask to Salmon
+#  - get new card
+#  - time should be near 12, so Ernest Chub is here now
+#  - ask Chub to go to disco (before 12)
+#  - hurry to Music Store and buy earplugs (wear them)
+#  - hurry to Clothes Shop and buy tie and sunglasses (wear glasses)
+# Go to Opah (take Tube from Pickerel)
+#  - go to restaurant and buy plankton
+#  - meet Ernest at 12:30, give him tie and go to Disco
+#  - go to lab and drop stuff (screwdriver, filter, focus wheel and screw)
+# Go to Eelpout
+#  - go to pub
+#  - buy masks to Salmon, then buy Cylinder
+# Go to Paddlington (via Eelpout)
+#  - go to Lounge
+#  - enter Dark Warp and get cylinder
+#  - 
 
 
