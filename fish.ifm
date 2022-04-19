@@ -239,6 +239,8 @@ map "Large Warp";
 
   room "Cinema" dir w from Plaza
     note "nothing here, just costs money and looses and hour";
+    task "TODO: buy film from Second Hand Shop, get it shown here" note "what good is this??";
+    task "TODO: find someone to invite to cinema?" note "maybe to see the Killer Tomatoes movie?";
 
   room "Clothing Shop" dir n from Plaza;
     item "tie" note "probably needed for restaurant??";
@@ -314,7 +316,8 @@ map "Large Warp";
     task "wear ear plugs" tag task_wear_ear_plugs need ear_plugs;
 
   room "Disco" dir n from Opah after task_wear_ear_plugs task_wear_ear_plugs;
-    task "TODO: figure out what to do here? Maybe a good place to escape fins??";
+    task "TODO: invite Ernie Chub to Disco, give him tie";
+
 
   room "University Foyer" tag University_Foyer dir e from Opah exit e s n;
     item "steel door";
