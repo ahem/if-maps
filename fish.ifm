@@ -403,8 +403,11 @@ map "Large Warp";
       note " - cell 4 affects pos 3 (2), 4 (n) and 5 (3)"
       note " - cell 5 affects pos 1 (4), 4 (4) and 5 (n)"
       note "5 to 'O', 4 to 'C', 3 to 'S', 2 to 'A', 1 to 'W'";
-# ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ
-
+    task "join focus wheel to filter" need filter focus_wheel;
+    task "join crystal to photon bridge" need photon_bridge tuned_crystal after last;
+    task "join crystal bridge to focus filter" after last;
+    task "join crystal filter to case" need radio_case after last give stream_regulator;
+    item "stream regulator" hidden tag stream_regulator;
 
   room "Project Room" dir ne;
     item "device";
@@ -413,6 +416,10 @@ map "Large Warp";
     task "unlock lok screw with hyperdriver" need hyperdriver
       after task_free_chub_from_fin
       tag task_get_chubs_password;
+    task "unlock lok screw with hyperdriver" need hyperdriver stream_regulator;
+    task "get accelerator" after last;
+    task "put regulator in device" need stream_regulator after last;
+    task "attach lok screw to regulator" finish;
 
   room "Store Room" dir se from Laboratory;
     item "protocopier";
@@ -446,42 +453,23 @@ map "Large Warp";
 
 
 
-# Start in lounge:
-#  - get pass + fishofax
-#  - switch off light
-#  - leave door open
-# Go to Battersea
-#  - take tour (spend the half hour here, before the meeting at Opah)
-# Go to Opah
-#  - meet principal
-#  - go to lab, read notes
-#  - go to library, get Focus wheel page
-#  - go to store room in lab, get focus wheel
-#  - turn off protocopier
-# Go to Eelpout
-#  - go to Hardware Store 
-#  - buy screwdriver
-# Go to Battersea (take tube from Pickerel)
-#  - turn off switch
-#  - get filter
-# Go to Eelpout
-#  - go to Pub
-#  - buy mask to Salmon
-#  - get new card
-#  - time should be near 12, so Ernest Chub is here now
-#  - ask Chub to go to disco (before 12)
-#  - hurry to Music Store and buy earplugs (wear them)
-#  - hurry to Clothes Shop and buy tie and sunglasses (wear glasses)
-# Go to Opah (take Tube from Pickerel)
-#  - go to restaurant and buy plankton
-#  - meet Ernest at 12:30, give him tie and go to Disco
-#  - go to lab and drop stuff (screwdriver, filter, focus wheel and screw)
-# Go to Eelpout
-#  - go to pub
-#  - buy masks to Salmon, then buy Cylinder
-# Go to Paddlington (via Eelpout)
-#  - go to Lounge
-#  - enter Dark Warp and get cylinder
-#  - 
+# University:
+#   - [*] photon bridge (need cylinder, from apartment + new card, from city)
+#   - [*] focus wheel
+#   - [*] tuned crystal (need raw crystal, from Museum + new card, from city)
+# Museum:
+#   - crystal (need plankton, from university)
+# City:
+#   - buy back Fishton
+#   - get new card
+#   - order cylinder
+# Apartment:
+#   - [*] case (needs to buy back Fishton, in City)
+#   - cylinder (needs to order it first, in City)
+# Battersea:
+#   - [*] filter (needs power out, from university + screwdriver, from city
+
+# Apartment -> Battersea (tour) -> Uni -> City (purchase) -> Museum -> get crystal -> 
+
 
 
