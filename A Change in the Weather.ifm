@@ -1,0 +1,61 @@
+title "A Change in the Weather";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+room_colour = "gray70" in style Dark;
+
+map "A Change in the Weather";
+
+  room "Edge of Meadow";
+    item "bridge";
+  
+  room "Stream Bank" tag Stream_bank dir e exit s ne;
+    item "bridge";
+    task "fill bucket" tag task_fill_bucket need bucket;
+
+  room "Wildflowers" tag Wildflowers dir s exit e se;
+    item "bucket" tag bucket;
+    task "drop sandbag" need dirty_sandbag drop dirty_sandbag;
+
+  room "Steep Face" tag Steep_Face dir e ne exit s nw;
+    item "bush";
+    item "tree";
+
+  room "Rocky Outlook" dir nw exit e sw link Stream_bank;
+    item "broken spade" tag broken_spade;
+    item "trench";
+    task "pour water on spade" need bucket after task_fill_bucket;
+    task "pull spade" give broken_spade after last;
+
+  room "Near Top of Hill" dir e se;
+    item "boulder";
+    item "cave";
+    item "shaft" hidden tag shaft;
+    task "dig boulder with spade" tag task_dig_boulder need broken_spade give shaft lose broken_spade;
+    # task "push boulder" after last;
+    task "throw shaft" need shaft drop shaft note "needs fox to be there";
+    task "throw shaft" need shaft lose shaft after last note "reveals key";
+    item "rusty key" tag rusty_key hidden before task_sleep after last;
+    task "push boulder east" tag task_push_boulder after task_sleep;
+    item "blade" hidden tag blade after task_push_boulder;
+
+  room "Small cave" dir e after task_dig_boulder before task_push_boulder;
+    item "blanket";
+    task "sleep" tag task_sleep note "need blanket to be dry";
+
+  room "Edge of Bluff" dir s from Steep_Face exit e sw;
+    item "shed";
+    task "unlock lock with key" tag task_unlock_shed need rusty_key after task_sleep;
+
+  room "In a Small Shed" dir e after task_unlock_shed style Dark;
+    item "dirty sandbag" tag dirty_sandbag;
+    item "torn sandbag";
+
+
+# at some point in the night, the tree at "Steep Face" is struct by lightning
+# this causes water to flow southwest to "Wildflowers" and then north to wash away
+# the bridge. I guess the point is to prevent this.
+
+
+
+
