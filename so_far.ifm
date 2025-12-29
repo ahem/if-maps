@@ -1,0 +1,121 @@
+title "So Far";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+map "Abandoned Road and Wall";
+  room "Abandoned road" exit n;
+
+  room "Abandoned road, at Chimney" tag road_at_chimney dir n exit n w;
+    item "Chimney";
+    item "Shadow"
+      note "behind chimney, portal to Platform and Arena";
+
+  room "Fields by Road" dir w;
+    item "Vine";
+    item "Pod" tag item_pod note "examine vine first";
+
+  room "Road at Gate" tag road_at_gate dir n from road_at_chimney exit e w n;
+  
+  room "By West Pillar" dir w from road_at_gate;
+    item "pillar";
+    task "squeeze pod on hatch" need item_pod;
+    task "open hatch, wait" tag task_open_west_pillar after last;
+    task "push pillar" tag task_push_pillar after task_squeeze_pod_on_pulley;
+
+  room "Inside West Pillar" dir w go in after task_open_west_pillar;
+
+  room "West Pillar, Top" dir n go up;
+    item "pods" tag item_three_pods;
+
+  room "By East Pillar" dir e from road_at_gate;
+    task "square pod on hatch" need item_three_pods;
+    task "open hatch" after last tag task_open_east_pillar;
+
+  room "Inside East Pillar" dir e go in after task_open_east_pillar;
+
+  room "East Pillar, Top" dir n go up;
+    task "squeeze pod on pulley" tag task_squeeze_pod_on_pulley need item_three_pods;
+
+  room "Road Beyond Gate" dir n from road_at_gate after task_push_pillar;
+
+  room "Branched Road" dir n tag branched_road exit n nw;
+    item "pipes and cable";
+
+  room "South of Moat" dir n 2 from branched_road tag south_of_moat exit e w n;
+
+  room "Stone Bridge" dir n from south_of_moat exit n;
+    item "vines";
+
+  room "East of Moat" dir e 2 n 2 from south_of_moat exit n;
+    item "lever";
+
+  room "West of Moat" tag west_of_moat dir w 2 n 2 from south_of_moat exit n sw;
+    item "pipes and cable";
+    item "lever";
+    task "pull lever" after task_push_blocks_in_dome;
+    task "climb web" after last;
+
+  room "Balcony" dir e nolink exit e;
+    link last to west_of_moat style DashedLink;
+    item "shadow" note "portal to Ice Area";
+
+  room "By Dome" dir nw w 2 nw from branched_road;
+    link last to west_of_moat;
+
+  room "East Cresent Chamber" dir w exit nw sw w;
+    item "hatch";
+    item "cord";
+    item "plants";
+    item "blossom" note "smell to be able to survive in central chamber";
+
+  room "Central Chamber" dir w
+      note "death if you stay too long in this room"
+      note "smell the blossom outside to survive the poisonous air";
+    item "blocks";
+    task "smell smell blossom";
+    task "push blocks" tag task_push_blocks_in_dome
+      note "they must be 1 inch apart. Smell blossom between pushes";
+
+    
+map "Platform and Arena";
+  room "Field behind Platform";
+  item "Shadow"
+    note "behind bales, portal back to Abandoned Road and Wall";
+
+  room "On the Platform" dir w go up exit sw;
+
+  room "Dusty Yard" tag dusty_yard dir sw exit n s e w;
+
+  room "Musty Building" dir s exit s
+    note "this is a stable of some kind for the creatures"
+    note "it is possible to ride the creatures, when they are here"
+    note "the violet creature is good at jumping"
+    ;
+
+  room "North end of Mall" tag north_mall dir e 3 from dusty_yard exit e s;
+    item "Statue";
+
+  room "Center of Mall" tag center_mall dir s exit e s
+    note "a smoking girl drops something, which is a square";
+
+  room "South end of Mall" tag south_mall dir s exit ne w e
+    note "cannot enter roads or the doorway to north-east. people hold a sphere up to my head??"
+    note "old woman towards east, has maybe lost here sphere??, so I can go that way a little";
+
+  room "Narrow Alley" dir e from center_mall;
+    item "Shadow" note "portal to Grassy Hilltop";
+
+  room "Busy road" dir e from north_mall exit e;
+
+  room "Crowded Building" dir n from north_mall;
+    
+map "Desolation of Ice";
+
+  room "Desolation of Ice" exit s;
+    item "spire";
+    item "shadow" note "portal back to castle in Abandoned Road area";
+
+  room "Desolation, By Crevasse";
+    item "pole";
+

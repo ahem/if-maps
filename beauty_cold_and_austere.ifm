@@ -1,0 +1,92 @@
+title "A Beauty Cold and Austre!";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+item "math book" tag math_book;
+
+map "College";
+
+    room "Dorm room" tag Dorm_room;
+      item "bed";
+      item "desk";
+      item "medicine bottle" tag medicine_bottle
+        note "Blorple Pills: Explore a nearby object’s mystic energy field via the power of dreams!";
+      item "note";
+      item "pill" hidden note "in medicine bottle";
+      task "eat pill, then sleep" goto Point;
+
+map "Somewhere";
+
+  room "Point" tag Point score 2;
+
+  room "One" tag One dir s from Point go down;
+    task "wave wand" tag task_increment_one need white_wand goto Two score 1;
+
+  room "Void" tag Void dir s from One go down;
+    item "white wand" tag white_wand note "increment";
+
+map "Positive Axis";
+
+  room "Two" tag Two;
+
+  room "Positive Axis: 2" dir n go up exit e w;
+
+  room "Positive Axis: 1" dir w;
+
+  room "One" dir s go down;
+
+  # room "Form" dir sw go ;
+
+# Pascal's triangle:
+#             0                          1
+#             1                       1   1
+#             2                     1   2   1
+#             3                   1   3   3   1
+#             4                 1   4   6   4   1
+#             5               1   5  10  10   5   1
+#             6             1   6  15  20  15   6   1
+#             7           1   7  21  35  35  21   7   1
+#             8         1   8  28  56  70  56  28   8   1
+#             9       1   9  36  84 126  126  84  36  9   1
+#            10     1  10  45 120 210  252 210  120 45  10  1
+
+# Bronze:
+#    2X + 2 = 12
+#    2X + 2 (-2) = 12 (-2)    get 2 sepia and 2 tan
+#    2X (-X) = 10 (-5)        get brown x and 5 sepia
+#    X = 5
+
+# Silver:
+#    3Y + 6 = X + 10          get gray x and 5 tan
+#    3Y + 1 = 10              get 1 ash and 1 slate
+#    3Y = 9                   get 2 grey y and 6 slate
+#    Y = 3
+
+# Gold:
+#    X + Z + 4 = Y + 8        
+#    5 + Z + 4 = 3 + 8
+#    Z + 9 = 11
+#    Z = 2
+
+# (X + 1)^4
+# (X + 1)(X + 1)(X + 1)(X + 1)
+# (X^2 + 2X + 1)(X + 1)(X + 1)
+# (X^3 + 2X^2 + X + X^2 + 2X + 1)(X + 1)
+# (X^3 + 3X^2 + 3X + 1)(X + 1)
+# X^4 + 3X^3 + 3X^2 + X + X^3 + 3X^2 + 3X + 1
+# X^4 + 4X^3 + 6X^2 + 4X + 1
+
+# NOTE:: There is a phase inverter. Can invert sine wave?
+
+# y = 50x - πx^3
+# y' = -3πx^2 + 50
+# y'' = -6πx
+
+# 50 = 3πx^2
+# 5.30516 ~ x^2
+# x ~ 2.3033
+
+
+
+

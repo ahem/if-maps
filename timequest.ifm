@@ -1,0 +1,1435 @@
+title "Timequest";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+room_colour = "gray70" in style Dark;
+
+map "HQ, 2090 AD";
+
+  room "Drexlers Office";
+
+  room "Vettenmyer's Quarters" dir w;
+    item "Card" tag interkron_card note "in drawer" score 5;
+
+  room "Interkron, HQ 2090 AD" tag hq_2090_interkron dir w go in score 10;
+    item "Slot";
+    task "insert card in slot" need interkron_card;
+
+  join hq_2090_interkron to rome_1361_interkron;
+  join hq_2090_interkron to rome_44_interkron;
+  join hq_2090_interkron to rome_452_interkron;
+  join hq_2090_interkron to rome_800_interkron;
+  join hq_2090_interkron to rome_1215_interkron;
+  join hq_2090_interkron to rome_1519_interkron;
+  join hq_2090_interkron to rome_1588_interkron;
+  join hq_2090_interkron to rome_1798_interkron;
+  join hq_2090_interkron to rome_1940_interkron;
+  join hq_2090_interkron to baghdad_1361_interkron;
+  join hq_2090_interkron to baghdad_44_interkron;
+  join hq_2090_interkron to baghdad_452_interkron;
+  join hq_2090_interkron to baghdad_800_interkron;
+  join hq_2090_interkron to baghdad_1215_interkron;
+  join hq_2090_interkron to baghdad_1519_interkron;
+  join hq_2090_interkron to baghdad_1588_interkron;
+  join hq_2090_interkron to baghdad_1798_interkron;
+  join hq_2090_interkron to cairo_1361_interkron;
+  join hq_2090_interkron to cairo_44_interkron;
+  join hq_2090_interkron to cairo_452_interkron;
+  join hq_2090_interkron to cairo_800_interkron;
+  join hq_2090_interkron to cairo_1215_interkron;
+  join hq_2090_interkron to cairo_1519_interkron;
+  join hq_2090_interkron to cairo_1588_interkron;
+  join hq_2090_interkron to cairo_1798_interkron;
+  join hq_2090_interkron to mexico_1361_interkron;
+  join hq_2090_interkron to mexico_44_interkron;
+  join hq_2090_interkron to mexico_452_interkron;
+  join hq_2090_interkron to mexico_800_interkron;
+  join hq_2090_interkron to mexico_1215_interkron;
+  join hq_2090_interkron to mexico_1519_interkron;
+  join hq_2090_interkron to peking_1361_interkron;
+  join hq_2090_interkron to peking_44_interkron;
+  join hq_2090_interkron to peking_452_interkron;
+  join hq_2090_interkron to peking_800_interkron;
+  join hq_2090_interkron to peking_1215_interkron;
+  join hq_2090_interkron to peking_1519_interkron;
+  join hq_2090_interkron to peking_1588_interkron;
+  join hq_2090_interkron to peking_1798_interkron;
+  join hq_2090_interkron to peking_1940_interkron;
+  join hq_2090_interkron to dover_1361_interkron;
+  join hq_2090_interkron to dover_44_interkron;
+  join hq_2090_interkron to dover_452_interkron;
+  join hq_2090_interkron to dover_800_interkron;
+  join hq_2090_interkron to dover_1215_interkron;
+  join hq_2090_interkron to dover_1519_interkron;
+  join hq_2090_interkron to dover_1588_interkron;
+  join hq_2090_interkron to dover_1798_interkron;
+  join hq_2090_interkron to dover_1940_interkron;
+
+# HQ, 2090 AD:       starting area
+# Rome, 1361 BC:     (man has key to time-travel, apparently): visit him in all ages
+# Rome 44 BC:        main task 1: save Caesor, Done!
+# Rome, 452 AD:      main task 2: convince Attila, done!
+# Rome, 800 AD:      main task 3: Convince Charlemagne that he is worthy, Done!
+# Rome, 1215 AD:     message, done!
+# Rome, 1519 AD:     boy the plaque, done!
+# Rome, 1588 AD:     message (from leaflet), done!
+# Rome, 1798 AD:     Main task 9: convince Napoleon to go to Egypt, DONE!
+# Rome, 1940 AD:     main task 10: fool Hitler + read message. Done! ...also get crown from Napoleon museum.
+# Baghdad, 1361 BC:  message, done + enter Tower of Babel. TODO: finish game!
+# Baghdad, 44 BC:    message, done!
+# Baghdad, 452 AD:   message, done!
+# Baghdad, 800 AD:   main task 4: prove Viziers treachery, DONE!
+# Baghdad, 1215 AD:  sold Rhine Powder to Chinese Merchant, DONE!
+# Baghdad, 1519 AD:  save girl from Sultan (1001 Nights), DONE!
+# Baghdad, 1588 AD:  message, done! (get badge by saving girl in 1519)
+# Baghdad, 1798 AD:  message, done!
+# Cairo, 1361 BC:    give a "royal gift" to King Tut (must be something from pyramid?), done
+# Cairo, 44 BC:      meet Cleopatra, get Rhino Powder, done!
+# Cairo, 452 AD:     message, done!
+# Cairo, 800 AD:     message, done! [needed chalk from Dover, 44 BC]
+# Cairo, 1215 AD:    get past blade and tiles puzzle in pyramid, done!
+# Cairo, 1519 AD:    message, done!
+# Cairo, 1588 AD:    message, done!
+# Cairo, 1798 AD:    get Napoleon here and use him to get crown from pyramid.
+# Mexico, 1361 BC:   get flint knife [use knowledge of eclipse]
+# Mexico, 44 BC:     wear costume and give helmet, done
+# Mexico, 452 AD:    message, done! (learn way through maze)
+# Mexico, 800 AD:    navigate maze in darkness and get feathered serpent costume. Done!
+# Mexico, 1215 AD:   message, done! (save warrior from sacrifice)
+# Mexico, 1519 AD:   main task 7: Quetzlcoatl myth, DONE!
+# Peking, 1361 BC:   escape from burial chamber + get emerald, done
+# Peking, 44 BC:     turn back army from great wall. Done!
+# Peking, 452 AD:    give emerald to priest, done
+# Peking, 800 AD:    get mask
+# Peking, 1215 AD:   main task 6: open gates for Genghis Khan, done!
+# Peking, 1519 AD:   message, done! (from fortune cookie)
+# Peking, 1588 AD:   message, done! (listen to priest's mantra)
+# Peking, 1798 AD:   message, done! (enter the forbidden city)
+# Peking, 1940 AD:   get Molotov Cocktail (bottle with handkerchief and ether)
+# Dover, 1361 BC: got conch, learned about Solar Eclipse in Mexico, 1361 BC!
+# Dover, 44 BC:   get chalk, done
+# Dover, 452 AD:  message, done! (read Arthurs sword)
+# Dover, 800 AD:  message, done!
+# Dover, 1215 AD: main task 5: king john and the courier, done!
+# Dover, 1519 AD: put plaque in cache under loose floorboard
+# Dover, 1588 AD: main task 8: Get Sir Francis Drake to Queen Elizabeths Room. Also get helmet, DONE!
+# Dover, 1798 AD: get Lord Nelson to sail for Egypt to meet Napoleon, done!
+# Dover, 1940 AD: get Churchill's cigar (part of main task 10), done
+
+
+# Messages:
+#     1: "Zeke is Number One!"
+#     2: "Everywhere you go, I've been there too"
+#     3: "Keep three things in mind: You're confused, I'm not, and you're never going to catch me"
+#     4: "Eventually you will acknowledge me as the master of the fourth dimension - time"
+#     5: "If this fifth crusade succeeds, I'll eat my hat.";
+#     6: "Numbers are important when you have no sixth sense and everything seems out of order."
+#     7: "Things would be better if you were the seventh son of a seventh son.
+#     8: "Old man Drexler looks like he ate a lemon"
+#     9: "Will it mean the end of the world? Nein."
+#    10: "Eternity will pass before you figure out a tenth of this"
+#    11: "Risk is just a leaven to make your interest rise."
+#    12: ".12 calibre bullets won't even slow me down."
+#    13: "Saying you're not stupid is like saying thirteen isn't an unlucky number"
+#    14: "As for teenagers, I think they should be banished from the academy."
+#    15: "You act like you bought your brains at a five and ten cent store."
+#    16: "Eat my dust. It's the sixteenth century and you don't have a clue."
+#    17: "Actually, I've been wanting to do this since I was seventeen."
+#    18: "Sandtraps surround the eighteenth hole - deathtraps surround my lair."
+#    19: "This is the last message I will leave in the nineteen hundreds"
+# "ZEKE IN TOWER. SAY EAST"
+
+# Endgame:
+#   07:03 room empty
+#   07:59 room empty, teleport forward to 09:01
+#   08:00 enters room, (see another version of me teleport forward to 09:01). Travel back to 7:03
+#   08:01 Vettenmyer captures me
+#   09:01 Vettenmyer is on floor. Tied-up version of me presses remote to open case.
+
+map "Rome, 1361 BC";
+
+  room "Interkron, Rome 1361 BC" tag rome_1361_interkron;
+
+  room "Field" dir e go out exit s;
+    item "stream";
+
+  room "Academy" dir s;
+    item "Old man" note "Here at the acedemy we search for the truth. Those around us believe that the fate of man is determined from the gods, and that they can learn this fate by examining the organs of sacrificial animals for differences in size, shape, color, and markings. We are not so sure - and perhaps in time - we shall learn more";
+    task "sit" tag talk_philosopy_rome_1361;
+
+
+
+map "Rome 44 BC"; # DONE
+  
+  room "Interkron, Rome 44 BC" tag rome_44_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_44_street;
+
+  room "Academy" dir s from rome_44_street;
+    item "bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_44 after talk_philosopy_rome_1361;
+
+  room "Circus Maximus" dir se from rome_44_street exit nw ne se tag rome_44_circus
+    note "February 15th, chariot races 1:00 - 3:00. Tomorrow Gladiators vs Lions";
+
+  room "Grand Stand" dir se from rome_44_circus;
+    item "Focaccia seller";
+    item "Focaccia" tag focaccia score 5;
+
+  room "Gladitorium" dir ne from rome_44_circus exit sw se
+    note "'You know the drill, races every half hour and the early ones are just for crowd amusement. The last one is the one that counts. The winner of that one gets to meet the big C and ask for a favour. After that comes the parade of lions.'"
+    note "there is a broken chariout inside the arena";
+    item "Clothes peg" tag clothes_peg score 5;
+    item "Jar of oil" tag jar_of_oil score 5;
+
+  room "Arana" tag rome_44_arena dir se
+    note "Why would anyone put on a laurel wreath and then take a whip to a lion";
+    item "Chariot";
+    item "Wheel";
+    task "fix chariot" cmd "put wheel on chariot then put peg in hole" need clothes_peg;
+    task "pour oil on chariot" need jar_of_oil;
+    task "win race" after last note "enter chariot, at 15:00" goto rome_44_imperial_box;
+
+  room "Imperial Box" dir s tag rome_44_imperial_box nolink;
+    link rome_44_imperial_box to rome_44_arena style DashedLink;
+    item "Caesar";
+    item "Celopatra";
+    item "Calpurnia";
+    item "Wreath" hidden tag caesars_wreath;
+    task "caesar, give me wreath" give caesars_wreath score 5;
+    item "sword" after last score 5;
+    task "kill lion with sword" tag task_rescue_caesar need last lose it goto rome_44_circus score 30;
+
+
+map "Rome, 452 AD";
+
+  room "Interkron, Rome 452 AD" tag rome_452_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se ne tag rome_452_street;
+
+  room "Academy" dir s from rome_452_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_452 after talk_philosopy_rome_44;
+
+  room "Circus Maximus" dir se from rome_452_street
+    note "Closed by order of Pope Leo";
+
+  room "The Vatican" tag rome_452_vatican dir nw from rome_452_street exit w ne se;
+
+  room "Saint Peter's" dir w from rome_452_vatican;
+    item "High Altar" note "build upon the tomb of the apostle himself";
+    item "Pope Leo" note "He leaves for Attila at 12:10 or so";
+
+  room "Road to Ravenna" dir ne from rome_452_vatican exit w sw;
+
+  room "Attila's Tent" dir w;
+    item "Treasure";
+    item "Attila" note "Honoria, the empirors sister, sent a ring via messenger (Vettenmyer) and told Attila to only believe in miracle he can see with his eyes";
+    task "wait for Attila to return" need mask_with_fireworks;
+    item "Ancient parchment" tag parchment hidden;
+    task "light fuse with lighter" need mask_with_fireworks need lighter give parchment score 30; 
+    
+
+map "Rome, 800 AD";
+
+  room "Interkron, Rome 800 AD" tag rome_800_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_800_street;
+
+  room "Academy" dir s from rome_800_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_800 after talk_philosopy_rome_452 ;
+
+  room "Circus Maximus" dir se from rome_800_street
+    note "Closed by order of Pope Leo III";
+
+  room "The Vatican" tag rome_800_vatican dir nw from rome_800_street exit w se;
+
+  room "Saint Peter's" dir w from rome_800_vatican;
+    item "High Altar" note "build upon the tomb of the apostle himself";
+    item "Charlemagne";
+    task "wait until coronation" after replace_crown score 30;
+
+  room "Chapel" dir n;
+    item "Crown" tag crown after drug_priest score 5;
+    item "Priest";
+    task "open bottle" need molotov_cocktail score 5;
+    task "pour ether on handkerchief" after last;
+    task "drug priest" tag drug_priest after last;
+    task "put crown on altar" tag replace_crown need crown_with_inscription lose it;
+
+map "Rome, 1215 AD"; # DONE (just get the message)
+
+  room "Interkron, Rome 1215 AD" tag rome_1215_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_1215_street;
+
+  room "Academy" dir s from rome_1215_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_1215 after talk_philosopy_rome_800 ;
+
+  room "Circus Maximus" dir se from rome_1215_street
+    note "Closed by order of Pope Innocent III";
+
+  room "The Vatican" tag rome_1215_vatican dir nw from rome_1215_street exit w se;
+    item "Pope Innocent";
+    task "listen" score 1 note "If this fifth crusade succeeds, I'll eat my hat.";
+
+  room "Saint Peter's" dir w from rome_1215_vatican;
+    item "High Altar" note "build upon the tomb of the apostle himself";
+
+map "Rome, 1519 AD";
+
+  room "Interkron, Rome 1519 AD" tag rome_1519_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_1519_street;
+
+  room "Academy" dir s from rome_1519_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_1519 after talk_philosopy_rome_1215 ;
+
+  room "Circus Maximus" dir se from rome_1519_street
+    note "Closed by order of Pope Leo X";
+
+  room "The Vatican" tag rome_1519_vatican dir nw from rome_1519_street exit w se;
+    item "Vendor";
+    item "Plaque" tag papal_plaque note "This room has been blessed by the Most Holy Catholic Pope. May his benediction fall upon all who sleep here.";
+    task "give indulgence to vendor" need indulgence lose it give papal_plaque score 5;
+
+  room "Saint Peter's" dir w from rome_1519_vatican;
+    item "High Altar" note "build upon the tomb of the apostle himself";
+    item "Pope Leo X";
+    item "Michaelangelo";
+    item "Indulgence" tag indulgence hidden;
+    item "Pope Leo's Book" score 5 note "The Glorious Life of Pope Leo.";
+    task "give book to Leo" need last lose it score 5 give indulgence;
+
+map "Rome, 1588 AD";
+
+  room "Interkron, Rome 1588 AD" tag rome_1588_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_1588_street;
+
+  room "Academy" dir s from rome_1588_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_1588 after talk_philosopy_rome_1519 ;
+
+  room "Circus Maximus" dir se from rome_1588_street
+    note "Closed by order of Pope Sixtus V";
+
+  room "The Vatican" tag rome_1588_vatican dir nw from rome_1588_street exit w se;
+    item "Soothsayer";
+    item "Leaflet";
+    task "read leaflet" score 1 after last
+      note "A thousand years after the virgin birth and after five hundred more allowed the globe, the wonderful eighty-eighth year begins and brings with it woe enough. If, this year, total catastrophe does not befall, if land and sea do not collapse in total ruin, yet will the whole world suffer upheavals, empires will dwindle and from everywhere will be great lamention."
+      note "Printer is ZSV and writes in modern english 'Will it mean the end of the world? Nein.' Latin text by John Muller of Konigsberg, known as Regiomontanus."
+      note "ZSV is Zeke S. Vettenmyer";
+
+  room "Saint Peter's" dir w from rome_1588_vatican;
+    item "High Altar" note "build upon the tomb of the apostle himself";
+    item "Statue" note "It is the world-renowned 'Pieta'.";
+
+map "Rome, 1798 AD";
+
+  room "Interkron, Rome 1798 AD" tag rome_1798_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_1798_street;
+    item "Rock" tag baseball_rock score 5 note "baseball sized rock";
+
+  room "Academy" dir s from rome_1798_street;
+    item "Bench";
+    item "Old man";
+    task "sit" tag talk_philosopy_rome_1798 after talk_philosopy_rome_1588 ;
+
+  room "Circus Maximus" dir se from rome_1798_street exit nw n;
+    item "Soldiers" note "the solider look bored" note "all wrongdoers are brought before the general";
+    task "throw rock at window" need baseball_rock lose it score 5 goto rome_1798_sala_del_mappamondo need ankh;
+
+  room "Sala del Mappamondo" tag rome_1798_sala_del_mappamondo dir n;
+    item "Napoleon";
+    item "Napoleons pass" tag napoleons_pass hidden;
+    task "show ankh to napoleon" score 5 need ankh lose it;
+    task "show map to napoleon" after last need tuts_map score 30 give napoleons_pass;
+
+  room "The Vatican" tag rome_1798_vatican dir nw from rome_1798_street exit w se;
+
+  room "Saint Peter's" dir w from rome_1798_vatican;
+    item "Statue" note "It is the world-renowned 'Pieta'.";
+
+map "Rome, 1940 AD";
+
+  room "Interkron, Rome 1940 AD" tag rome_1940_interkron;
+
+  room "Cloaca Maxima" dir e go out;
+
+  room "Street" dir e go up exit s se tag rome_1940_street;
+
+  room "Academy" tag rome_1940_academy dir s from rome_1940_street;
+    item "Bench";
+    item "Old man";
+    item "Key" tag old_mans_key hidden;
+    task "sit" after talk_philosopy_rome_1798;
+    task "ask about key" after last give old_mans_key score 20;
+    task "get cloak" after unlock_doomsday_device score 75 finish;
+
+  room "Circus Maximus" dir se from rome_1940_street exit nw n;
+    item "Graffiti";
+    task "Read graffiti" note "This is the last message I will leave in the nineteen hundreds" score 2;
+
+  room "Mueseum" dir n exit n s;
+    item "Soldier";
+    item "Crown" tag crown_with_inscription hidden after napoleon_gets_crown;
+
+  room "Sala del Mappamondo" dir n
+      note "Codeword is 'Cigar'";
+    item "Mussolini";
+    item "Hitler";
+    item "Radio";
+    task "wait for announcement" after tag_get_cigar note "'clean' when hitler rebukes you";
+    task "wait for 'get cigar' moment" after last;
+    task "unplug radio" after last;
+    task "wait for Hitler and Mussolini to leave" after last score 30;
+
+  room "The Vatican" tag rome_1940_vatican dir nw from rome_1940_street exit w se;
+
+  room "Saint Peter's" dir w from rome_1940_vatican;
+    item "Statue" note "It is the world-renowned 'Pieta'.";
+
+map "Baghdad, 1361 BC";
+
+  room "Interkron, Baghdad 1361 BC" tag baghdad_1361_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_1361_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Bazaar" dir n from baghdad_1361_caravan_trail;
+
+  room "Ishtar Square" tag baghdad_1361_ishtar_square dir s from baghdad_1361_caravan_trail exit w n e;
+    task "say east" tag say_tower_of_babel_password;
+
+  room "Tower of Babel" dir e from baghdad_1361_ishtar_square score 20 after say_tower_of_babel_password exit e;
+    
+  room "Tower room" dir e go up oneway score 30;
+    item "Forward time-machine" note "forward exactly 62 minutes, 5 minutes to recharge";
+    item "Backward time-machine" note "backward exactly 57 minutes, 5 minutes to recharge";
+    item "Doomsday Device";
+    task "stand on right platform";
+    task "wait, then stand on left platform when you hear footsteps" after last;
+    task "put key in keyhole" tag unlock_doomsday_device after last need old_mans_key lose it score 50;
+    task "stand on right platform" after last score 25 note "hear number from future me";
+    task "wait until Vettenmyer asks for number, then say it" after last score 15;
+    task "kick Vettenmyer" after last;
+    task "say number" after last score 30 goto rome_1940_academy;
+
+  room "Courtyard" dir w from baghdad_1361_ishtar_square;
+    item "Vines" note "They have been trained to grow in some sort of pattern, but you can't make out what it is";
+
+  room "Hanging Gardens" dir w go up;
+    task "examine courtyard" score 1 note "message: Zeke is Number One!";
+
+map "Baghdad, 44 BC";
+
+  room "Interkron, Baghdad 44 BC" tag baghdad_44_interkron;
+
+  room "Secluded Cave" dir w go out;
+    item "Note";
+    task "read note" note "Everywhere you go, I've been there too" score 1;
+
+  room "Caravan Trail" tag baghdad_44_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Bazaar" dir n from baghdad_44_caravan_trail;
+
+  room "Ruins of Babylon" dir s from baghdad_44_caravan_trail;
+
+map "Baghdad, 452 AD";
+
+  room "Interkron, Baghdad 452 AD" tag baghdad_452_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_452_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Bazaar" dir n from baghdad_452_caravan_trail;
+
+  room "Ruins of Babylon" dir s from baghdad_452_caravan_trail;
+    item "Fragile jug" note "as soon as you touch it, it crumples to dust";
+    task "examine jug" score 1 note "Risk is just a leaven to make your interest rise.";
+
+map "Baghdad, 800 AD";
+
+  room "Interkron, Baghdad 800 AD" tag baghdad_800_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_800_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Ruins of Babylon" dir s from baghdad_800_caravan_trail;
+
+  room "Selene Gate" dir n from baghdad_800_caravan_trail;
+
+  room "Bazaar" tag baghdad_800_bazaar dir n exit s w;
+    item "Beggar";
+    task "give focaccia to beggar" need focaccia lose it score 10 goto baghdad_800_palace;
+
+  room "Sultans Palace" tag baghdad_800_palace dir w nolink;
+    link baghdad_800_palace to baghdad_800_bazaar style DashedLink;
+    item "Sultan";
+    item "Vizier" note "red turban, organge sash, yellow pantaloons, blue armband, green gloves, and purple slippers";
+    item "turban" tag turban_with_ruby hidden note "ruby is just a piece of glass";
+    task "nod to sultan" tag task_nod_to_sultan goto baghdad_800_harem;
+    task "give fig to vizier" tag task_give_fig_to_vizier after task_wear_veil need bowl_of_figs;
+
+  room "Harem" tag baghdad_800_harem dir n 2 exit n ne e se s sw w nw;
+    task "lie on divan" tag task_harem_massage
+      note "massage: Ulima (blue) calf, Leila (red) feet, Fatima (purple) forehead, Aisha (yellow) chest, Jamila (green) hands, Kilila (orange) arms"
+      note "head: red/purple, body: orange/yellow, legs: yellow/blue, arms: blue/orange, hands: green/green, feet: purple/red"
+      note "hands is green both on massage and Viziers clothes.";
+    item "Bowl of figs" tag bowl_of_figs score 5;
+
+  room "Ulima's Room" dir ne from baghdad_800_harem;
+    item "Ulima";
+    item "Blue veil";
+
+  room "Leila's Room" dir e from baghdad_800_harem;
+    item "Leila";
+    item "Red veil";
+
+  room "Fatima's Room" dir se from baghdad_800_harem;
+    item "Fatima";
+    item "Purple Veil";
+
+  room "Aisha's Room" dir sw from baghdad_800_harem;
+    item "Aisha";
+    item "Yellow Veil";
+    
+  room "Jamila's Room" dir w from baghdad_800_harem;
+    item "Jamila";
+    item "Green Veil";
+    task "wear green veil" tag task_wear_veil after task_harem_massage;
+    task "remove veil" after task_give_fig_to_vizier;
+    task "get under bed then wait for vizier to leave" after last;
+    task "get slipper" after last;
+    task "give slipper to sultan" after last give turban_with_ruby score 30 goto baghdad_800_bazaar;
+    
+  room "Kalila's Room" dir nw from baghdad_800_harem;
+    item "Kalila";
+    item "Orange Veil";
+
+map "Baghdad, 1215 AD";
+
+  room "Interkron, Baghdad 1215 AD" tag baghdad_1215_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_1215_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Ruins of Babylon" dir s from baghdad_1215_caravan_trail;
+
+  room "Selene Gate" dir n from baghdad_1215_caravan_trail;
+
+  room "Bazaar" tag baghdad_1215_bazaar dir n exit s w;
+    item "Chinese Merchant";
+    item "1 drachma" tag one_drachma hidden;
+    item "1000 yuan" tag thousand_yuan hidden;
+    task "offer powder to merchant" tag task_offer_power_to_merchant
+      need rhino_powder lose it
+      give one_drachma
+      give thousand_yuan
+      note "password to Peking in 1215 AD is 'tower gate'"
+      score 10;
+
+map "Baghdad, 1519 AD";
+
+  room "Interkron, Baghdad 1519 AD" tag baghdad_1519_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_1519_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Ruins of Babylon" dir s from baghdad_1519_caravan_trail;
+
+  room "Selene Gate" dir n from baghdad_1519_caravan_trail;
+
+  room "Bazaar" tag baghdad_1519_bazaar dir n exit s w ne;
+    item "Date vendor";
+    task "buy dates" tag buy_dates need one_drachma lose it after get_mule score 5;
+
+  room "Alley" dir ne exit w;
+    item "Mule";
+    task "get tether";
+    task "whisper in ear" tag get_mule after last score 5;
+    task "drop tether" tag park_mule after put_urn_in_house;
+    task "get tether and whisper in ear" after hide_girl_with_dates tag get_mule_again;
+
+  room "House" dir w
+      note "Soldiers come at 12:00";
+    item "Mother";
+    item "Daughter";
+    item "Son" note "eyes are a curious mixture of brown and green";
+    task "go here with dates on mule" tag put_urn_in_house;
+    task "empty urn" after park_mule;
+    task "girl, hide in urn" after last;
+    task "put dates in urn" tag hide_girl_with_dates after last;
+    task "get mule to eat leftover dates" after get_mule_again;
+    task "wait for soldiers" tag sucessfully_hide_girl after last score 10;
+  
+map "Baghdad, 1588 AD";
+
+  room "Interkron, Baghdad 1588 AD" tag baghdad_1588_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_1588_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Ruins of Babylon" dir s from baghdad_1588_caravan_trail;
+
+  room "Selene Gate" dir n from baghdad_1588_caravan_trail;
+    item "sign" note "Baghdad is a closed city. Anyone not wearing a badge will be arrested as a spy";
+
+  room "Bazaar" tag baghdad_1588_bazaar dir n exit s w ne;
+    item "Badge vendor";
+    item "Badge" tag baghdad_badge hidden;
+    task "wait for soldiers" after sucessfully_hide_girl give baghdad_badge score 5;
+
+  room "Allay" dir ne need baghdad_badge;
+    item "Graffiti";
+    task "read graffiti" score 1 note "Eat my dust. It's the sixteenth century and you don't have a clue.";
+
+map "Baghdad, 1798 AD";
+
+  room "Interkron, Baghdad 1798 AD" tag baghdad_1798_interkron;
+
+  room "Secluded Cave" dir w go out;
+
+  room "Caravan Trail" tag baghdad_1798_caravan_trail dir w exit n s e;
+    item "Caravan";
+
+  room "Ruins of Babylon" dir s from baghdad_1798_caravan_trail;
+
+  room "Selene Gate" dir n from baghdad_1798_caravan_trail;
+
+  room "Bazaar" tag baghdad_1798_bazaar dir n exit s w;
+    item "Carpet vendor";
+    item "magic carpet" note "already sold to sultan";
+    task "examine carpet" score 1 note "'Keep three things in mind: You're confused, I'm not, and you're never going to catch me";
+
+map "Cairo, 1361 BC";
+
+  room "Interkron, Cairo 1361 BC" tag cairo_1361_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+
+  room "Royal Compound" tag cairo_1361_royal_compound dir w exit n e s w
+    note "south and west is 'royalty only'";
+    item "map" tag tuts_map hidden note "crocodile, cat, hawk, scorpion, snake";
+    task "give crown to tut" after task_rescue_baby_moses need crown lose it give tuts_map score 5;
+
+  room "Riverside" dir n from cairo_1361_royal_compound;
+    item "Baby moses";
+    item "King Tut";
+    task "get cradle";
+    task "give baby to girl" tag task_rescue_baby_moses after last goto cairo_1361_royal_compound score 5;
+
+
+map "Cairo, 44 BC";
+
+  room "Interkron, Cairo 44 BC" tag cairo_44_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+    task "Accept Celopatra's invitation" tag task_accept_cleopatra after task_rescue_caesar goto cairo_44_royal_palace;
+
+  room "Royal Compound" tag cairo_44_royal_compound dir w exit n e;
+
+  room "Riverside" dir n from cairo_44_royal_compound;
+
+  room "Royal Palance" tag cairo_44_royal_palace dir w from cairo_44_royal_compound nolink;
+    link cairo_44_royal_compound to cairo_44_royal_palace style DashedLink;
+    item "Cleopatra";
+    item "powder" tag rhino_powder note "powerful aphrodisiac, some men would kill for this - especially in the east";
+    task "kiss Cleopatra" give rhino_powder score 5 goto cairo_44_royal_compound;
+
+    
+map "Cairo, 452 AD";
+
+  room "Interkron, Cairo 452 AD" tag cairo_452_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+
+  room "Royal Compound" tag cairo_452_royal_compound dir w exit n e;
+    item "Carving";
+    task "Read carving" note "Saying you're not stupid is like saying thirteen isn't an unlucky number" score 1;
+
+  room "Riverside" dir n from cairo_452_royal_compound;
+
+    
+map "Cairo, 800 AD";
+
+  room "Interkron, Cairo 800 AD" tag cairo_800_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+    item "Deaf man with slate";
+    task "give chalk" need chalk lose it;
+    task "read message" after last score 1 note "Sandtraps surround the eighteenth hole - deathtraps surround my lair.";
+
+  room "Royal Compound" tag cairo_800_royal_compound dir w exit n e;
+
+  room "Riverside" dir n from cairo_800_royal_compound;
+
+map "Cairo, 1215 AD";
+
+  room "Interkron, Cairo 1215 AD" tag cairo_1215_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+
+  room "Royal Compound" tag cairo_1215_royal_compound dir w exit n e s;
+
+  room "Riverside" dir n from cairo_1215_royal_compound;
+
+  room "Descending Passage" dir s from cairo_1215_royal_compound style Dark;
+
+  room "Pit" dir s need lighter style Dark;
+    item "Panel";
+    task "touch panel" tag touch_panel;
+
+  room "Hidden Passageway" dir w after touch_panel score 10 exit w need lighter style Dark;
+    item "picture tiles";
+    task "press picture tiles"
+      cmd "press crocodile then press cat then press hawk then press scorpion then press snake"
+      tag press_tiles
+      need tuts_map;
+
+  room "Ledge" dir w after press_tiles score 10 need lighter style Dark;
+
+  room "Kings Chamber" dir w need lighter style Dark;
+    item "Ankh" tag ankh score 5;
+    
+
+map "Cairo, 1519 AD";
+
+  room "Interkron, Cairo 1519 AD" tag cairo_1519_interkron;
+
+  room "Tomb" dir n go out;
+    item "Message";
+    task "read message" score 1 note "Numbers are important when you have no sixth sense and everything seems out of order.";
+
+  room "Avenue of the Dead" dir n exit w s;
+
+  room "Royal Compound" tag cairo_1519_royal_compound dir w exit n;
+
+  room "Riverside" dir n from cairo_1519_royal_compound;
+
+
+map "Cairo, 1588 AD";
+
+  room "Interkron, Cairo 1588 AD" tag cairo_1588_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+
+  room "Royal Compound" tag cairo_1588_royal_compound dir w exit n;
+    item "Graffiti";
+    task "read graffiti" score 1 note ".12 calibre bullets won't even slow me down.";
+
+  room "Riverside" dir n from cairo_1588_royal_compound;
+
+map "Cairo, 1798 AD";
+
+  room "Interkron, Cairo 1798 AD" tag cairo_1798_interkron;
+
+  room "Tomb" dir n go out;
+
+  room "Avenue of the Dead" dir n exit w s;
+    item "Broadside"
+      note "NAPOLEON INVADES ENGLAND"
+      note "NAPOLEON CONQUERS EGYPT. ENGLISH FLEET REMAINS IN CHANNEL."
+      note "NAPOLEON ARMY CONQUERS EGYPT WHILE FRENCH FLEET DESTROYED BY NELSON AT BATTLE OF ABUKIR BAY.";
+
+  room "Royal Compound" tag cairo_1798_royal_compound dir w exit n e s w;
+    item "Napoleons tent" note "only after convincing him to go here";
+    task "show pass to guards" tag show_pass_to_guards need napoleons_pass need boarding_hook;
+    task "return here with crown" after napoleon_gets_crown score 25;
+
+  room "Descending Passage" dir s from cairo_1798_royal_compound after show_pass_to_guards style Dark;
+
+  room "Pit" dir s need lighter style Dark;
+    item "Panel";
+
+  room "Hidden Passageway" dir w after touch_panel exit w need lighter style Dark;
+    item "picture tiles";
+    task "press picture tiles"
+      cmd "press crocodile then press cat then press hawk then press scorpion then press snake"
+      tag press_tiles_cairo_1798
+      need tuts_map;
+
+  room "Ledge" dir w after press_tiles need lighter style Dark;
+    task "get ruby" need turban_with_ruby;
+    task "tie turban to hook" after last need boarding_hook need turban_with_ruby lose turban_with_ruby;
+    task "throw hook at strut" after last tag throw_hook_at_strut need boarding_hook lose it;
+
+  room "Kings Chamber" dir w after throw_hook_at_strut score 20 need lighter style Dark;
+    item "Crown";
+    task "Let Napoleon get crown" tag napoleon_gets_crown;
+
+  room "Riverside" dir n from cairo_1798_royal_compound;
+
+map "Mexico, 1361 BC";
+
+  room "Interkron, Mexico 1361 BC" tag mexico_1361_interkron;
+    task "drop all" tag drop_all_before_getting_captured after learn_about_eclipse;
+    task "get all again" need flint_knife;
+
+  room "Island" dir e go out;
+    item "Olmec Indian";
+    item "Flint knife" tag flint_knife hidden;
+    task "tell olmec about eclipse" after drop_all_before_getting_captured;
+    task "get knife" after last give flint_knife;
+
+
+map "Mexico, 44 BC";
+
+  room "Interkron, Mexico 44 BC" tag mexico_44_interkron;
+    task "wear costume" tag wear_costume_mexico_44 need costume;
+    task "remove costume" need costume after make_helmet_a_symbol; 
+
+  room "Temple" dir e go out after wear_costume_mexico_44;
+     item "Toltec Indian" note "The feathered serpent appeared over 1000 years ago and demanded that we should wait 100 generations. He would then return and show us the object of our doom. Then, if our ways still did not please him, he would return again in the guise of a white man bering the same symbol. And then our race come to an end";
+     task "put helmet on cushion" tag make_helmet_a_symbol need helmet lose it after wear_costume_mexico_44 score 10;
+
+
+map "Mexico, 452 AD";
+
+  room "Interkron, Mexico 452 AD" tag mexico_452_interkron;
+
+  room "Temple" dir e go out;
+
+  room "Maze" tag mexico_452_maze_1 dir e exit n ne s w;
+    item "Footprints" note "from west to northeast";
+
+  room "Maze" dir n from mexico_452_maze_1;
+
+  room "Maze" tag mexico_452_maze_2 dir s from mexico_452_maze_1 exit n ne e;
+
+  room "Maze" dir e from mexico_452_maze_2;
+
+  room "Maze" tag mexico_452_maze_3 dir ne from mexico_452_maze_2 exit n e se sw;
+
+  room "Maze" tag mexico_452_maze_4 dir n from mexico_452_maze_3 exit nw sw s se;
+    link mexico_452_maze_1 to mexico_452_maze_4;
+    item "Footprints" note "from southwest to northwest";
+
+  room "Maze" tag mexico_452_maze_5 dir se from mexico_452_maze_3;
+
+  room "Maze" tag mexico_452_maze_6 dir e from mexico_452_maze_3 exit w nw;
+    link mexico_452_maze_6 to mexico_452_maze_4;
+
+  room "Maze" tag mexico_452_maze_7 dir nw from mexico_452_maze_4 exit n e se;
+    item "Footprints" note "from southeast to east";
+    
+  room "Maze" tag mexico_452_maze_8 dir n from mexico_452_maze_7 exit n e se s;
+
+  room "Maze" tag mexico_452_maze_9 dir n from mexico_452_maze_8 exit e se s;
+
+  room "Maze" tag mexico_452_maze_10 dir e from mexico_452_maze_9 exit e w;
+
+  room "Maze" tag mexico_452_maze_11 dir e from mexico_452_maze_10 exit w sw;
+
+  room "Maze" tag mexico_452_maze_12 dir sw from mexico_452_maze_11 exit ne w nw;
+    link mexico_452_maze_12 to mexico_452_maze_8;
+    link mexico_452_maze_12 to mexico_452_maze_9;
+
+  room "Maze" tag mexico_452_maze_13 dir se from mexico_452_maze_8 exit ne w nw;
+    item "Footprints" note "from west to northeast";
+    link mexico_452_maze_13 to mexico_452_maze_7;
+
+  room "Maze" tag mexico_452_maze_14 dir ne from mexico_452_maze_13 exit ne se sw;
+    item "walls" note "walls look like they are reinforced to support extra weight";
+    item "Footprints" note "from southwest to southeast";
+
+  room "Maze" tag mexico_452_maze_15 dir ne from mexico_452_maze_14 exit e se s sw;
+
+  room "Maze" tag mexico_452_maze_16 dir e from mexico_452_maze_15 exit e w;
+
+  room "Maze" tag mexico_452_maze_17 dir e from mexico_452_maze_16 exit w s;
+
+  room "Maze" tag mexico_452_maze_18 dir s from mexico_452_maze_17 exit n s;
+
+  room "Maze" tag mexico_452_maze_19 dir s from mexico_452_maze_18 exit n;
+
+  room "Maze" tag mexico_452_maze_20 dir se from mexico_452_maze_15 exit s w nw;
+
+  room "Maze" tag mexico_452_maze_21 dir s from mexico_452_maze_20 exit n se w nw;
+
+  room "Maze" tag mexico_452_maze_22 dir nw from mexico_452_maze_21 exit n e se;
+    link mexico_452_maze_22 to mexico_452_maze_15;
+    link mexico_452_maze_22 to mexico_452_maze_20;
+
+  room "Maze" tag mexico_452_maze_23 dir se from mexico_452_maze_21 exit s sw w nw;
+
+  room "Maze" tag mexico_452_maze_24 dir s from mexico_452_maze_23 exit n s sw;
+
+  room "Maze" tag mexico_452_maze_25 dir s from mexico_452_maze_24 exit n w;
+
+  room "Maze" tag mexico_452_maze_26 dir w from mexico_452_maze_25 exit ne e;
+    link mexico_452_maze_26 to mexico_452_maze_24; 
+
+  room "Maze" tag mexico_452_maze_27 dir sw from mexico_452_maze_23 exit n ne;
+
+  room "Maze" tag mexico_452_maze_28 dir n from mexico_452_maze_27 exit e s w;
+    link mexico_452_maze_28 to mexico_452_maze_23; 
+
+  room "Maze" tag mexico_452_maze_29 dir w from mexico_452_maze_28 exit e s nw;
+    item "Footprints" note "from northwest to south";
+
+  room "Maze" tag mexico_452_maze_30 dir nw from mexico_452_maze_29 exit e se;
+    item "Footprints" note "from east to southeast";
+
+  room "Maze" tag mexico_452_maze_31 dir e from mexico_452_maze_30 exit e w nw;
+    item "Footprints" note "from northwest to w";
+    link mexico_452_maze_31 to mexico_452_maze_14; 
+    link mexico_452_maze_31 to mexico_452_maze_21; 
+
+  room "Maze" tag mexico_452_maze_32 dir s from mexico_452_maze_29 exit n s;
+    item "Footprints" note "from north to south";
+
+  room "Maze" tag mexico_452_maze_33 dir s from mexico_452_maze_32 exit n s;
+    item "Footprints" note "from north to south";
+
+  room "Closet" dir s from mexico_452_maze_33 exit n;
+    item "Graffiti";
+    task "read graffiti" score 1 note "As for teenagers, I think they should be banished from the academy.";
+
+map "Mexico, 800 AD";
+
+  room "Interkron, Mexico 800 AD" tag mexico_800_interkron;
+
+  room "Temple" dir e go out;
+
+  room "Maze" dir e style Dark;
+  room "Maze" dir ne style Dark;
+  room "Maze" dir nw style Dark;
+  room "Maze" dir e style Dark;
+  room "Maze" dir ne style Dark;
+  room "Maze" dir se style Dark;
+  room "Maze" dir w style Dark;
+  room "Maze" dir se style Dark;
+  room "Maze" dir s style Dark;
+  room "Maze" dir s style Dark;
+
+  room "Closet" dir s;
+    item "Costume" tag costume note "Feathered serpent costume" score 5;
+    
+map "Mexico, 1215 AD";
+
+  room "Interkron, Mexico 1215 AD" tag mexico_1215_interkron;
+
+  room "Temple" dir e go out;
+
+  room "Maze" dir e style Dark;
+  room "Maze" dir ne style Dark;
+  room "Maze" dir nw style Dark;
+  room "Maze" dir e style Dark;
+  room "Maze" tag mexico_1215_maze dir ne style Dark;
+  room "Maze" dir se style Dark;
+  room "Maze" dir w style Dark;
+  room "Maze" dir se style Dark;
+  room "Maze" dir s style Dark;
+  room "Maze" dir s style Dark;
+  room "Closet" dir s;
+
+  room "Alcove" dir ne from mexico_1215_maze go up;
+    task "wear costume" tag wear_costume_mexico_1215 need costume;
+
+  room "Top of Pyramid" dir s;
+    item "Priest";
+    item "Warrior";
+    item "Altar";
+    task "release warrior" tag release_warrior after wear_costume_mexico_1215 need flint_knife score 10;
+    task "read message" after last score 1 note "Actually, I've been wanting to do this since I was seventeen.";
+
+map "Mexico, 1519 AD";
+  room "Interkron, Mexico 1519 AD" tag mexico_1519_interkron;
+
+  room "Temple" dir e go out;
+    item "Montezuma";
+    task "wait" after make_helmet_a_symbol score 30;
+
+map "Peking, 1361 BC";
+
+  room "Interkron, Peking 1361 BC" tag peking_1361_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_1361_park dir n exit n e s;
+
+  room "Marketplace" dir n from peking_1361_park exit s;
+
+  room "Sacred Way" tag peking_1361_sacred_way dir e from peking_1361_park;
+
+  room "Burial Cave" tag peking_1361_burial_cave dir e oneway score 10;
+    item "Mourners";
+    item "Dead Emperor";
+    item "Statue" note "There is maybe room for something in the statues mouth??";
+    item "Basin" tag basin after fill_basin_with_water;
+    item "Emerald" tag emerald hidden after empty_basin_in_mouth score 5;
+    item "First tablet"
+      note "There are ways, but the Way is uncharted;"
+      note "There are names but not nature in words:"
+      note "Nameless indeed is the source of creation"
+      note "But things have a mother and she has a name."
+      note ""
+      note "The secret waits for the insight"
+      note "Of eyes unclouded by longing"
+      note "Those who are bound by desire"
+      note "See only the outward container"
+      note ""
+      note "These two come paired but distinct"
+      note "By their names."
+      note "Of all things profoud,"
+      note "Say that their pairing is deepest,"
+      note "The gate to the root of the world.";
+    item "Second tablet"
+      note "Thirty spokes will converge"
+      note "In the hub of a wheel;"
+      note "But the use of the cart"
+      note "Will depend on the part"
+      note "Of the hub that is in void."
+      note ""
+      note "With a wall all around"
+      note "A clay bowl is molded;"
+      note "But the use of the bowl"
+      note "Will deepend on the part"
+      note "Of the bowl that is void."
+      note ""
+      note "Cut out windows and doors"
+      note "In the house as you build;"
+      note "But the use of the house"
+      note "Will depend on the space"
+      note "In the walls that is void."
+      note ""
+      note "So advantage is had"
+      note "From whatever is there;"
+      note "But usefulness rises"
+      note "From whatever is not" ;
+    item "Third tablet"
+      note "The softest of stuff in the world"
+      note "Penetrates quickly the hardest;"
+      note "Insubstantial, it enters"
+      note "Where no room is."
+      note ""
+      note "By this I know the benefit"
+      note "Of something done by quiet being;"
+      note "In all the world but few can know"
+      note "Accomplishment apart from work,"
+      note "Instruction when no words are used.";
+    item "Fourth tablet"
+      note "The world may be known"
+      note "Without leaving the house;"
+      note "The Way may be seen"
+      note "Apart from the windows."
+      note "The further you go,"
+      note "The less you will know."
+      note ""
+      note "Accordingly, the Wise Man"
+      note "Knows without going,"
+      note "Sees without seeing,"
+      note "Does without doing.";
+    task "give basin to man";
+    task "sit" note "the emerald begins to glow";
+    task "meditate" tag fill_basin_with_water note "the basin becomes full with water" score 20;
+    task "stand" after last;
+    task "empty basin in mouth" tag empty_basin_in_mouth need basin lose it score 20;
+    link peking_1361_burial_cave to peking_1361_sacred_way dir s after last;
+
+map "Peking, 44 BC";
+
+  room "Interkron, Peking 44 BC" tag peking_44_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_44_park dir n exit n e s;
+
+  room "Sacred Way" dir e 3 from peking_44_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+    item "Barbarian Army";
+    item "Emperors Seal" tag emperors_seal hidden;
+    task "blow conch" need conch_shell give emperors_seal score 5;
+
+  room "Marketplace" dir n from peking_44_park exit s;
+
+map "Peking, 452 AD";
+
+  room "Interkron, Peking 452 AD" tag peking_452_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_452_park dir n exit n e s;
+
+  room "Sacred Way" dir e 3 from peking_452_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+
+  room "Marketplace" dir n from peking_452_park exit s;
+    item "Priest";
+    task "give emerald to priest" tag donate_emerald need emerald lose it score 5;
+
+map "Peking, 800 AD";
+
+  room "Interkron, Peking 800 AD" tag peking_800_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_800_park dir n exit n e s;
+
+  room "Sacred Way" dir e 3 from peking_800_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+
+  room "Marketplace" dir n from peking_800_park exit s e;
+
+  room "Buddhist Temple" dir e exit e;
+    item "Statue";
+    item "Sapphire";
+    item "Priest";
+
+  room "Sanctuary" dir e after donate_emerald score 10;
+    item "Mask" tag mask_with_fireworks note "the face has western, rather than oriental features that make it resemble and Old Testament patriarch." score 5;
+
+map "Peking, 1215 AD";
+
+  room "Interkron, Peking 1215 AD" tag peking_1215_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_1215_park dir n exit n e s;
+    item "Mongol Warrior";
+    task "captured by mongols" goto peking_1215_genghis_khans_tent;
+    task "say password" cmd "tower gate" tag task_say_gate_password after task_offer_power_to_merchant;
+
+  room "Parade Ground" dir n from peking_1215_park after task_say_gate_password;
+    item "Soldiers";
+    task "girls, pleasure soldiers" after task_bring_girls_to_soldiers;
+    task "open gate" after last score 30;
+
+  room "Marketplace" tag peking_1215_marketplace dir n exit e s w;
+
+  room "Buddhist Temple" dir e from peking_1215_marketplace;
+    item "Buddhist Priest";
+    item "Portrait";
+    item "Buddha Statue";
+
+  room "House of One Thousand Pleasures" dir w from peking_1215_marketplace;
+    item "Madame";
+    task "show yuan to Madame" need thousand_yuan lose it;
+    task "girls, follow me" tag task_bring_girls_to_soldiers after last;
+
+  room "Sacred Way" tag peking_1215_sacred_way dir e 3 from peking_1215_park;
+
+  room "Great Wall" dir n 3 from peking_1215_sacred_way exit e s w;
+
+  room "Genghis Khan's Tent" tag peking_1215_genghis_khans_tent dir s from peking_1215_sacred_way;
+    item "Genghis Khan";
+
+map "Peking, 1519 AD";
+
+  room "Interkron, Peking 1519 AD" tag peking_1519_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_1519_park dir n exit n e s;
+
+  room "Sacred Way" dir e 3 from peking_1519_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+
+  room "Marketplace" dir n from peking_1519_park exit s e;
+    item "Emperor's Procession";
+    item "Cookie";
+    task "open cookie and read fortune" score 1 note "Things would be better if you were the seventh son of a seventh son.";
+
+  room "Buddhist Temple" dir e exit e;
+    item "Statue";
+    item "Sapphire";
+    item "Priest";
+
+
+map "Peking, 1588 AD";
+
+  room "Interkron, Peking 1588 AD" tag peking_1588_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_1588_park dir n exit n e s;
+
+  room "Sacred Way" dir e 3 from peking_1588_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+
+  room "Marketplace" dir n from peking_1588_park exit s e;
+
+  room "Buddhist Temple" dir e exit e;
+    item "Statue";
+    item "Sapphire";
+    item "Priest";
+    task "listen" score 1 note "Eventually you will acknowledge me as the master of the fourth dimension - time";
+
+map "Peking, 1798 AD";
+
+  room "Interkron, Peking 1798 AD" tag peking_1798_interkron;
+
+  room "Shrine" dir n go out;
+
+  room "Tientan Park" tag peking_1798_park dir n exit n e s;
+
+  room "Sacred Way" dir e 2 from peking_1798_park;
+
+  room "Great Wall" dir n 3 exit e s w;
+
+  room "Marketplace" dir n from peking_1798_park exit n s;
+
+  room "Tienanmen Square" dir n exit n s;
+    item "Eunuch" note "the only way to get anything out of him is if he thinks he owes you a favor";
+    task "show seal to eunuch" need emperors_seal goto peking_1798_forbidden_city;
+
+  room "Forbidden City" tag peking_1798_forbidden_city dir n score 10 after last;
+    item "Emperor";
+    item "Box";
+    item "Jade bar" hidden;
+    task "open box" note "many times";
+    task "examine bar" after last score 1 note "You act like you bought your brains at a five and ten cent store.";
+    
+
+
+map "Peking, 1940 AD";
+
+  room "Interkron, Peking 1940 AD" tag peking_1940_interkron;
+
+  room "Shrine" dir n go out;
+    item "Poster" note "Revenge, midday";
+
+  room "Tientan Park" tag peking_1940_park dir n exit n e s;
+    item "Japanese Patrol";
+    task "wait for 12:00" note "after this you must be gone by 12:10 otherwise you will be arrested";
+    item "Molotov Cocktail" tag molotov_cocktail after last score 5;
+
+
+map "Dover, 1361 BC";
+
+  room "Interkron, Dover 1361 BC" tag dover_1361_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1361_lawn dir se exit n s w nw;
+
+  room "Tavern" dir n from dover_1361_lawn;
+    item "Innkeeper";
+
+  room "Cliff" dir s from dover_1361_lawn;
+    
+  room "Rocky Shore" dir s;
+    item "Conch shell" tag conch_shell score 5;
+
+  room "Stonehenge" dir w 3 from dover_1361_lawn;
+    task "witness summer solstice" tag learn_about_eclipse score 5 note "he says something that is maybe about a solar eclipse at 13:00??";
+    item "Sighting stone";
+    item "Old man";
+
+map "Dover, 44 BC";
+
+  room "Interkron, Dover 44 BC" tag dover_44_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_44_lawn dir se exit n s nw;
+
+  room "Cliff" dir s from dover_44_lawn;
+    item "chalk" tag chalk score 5;
+
+  room "Tavern" dir n from dover_44_lawn;
+    item "Innkeeper";
+
+map "Dover, 452 AD";
+
+  room "Interkron, Dover 452 AD" tag dover_452_interkron;
+
+  room "Shed" dir se go out
+      note "just a few turns before King Arthur kills you!";
+    item "King Arthur";
+    item "Excalibur";
+    task "read excalibur" score 1 note "Eternity will pass before you figure out a tenth of this";
+
+map "Dover, 800 AD";
+
+  room "Interkron, Dover 800 AD" tag dover_800_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_800_lawn dir se exit n nw;
+    item "Message";
+    task "read message" score 1 note "Old man Drexler looks like he ate a lemon";
+
+  room "Tavern" dir n from dover_800_lawn;
+    item "Innkeeper";
+
+map "Dover, 1215 AD";
+
+  room "Interkron, Dover 1215 AD" tag dover_1215_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1215_lawn dir se exit n w nw;
+    item "Horse";
+    task "ride horse" tag task_ride_horse;
+
+  room "Tavern" dir n from dover_1215_lawn;
+    item "Innkeeper";
+    item "Courier";
+
+  room "Forest" tag dover_1215_forest dir w 4 from dover_1215_lawn after task_ride_horse;
+    item "Arrow";
+    task "get message then read it" tag read_message_from_outlaws note "Sir traveller, soon there will happen something which you do not wish to see. Please leave.";
+    task "search courier" after wait_for_courier;
+    task "open pouch" after last;
+    task "get letter" after last;
+    task "give letter to leader" tag give_letter_to_outlaw_leader after last score 5;
+
+  room "Behind the tree" dir ne from dover_1215_forest after read_message_from_outlaws;
+    task "wait for courier" tag wait_for_courier;
+
+  room "Runnymede" dir nw from dover_1215_forest;
+    item "King John";
+    item "Cleric";
+    item "Magna Carta";
+    task "wait for courier" after give_letter_to_outlaw_leader score 30;
+
+map "Dover, 1519 AD";
+
+  room "Interkron, Dover 1519 AD" tag dover_1519_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1519_lawn dir se exit n nw;
+
+  room "Tavern" dir n from dover_1519_lawn;
+    item "Innkeeper";
+
+  room "Landing" dir n go up tag dover_1519_landing exit e s w;
+
+  room "East Bedroom" dir e from dover_1519_landing;
+    item "Loose floorboard";
+    task "move floorboard" score 5;
+    task "put plaque in cache" tag store_plaque_in_cache after last need papal_plaque lose it;
+    task "close cache" after last;
+
+  room "West Bedroom" dir w from dover_1519_landing;
+
+map "Dover, 1588 AD";
+
+  room "Interkron, Dover 1588 AD" tag dover_1588_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1588_lawn dir se exit n nw;
+
+  room "Tavern" dir n from dover_1588_lawn;
+    item "Innkeeper";
+    item "Sir Francis Drake";
+    item "Sailor" note "sailor is a poet";
+    item "Helmet" tag helmet hidden;
+    task "give parchment to sailor" after get_drake_to_meet_queen need parchment give helmet score 5;
+
+  room "Landing" dir n go up tag dover_1588_landing exit e s w;
+    task "knock on door before entering" cmd "knock on door then open door";
+    task "wait for Sir Francis Drake" tag get_drake_to_meet_queen after get_elizabeth_to_switch_room score 30;
+
+  room "East Bedroom" dir e from dover_1588_landing;
+    item "Loose floorboard";
+    item "Queen Elizabeth";
+    task "bow";
+    task "open floorbaord" after store_plaque_in_cache;
+    task "get plaque" after last;
+    task "give plaque to Elizabeth" tag get_elizabeth_to_switch_room after last score 10;
+
+  room "West Bedroom" dir w from dover_1588_landing;
+    item "Woman";
+
+map "Dover, 1798 AD";
+
+  room "Interkron, Dover 1798 AD" tag dover_1798_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1798_lawn dir se exit n nw;
+
+  room "Tavern" dir n from dover_1798_lawn;
+    item "Innkeeper";
+    item "Lord Nelson";
+    item "boarding hook" tag boarding_hook score 5 after get_lord_nelson_to_egypt;
+    task "show pass to nelseon" need napoleons_pass tag get_lord_nelson_to_egypt;
+
+  room "Landing" dir n go up tag dover_1798_landing exit e s w;
+
+  room "East Bedroom" dir e from dover_1798_landing;
+
+  room "West Bedroom" dir w from dover_1798_landing;
+
+map "Dover, 1940 AD";
+
+  room "Interkron, Dover 1940 AD" tag dover_1940_interkron;
+
+  room "Shed" dir se go out;
+
+  room "Lawn" tag dover_1940_lawn dir se exit n nw;
+
+  room "Tavern" dir n from dover_1940_lawn;
+    item "Innkeeper";
+    item "Announcer";
+    item "Churchill";
+    task "get cigar" tag tag_get_cigar score 5 note "makes Churchill say cigar";
+    task "wait for Churchill to leave";
+    item "lighter" tag lighter after last score 5;
+
+  room "Landing" dir n go up tag dover_1940_landing exit e s w;
+
+  room "East Bedroom" dir e from dover_1940_landing;
+
+  room "West Bedroom" dir w from dover_1940_landing;
