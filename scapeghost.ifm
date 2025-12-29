@@ -1,0 +1,264 @@
+title "Scapeghost";
+
+page_rotate = false;
+link_dashed = true in style DashedLink;
+
+map "Part 1 - Cemetary";
+
+  room "By my own grave" tag Own_grave exit n w nw;
+    task "Lift Pebble" tag task_lift_pebble after task_lift_dry_leaf;
+    item "Pebble" tag item_pebble;
+    item "Wreath" tag item_wreath;
+    task "put yellow card on wreath" lose item_yellow_card need item_yellow_card;
+    task "make dog to get wreath" tag task_get_wreath
+      cmd "get wreath" after last after task_get_fishbone;
+
+  room "Gravel Path Corner" dir w from Own_grave tag Corner exit n ne e s w nw;
+    task "Lift matchbook" tag task_lift_matchbook after task_lift_pebble;
+    item "Matchbook" tag item_matchbook;
+
+  room "Wide Gravel Path" dir s from Corner tag Wide_path exit n e s;
+    task "greet dog" tag task_greet_dog cmd "dog, hello; dog, hello; dog, hello";
+    task "get the fishbone out of dogs throat" tag task_get_fishbone
+        cmd "get fishbone"
+        after task_greet_dog
+        after task_lift_matchbook;
+    item "Dog" note "it wanders around";
+    item "Thermometer";
+    item "Crumbling wall";
+    task "push wall"
+      after task_turn_off_spotlight
+      after task_bert_follow_me
+      after task_edna_follow_me
+      after task_alex_follow_me
+      after task_david_follow_me
+      after task_violet_follow_me
+      after task_edith_follow_me
+      after task_colonel_follow_me
+      goto Own_grave_part_2
+      note "This ends part 1";
+
+  room "Junction by Vault" dir s from Wide_path tag Junction exit n e s w;
+    item "Vault" note "Drugs are hidden in valut";
+    task "TODO: get drugs from vault";
+
+  room "By Rusty Gate" dir e from Junction tag Rusty_gate exit e s w;
+
+  room "Grassy Lawn" dir s from Rusty_gate tag Grassy_lawn exit n s
+    note "\"Reserved for future expansion\" - wasn't that a message I had come across on the station's computer system? And here as well..";
+
+  room "By South Wall" dir s from Junction tag South_wall exit n s;
+    item "yew tree";
+    item "octagonal seat";
+    item "spotlight";
+
+  room "Outside Old Church" dir w from Junction tag Outside_old_church exit n e s;
+
+  room "Joe Danby's Grave" dir n from Own_grave tag Joe_danbys_grave exit n s sw w nw
+      note "The great Landlord has called 'Time' on our Joe";
+    link last to Corner dir sw;
+    item "thistledown";
+
+  room "New graves" dir n from Joe_danbys_grave tag New_graves exit n s sw w sw;
+
+  room "Willmot grave" dir n from New_graves tag Willmot_graves exit s sw w;
+    item "Green wreath" tag item_green_wreath;
+    #task "TODO: Find a faded wreath"
+    #  note "it was here in the beginning? I wonder where it went to?";
+    task "wait for dog to bring wreath here" after task_get_wreath;
+    task "bert, follow me" tag task_bert_follow_me after last;
+    task "edna, follow me" tag task_edna_follow_me after last;
+
+  room "New graves" dir w from Willmot_graves tag Other_New_graves exit e s se sw w;
+    link last to New_graves dir se;
+
+  room "Beneath Copper Beech" dir sw from Willmot_graves tag Beneath_copper_beech;
+    link last to Joe_danbys_grave dir se;
+    link last to Misty_lawn dir nw;
+    link last to Other_New_graves dir n;
+    link last to New_graves dir e;
+    task "Lift dry leaf" tag task_lift_dry_leaf after task_lift_petal;
+    item "dry leaf";
+    item "jumbled stonework";
+    task "examine stonework" note "reveals plinth";
+    task "examine plinth" note "it looks like a sleeping guy" after last;
+    task "wake statue" after last;
+    task "alex, follow me" tag task_alex_follow_me after last;
+    
+  room "Tomb of David Ridge" dir w from Beneath_copper_beech tag Tomb_of_David_Ridge;
+    link last to Colonel_Rycrofts_tombstone dir nw;
+    link last to Misty_lawn dir n;
+    link last to Other_New_graves dir ne;
+    task "rock urn" tag task_rock_urn after task_lift_twig
+      note "this makes David Ridge want to help me";
+    task "david, follow me" tag task_david_follow_me after last;
+
+  room "Neatly Moved Lawn" dir w from Other_New_graves tag Misty_lawn exit e s se sw w;
+    item "Mist";
+
+  room "Colonel Rycroft's Tombstone" dir w from Misty_lawn tag Colonel_Rycrofts_tombstone
+      exit e s se sw w;
+    item "Colonel Rycroft";
+    task "Colonel, follow me" tag task_colonel_follow_me after task_scare_off_vandals;
+
+  room "Muddy lawn" dir e from Wide_path tag muddy_lawn;
+    item "spotlight";
+
+  room "Sundial" dir n from Corner tag Sundial;
+    link last to Beneath_copper_beech dir n; 
+    link last to Joe_danbys_grave dir e;
+    link last to New_graves dir ne;
+    link last to Own_grave dir se;
+    link last to Tomb_of_David_Ridge dir nw;
+    task "push sundial"
+      after last
+      after task_get_fishbone;
+    item "gnomon" tag item_gnomon hidden after last;
+
+  room "Grave Covered in Marigolds" dir sw from Colonel_Rycrofts_tombstone
+      tag Grave_covered_in_marigolds;
+    link last to Granite_cenotaph dir e;
+    link last to Old_tombstones dir se;
+    item "petal" tag petal;
+    task "get petal" tag task_lift_petal;
+
+  room "Violet Conways Headstone" dir s from Grave_covered_in_marigolds
+      tag Violet_conways_headstone exit n ne e s se;
+    link last to Pile_of_twigs dir se;
+    item "Violet Conway";
+    item "dogwood bush";
+    task "put bell on bush" need item_bell lose item_bell
+      note "put something noisy on her grave so she can find her way back to it";
+    task "violet, follow me" tag task_violet_follow_me after last;
+
+  room "Toppled Sepulchre" dir s from Violet_conways_headstone tag Toppled_sepulchre;
+
+  room "Edith Dean's Headstone" dir s from Toppled_sepulchre tag Edith_Deans_headstone;
+    item "gravel";
+    item "vase";
+    task "show gnomon to edith" tag task_show_gnomon need item_gnomon;
+    task "edith, follow me" tag task_edith_follow_me after last;
+
+  room "Pile of Twigs and Branches" dir e from Toppled_sepulchre tag Pile_of_twigs exit n ne e w nw;
+    item "heap of branches";
+    item "twig" tag item_twig hidden;
+    item "faded wreath" hidden
+      note "caretaker puts it on the heap of branches at the start of the game";
+    task "lift twig" tag task_lift_twig after task_get_fishbone give item_twig;
+    item "yellow card" hidden tag item_yellow_card after task_lift_twig
+      note "on the faded wreath in on the heap of branches";
+
+  room "Old Tombstones" dir e from Violet_conways_headstone tag Old_tombstones;
+    link last to Toppled_sepulchre dir sw;
+    link last to Pile_of_twigs dir s;
+    link last to Tomb_of_David_Ridge dir ne;
+
+  room "Swishy Grass" dir e from Old_tombstones tag Swishy_grass;
+    link last to Sundial dir e;
+    link last to Tomb_of_David_Ridge dir n;
+    link last to Beneath_copper_beech dir ne;
+    link last to Corner dir se;
+    link last to Pile_of_twigs dir sw;
+
+  room "Granite Cenotaph" dir nw from Swishy_grass tag Granite_cenotaph;
+    link last to Old_tombstones dir s;
+    link last to Violet_conways_headstone dir sw;
+    link last to Tomb_of_David_Ridge dir e;
+    link last to Misty_lawn dir ne;
+    link last to Colonel_Rycrofts_tombstone dir n;
+    item "Vandals" note "walks around";
+    item "Bottle of vodka";
+
+  room "Elder Bushes" dir nw from Granite_cenotaph tag Elder_bushes exit e s se;
+    link last to Grave_covered_in_marigolds dir s;
+    link last to Colonel_Rycrofts_tombstone dir e;
+    task "search bushes" note "reveals magazine";
+    item "magazine" hidden;
+
+  room "Outside shed" dir s from Swishy_grass tag Outside_shed exit n ne e w nw s;
+    link last to Pile_of_twigs dir w;
+    link last to Corner dir e;
+    link last to Sundial dir ne;
+    link last to Old_tombstones dir nw;
+    item "Rope handle";
+    item "Lock";
+    task "bert, wait 3 then push short lever"
+      after task_bert_follow_me
+      after task_edna_follow_me;
+    task "edna, wait 2 then push medium lever" after last;
+    task "joe, wait 1 then push long lever" after last;
+    task "turn barrel" after last;
+    task "pull rope" after last tag task_open_door
+      note "the dog must be there for this to work";
+
+  room "Inside Shed" tag Inside_shed dir s from Outside_shed after task_open_door;
+    item "watch";
+    item "bell" tag item_bell;
+    item "shovel";
+    item "button";
+    item "switch";
+    item "lightbulb";
+    task "joe, wait 1 then push button";
+    task "push button" after last tag task_turn_off_spotlight
+      note "pushing the button turns off the spotlight";
+    task "push switch" after last tag task_scare_off_vandals
+      goto Own_grave;
+
+map "Part 2 - Haunted House";
+
+  room "Own Grave" tag Own_grave_part_2 exit w n;
+    
+  room "Joe Danby's Grave" dir n exit w n;
+    item "Joe Danby" note "Joe Follows you";
+
+  room "New Graves" tag New_graves_part_2 dir n exit n e s w;
+
+  room "Willmots Graves" dir n exit s w;
+
+  room "Path" dir e from New_graves_part_2;
+
+  room "Winding Track" dir n exit n s;
+
+  room "South part of village green" dir n exit n s; 
+
+  room "Middle of village green" dir n exit n s;
+    item "footprints";
+
+  room "North green" dir n exit n s;
+
+  room "Front garden" dir n tag Front_garden exit e s w n;
+    task "concentrate" tag task_concentrate_in_front_garden
+      note "Joe Danby explains that concentrating can reveal visions of the past"
+      note "This reveals a vision of my past self leaving the house towards the herb garden, carrying a small item";
+
+  room "Herb garden" tag Herb_garden dir w from Front_garden exit e n;
+    item "ditch";
+    task "examine herbs" after task_concentrate_in_front_garden;
+    
+  room "Kitchen" dir n from Herb_garden exit n e s;
+    item "Bottle of Whisky";
+    item "Curtains";
+    item "Dispenser";
+    item "Lampholder";
+    item "Small switch";
+    item "Pearl bulb" tag item_pearl_bulb note "in lampholder";
+    item "Foil" tag item_foil note "in dispenser";
+    task "drop bulb" drop item_pearl_bulb need item_pearl_bulb;
+    task "put foil in lampholder" need item_foil drop item_foil after last;
+    task "push switch" note "blows fuse" after last;
+
+
+
+  
+
+
+
+  
+
+  
+
+
+    
+
+
+
