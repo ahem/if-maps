@@ -6,7 +6,7 @@ link_dashed = true in style DashedLink;
 map "Part 1 - Cemetary";
 
   room "By my own grave" tag Own_grave exit n w nw;
-    task "Lift Pebble" tag task_lift_pebble after task_lift_dry_leaf;
+    task "Lift Pebble" tag task_lift_pebble after task_lift_dry_leaf score 15;
     item "Pebble" tag item_pebble;
     item "Wreath" tag item_wreath;
     task "put yellow card on wreath" lose item_yellow_card need item_yellow_card;
@@ -14,12 +14,12 @@ map "Part 1 - Cemetary";
       cmd "get wreath" after last after task_get_fishbone;
 
   room "Gravel Path Corner" dir w from Own_grave tag Corner exit n ne e s w nw;
-    task "Lift matchbook" tag task_lift_matchbook after task_lift_pebble;
+    task "Lift matchbook" tag task_lift_matchbook after task_lift_pebble score 5;
     item "Matchbook" tag item_matchbook;
 
   room "Wide Gravel Path" dir s from Corner tag Wide_path exit n e s;
     task "greet dog" tag task_greet_dog cmd "dog, hello; dog, hello; dog, hello";
-    task "get the fishbone out of dogs throat" tag task_get_fishbone
+    task "get the fishbone out of dogs throat" tag task_get_fishbone score 10
         cmd "get fishbone"
         after task_greet_dog
         after task_lift_matchbook;
@@ -27,6 +27,7 @@ map "Part 1 - Cemetary";
     item "Thermometer";
     item "Crumbling wall";
     task "push wall"
+      score 35
       after task_turn_off_spotlight
       after task_bert_follow_me
       after task_edna_follow_me
@@ -40,7 +41,6 @@ map "Part 1 - Cemetary";
 
   room "Junction by Vault" dir s from Wide_path tag Junction exit n e s w;
     item "Vault" note "Drugs are hidden in valut";
-    task "TODO: get drugs from vault";
 
   room "By Rusty Gate" dir e from Junction tag Rusty_gate exit e s w;
 
@@ -58,14 +58,14 @@ map "Part 1 - Cemetary";
       note "The great Landlord has called 'Time' on our Joe";
     link last to Corner dir sw;
     item "thistledown";
+    task "lift thistledown" score 10 tag task_list_thistledown;
 
   room "New graves" dir n from Joe_danbys_grave tag New_graves exit n s sw w sw;
 
   room "Willmot grave" dir n from New_graves tag Willmot_graves exit s sw w;
     item "Green wreath" tag item_green_wreath;
-    #task "TODO: Find a faded wreath"
-    #  note "it was here in the beginning? I wonder where it went to?";
-    task "wait for dog to bring wreath here" after task_get_wreath;
+    #  note "the faded wreath was here in the beginning? I wonder where it went to?";
+    task "wait for dog to bring wreath here" after task_get_wreath score 50;
     task "bert, follow me" tag task_bert_follow_me after last;
     task "edna, follow me" tag task_edna_follow_me after last;
 
@@ -82,14 +82,14 @@ map "Part 1 - Cemetary";
     item "jumbled stonework";
     task "examine stonework" note "reveals plinth";
     task "examine plinth" note "it looks like a sleeping guy" after last;
-    task "wake statue" after last;
+    task "wake statue" after last after task_david_follow_me score 25;
     task "alex, follow me" tag task_alex_follow_me after last;
     
   room "Tomb of David Ridge" dir w from Beneath_copper_beech tag Tomb_of_David_Ridge;
     link last to Colonel_Rycrofts_tombstone dir nw;
     link last to Misty_lawn dir n;
     link last to Other_New_graves dir ne;
-    task "rock urn" tag task_rock_urn after task_lift_twig
+    task "rock urn" tag task_rock_urn after task_lift_twig score 25
       note "this makes David Ridge want to help me";
     task "david, follow me" tag task_david_follow_me after last;
 
@@ -113,21 +113,21 @@ map "Part 1 - Cemetary";
     task "push sundial"
       after last
       after task_get_fishbone;
-    item "gnomon" tag item_gnomon hidden after last;
+    item "gnomon" tag item_gnomon hidden after last score 5;
 
   room "Grave Covered in Marigolds" dir sw from Colonel_Rycrofts_tombstone
       tag Grave_covered_in_marigolds;
     link last to Granite_cenotaph dir e;
     link last to Old_tombstones dir se;
     item "petal" tag petal;
-    task "get petal" tag task_lift_petal;
+    task "get petal" tag task_lift_petal score 5 after task_list_thistledown;
 
   room "Violet Conways Headstone" dir s from Grave_covered_in_marigolds
       tag Violet_conways_headstone exit n ne e s se;
     link last to Pile_of_twigs dir se;
     item "Violet Conway";
     item "dogwood bush";
-    task "put bell on bush" need item_bell lose item_bell
+    task "put bell on bush" need item_bell lose item_bell score 25
       note "put something noisy on her grave so she can find her way back to it";
     task "violet, follow me" tag task_violet_follow_me after last;
 
@@ -136,7 +136,7 @@ map "Part 1 - Cemetary";
   room "Edith Dean's Headstone" dir s from Toppled_sepulchre tag Edith_Deans_headstone;
     item "gravel";
     item "vase";
-    task "show gnomon to edith" tag task_show_gnomon need item_gnomon;
+    task "show gnomon to edith" tag task_show_gnomon need item_gnomon score 25;
     task "edith, follow me" tag task_edith_follow_me after last;
 
   room "Pile of Twigs and Branches" dir e from Toppled_sepulchre tag Pile_of_twigs exit n ne e w nw;
@@ -144,7 +144,7 @@ map "Part 1 - Cemetary";
     item "twig" tag item_twig hidden;
     item "faded wreath" hidden
       note "caretaker puts it on the heap of branches at the start of the game";
-    task "lift twig" tag task_lift_twig after task_get_fishbone give item_twig;
+    task "lift twig" tag task_lift_twig after task_get_fishbone give item_twig score 5;
     item "yellow card" hidden tag item_yellow_card after task_lift_twig
       note "on the faded wreath in on the heap of branches";
 
@@ -193,15 +193,17 @@ map "Part 1 - Cemetary";
 
   room "Inside Shed" tag Inside_shed dir s from Outside_shed after task_open_door;
     item "watch";
-    item "bell" tag item_bell;
+    item "bell" tag item_bell score 10;
     item "shovel";
     item "button";
     item "switch";
     item "lightbulb";
     task "joe, wait 1 then push button";
-    task "push button" after last tag task_turn_off_spotlight
+    task "push button" after last tag task_turn_off_spotlight score 25
       note "pushing the button turns off the spotlight";
     task "push switch" after last tag task_scare_off_vandals
+      note "the vandals are scared off by the light in the shed turning on"
+      score 25
       goto Own_grave;
 
 map "Part 2 - Haunted House";
@@ -219,46 +221,124 @@ map "Part 2 - Haunted House";
 
   room "Winding Track" dir n exit n s;
 
-  room "South part of village green" dir n exit n s; 
+  room "South part of village green" dir n exit n s
+    note "You need to time walking across here to avoid headlights from cars."
+    note "You need to get Joe with you to the house";
 
   room "Middle of village green" dir n exit n s;
     item "footprints";
 
   room "North green" dir n exit n s;
 
-  room "Front garden" dir n tag Front_garden exit e s w n;
+  room "Front garden" dir n tag Front_garden exit e s w n score 10;
     task "concentrate" tag task_concentrate_in_front_garden
+      score 20
       note "Joe Danby explains that concentrating can reveal visions of the past"
       note "This reveals a vision of my past self leaving the house towards the herb garden, carrying a small item";
 
+  room "Grassy lawn" dir e from Front_garden;
+    item "ivy";
+    task "joe, go to lounge then put hand in door"
+      after task_concentrate_in_hall
+      note "This gave me a fix on the room, so that I knew the position of the chimney within the wall";
+    task "put hand in wall" tag task_dislodge_paper after last score 20;
+
   room "Herb garden" tag Herb_garden dir w from Front_garden exit e n;
     item "ditch";
-    task "examine herbs" after task_concentrate_in_front_garden;
+    task "examine herbs" after task_concentrate_in_front_garden score 20;
+    task "examine ditch";
+    task "examine branch" after last;
+    task "freeze water" after last;
+    item "card" tag item_id_card;
+    item "map" tag item_map score 20;
     
-  room "Kitchen" dir n from Herb_garden exit n e s;
+  room "Kitchen" tag Kitchen dir n from Herb_garden exit n e s;
     item "Bottle of Whisky";
     item "Curtains";
     item "Dispenser";
     item "Lampholder";
     item "Small switch";
-    item "Pearl bulb" tag item_pearl_bulb note "in lampholder";
+    item "Pearl bulb" tag item_pearl_bulb note "60 watt, push-fit, mushroom type";
     item "Foil" tag item_foil note "in dispenser";
     task "drop bulb" drop item_pearl_bulb need item_pearl_bulb;
     task "put foil in lampholder" need item_foil drop item_foil after last;
-    task "push switch" note "blows fuse" after last;
+    task "push switch" tag task_blow_fuse note "blows fuse" after last;
+    task "push whisky, light pool, wait, push curtains" tag task_light_a_fire
+      note "I must have hidden the evidence and found the body first"
+      after task_collect_evidence_1
+      after task_collect_evidence_2
+      after task_collect_evidence_3
+      after task_collect_evidence_4
+      after task_collect_evidence_5
+      after task_move_body_to_hall
+      score 50
+      note "This ends part 2";
 
 
-
-  
-
-
-
-  
-
-  
-
-
+  room "Hall" tag Hall dir e from Kitchen exit e w n s;
+    link last to Front_garden dir s;
+    item "directory";
+    item "telephone";
+    item "lampholder";
+    item "large switch";
+    item "clear bulb" note "100 watts, threaded base" tag item_100w_lightbulb;
+    task "concentrate" tag task_concentrate_in_hall
+      note "starts vision revealing my capture and death + bad guys buring evidence in the lounge and a piece of paper getting stuck in the chimney";
+    task "push switch" tag task_hurt_evil_ghost
+      note "this turns on the light on the landing, hurting the evil ghost"
+      goto Own_grave_part_2;
+    task "examine directory";
+    task "examine bookmark" note "reveals gangs new hideout";
+    task "joe, wait 1 then pull bookmark";
+    task "pull bookmark" tag task_collect_evidence_1 after last score 25;
+    task "push switch" score 25 need item_100w_lightbulb lose item_100w_lightbulb;
+    task "drop card" tag task_collect_evidence_2 need item_id_card drop item_id_card score 5;
+    task "drop paper" tag task_collect_evidence_3 need item_paper drop item_paper score 5;
+    task "drop map" tag task_collect_evidence_4 need item_map drop item_map score 5;
+    task "drop briefcase" tag task_collect_evidence_5 need item_briefcase drop item_briefcase score 5;
     
 
+  room "Breakfast room" dir n from Kitchen;
 
+  room "Lounge" tag Lounge dir e from Hall;
+    item "Chimney piece";
+    item "Fireplace";
+    item "Bricked-up door";
+    item "paper" tag item_paper hidden after task_dislodge_paper
+      note "the paper is revealed by the vision"
+      note "I can't reach with 'put hand in chimney' but Joe said 'why don't we try from another side...";
 
+  room "Landing" tag Landing dir n 2 from Hall go up exit nw n e score 10;
+    item "grandfather clock" note "there is a panel on the grandfather clock";
+    item "fluorescent tube";
+    item "evil ghost";
+    task "open panel then put socket inside panel then close panel"
+      need item_socket lose item_socket
+      after task_attach_plug_to_body;
+    task "push clock" tag task_move_body_to_hall after last score 50
+      note "this pulls the body down to the hall";
+
+  room "Bathroom" dir n from Landing;
+    item "mirror";
+    task "put hand in mirror";
+    task "break mirror" need item_socket score 30 note "reveals briefcase";
+    item "briefcase" hidden tag item_briefcase after last;
+
+  room "Attic" dir e 2 from Landing go up;
+    item "Plug" tag item_plug;
+    item "Socket" tag item_socket;
+    item "water tank";
+#    task "TODO: find the body in the water tank (revealed by vision)"
+#      note "it has to do with the extension cord and the grandfather clock below"
+#      note "I can put one end of the cord in the clock, close the panel and push the clock"
+#      note "and then, if I can get the other end tied to the corpse I think that would work...";
+    task "get inside tank";
+    task "attach plug to body" tag task_attach_plug_to_body need item_plug after last;
+
+# HINTS NEEDED:
+# - I could not figure out the wording for "get in tank". I had guessed the solution
+#   to the puzzle, though, that is tying the extension card to the grandfather clock
+#   and push it down the stairs to pull the body down. I just couldn't figure out how
+#   to attach the other end to the tank. I didn't understand that you had to go in the
+#   tank and connect it to the body. I had tried "enter tank" and "in" but neither of
+#   those had worked.
