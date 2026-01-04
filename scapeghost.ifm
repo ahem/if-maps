@@ -39,20 +39,20 @@ map "Part 1 - Cemetary";
       goto Own_grave_part_2
       note "This ends part 1";
 
-  room "Junction by Vault" dir s from Wide_path tag Junction exit n e s w;
+  room "Junction by Vault" dir s from Wide_path tag Junction_by_vault exit n e s w;
     item "Vault" note "Drugs are hidden in valut";
 
-  room "By Rusty Gate" dir e from Junction tag Rusty_gate exit e s w;
+  room "By Rusty Gate" dir e from Junction_by_vault tag Rusty_gate exit e s w;
 
   room "Grassy Lawn" dir s from Rusty_gate tag Grassy_lawn exit n s
     note "\"Reserved for future expansion\" - wasn't that a message I had come across on the station's computer system? And here as well..";
 
-  room "By South Wall" dir s from Junction tag South_wall exit n s;
+  room "By South Wall" dir s from Junction_by_vault tag South_wall exit n s;
     item "yew tree";
     item "octagonal seat";
     item "spotlight";
 
-  room "Outside Old Church" dir w from Junction tag Outside_old_church exit n e s;
+  room "Outside Old Church" dir w from Junction_by_vault tag Outside_old_church exit n e s;
 
   room "Joe Danby's Grave" dir n from Own_grave tag Joe_danbys_grave exit n s sw w nw
       note "The great Landlord has called 'Time' on our Joe";
@@ -272,7 +272,8 @@ map "Part 2 - Haunted House";
       after task_collect_evidence_5
       after task_move_body_to_hall
       score 50
-      note "This ends part 2";
+      note "This ends part 2"
+      goto Own_grave_part_3;
 
 
   room "Hall" tag Hall dir e from Kitchen exit e w n s;
@@ -334,6 +335,110 @@ map "Part 2 - Haunted House";
 #      note "and then, if I can get the other end tied to the corpse I think that would work...";
     task "get inside tank";
     task "attach plug to body" tag task_attach_plug_to_body need item_plug after last;
+
+map "Part 3 - Poltergeist";
+
+  room "Own Grave" tag Own_grave_part_3 exit w n;
+    item "priest";
+    item "Big John";
+    item "Weasel";
+
+  room "Path" dir w exit n e s w score 10;
+
+  room "Path" dir s exit n s;
+    item "rubble";
+
+  room "Junction" dir s exit n e s nw;
+
+  room "Car Park" tag Car_park dir e score 10;
+    item "van";
+    task "get in van, wait" goto Countryside_junction;
+
+  room "Countryside Junction" tag Countryside_junction dir w 3 nolink exit n s w;
+    link last to Car_park dir s e 3 ne style DashedLink nopath;
+
+  room "Dirt Track" dir w 2 exit w e;
+
+  room "Farmyard" tag Farmyard dir w 2 exit ne e s w n;
+
+  room "Barn" tag Barn dir w from Farmyard exit e w score 10;
+    item "Van";
+    item "Hay";
+    task "search hay";
+    item "Insecticide sprayer" tag item_sprayer hidden after last;
+
+  room "Back of Barn" dir w from Barn nolink;
+    link last to Barn dir e nopath style DashedLink;
+    item "Taxi";
+
+  room "Side of Farmhouse" tag Side_of_farmhouse dir ne 2 from Farmyard exit n sw e;
+
+  room "Outhouse" dir e from Side_of_farmhouse go in;
+    item "Generator";
+
+  room "Back of Farmhouse" dir n from Side_of_farmhouse score 10;
+    item "Connectors";
+    item "Wires";
+    task "touch connectors with sprayer" tag task_blow_farmhouse_fuse need item_sprayer score 20;
+
+  room "Hallway" dir n 2 from Farmyard tag Farmhouse_hallway score 10
+      after task_blow_farmhouse_fuse;
+    item "Cupboard";
+    item "Circuit breaker" hidden note "in cupboard";
+    task "turn off circuit breaker" score 20;
+
+  room "Basement stairs" dir sw from Farmhouse_hallway go down;
+    item "door with window";
+    task "TODO: open door"
+      note "I cannot carry anything thorugh the door"
+      note "in the cellar there is a shelf above the door";
+
+  room "Cellar" dir w go in exit n;
+    item "shelf";
+
+  room "Back of Cellar" dir n score 10;
+    item "Chair";
+    item "Hammer";
+    task "TODO: Free Sarah, once she is brought here";
+
+  room "Top of Stairs" tag Formhouse_top_of_stairs dir nw from Farmhouse_hallway go up exit n;
+    item "prints";
+    item "creaky stair";
+
+  room "Attic" dir nw from Formhouse_top_of_stairs go up;
+    
+  room "Attic Bedroom" dir w;
+    item "Bed";
+    item "Whisky flask";
+    item "Window";
+    item "Curtains";
+    item "Lampholder";
+    task "TODO: Distract Big John 5 times";
+
+  room "Living Room" dir n from Farmhouse_hallway;
+    item "Rugs";
+    item "Fire";
+    item "Grate";
+
+  room "Kitchen" dir e from Farmhouse_hallway;
+    item "Sarah";
+    item "Big John";
+    item "John";
+    item "Weasel";
+    item "Jude";
+    item "Professor";
+    item "Severian";
+    item "briefcase";
+    item "table";
+    task "TODO: Get the briefcase, which is full of drugs, as evidence";
+
+  room "Muddy track" dir s from Farmyard exit n e se w;
+
+  room "Junction" dir se exit n s nw;
+
+  room "Sharp bend" dir s exit n e;
+
+
 
 # HINTS NEEDED:
 # - I could not figure out the wording for "get in tank". I had guessed the solution
